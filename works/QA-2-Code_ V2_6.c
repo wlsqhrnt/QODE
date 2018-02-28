@@ -305,489 +305,242 @@ void setup(void)
     initPinConfiguration();
     initTimer();
 }
-void loop(){
-    if(firstCheck == 0){// 선공게임이 정해지지 않았을때 ( 게임 시작 전 )
-        if(startCheck == 0){
-            initing();
-            startAngle = rand() % 100 + 40; // 40~ 140;
-            startCheck = 1;
+void firstCheckFuntion(void)
+{
+    if(startCheck == 0){
+        initing();
+        startAngle = rand() % 100 + 40; // 40~ 140;
+        startCheck = 1;
+    }
+    if(firstAt == 1){ //A 선공
+        ball_Y_dir = 0;
+        digitalWrite(ball_Y_dirPin,ball_Y_dir);
+        firstCheck = 1;
+        setAngle(startAngle,speed);
+    }else if(firstAt == 2){//B선공 
+        ball_Y_dir = 1;
+        digitalWrite(ball_Y_dirPin,ball_Y_dir);
+        firstCheck = 1;
+        angle = getAngle(startAngle,HORIZONTAL);
+        setAngle(angle,speed);
+    }
+}
+void coordinateCheck(void)
+{
+    if (ndx == ball_X_Cood && ndy == ball_Y_Cood) {
+        // 현재 좌표와 목적지 좌표가 같 경우
+        line_step();
+        x_move_check = 0;
+        y_move_check = 0;
+    }
+    if (ndx != ball_X_Cood && x_move_check == 0) { // 현재 x좌
+        if (ndx > ball_X_Cood) {
+            if(ball_X_dir != 1){
+                ball_X_dir = 1; digitalWrite(ball_X_dirPin,ball_X_dir);
+            }
+            x_move_check = 1;
+        } else if (ndx < ball_X_Cood ) { // 좌측에 있을 경우
+            if(ball_X_dir != 0){
+                ball_X_dir = 0; digitalWrite(ball_X_dirPin,ball_X_dir);   
+            }
+            x_move_check = 1;
         }
-        if(firstAt == 1){ //A 선공
-            ball_Y_dir = 0;
-            digitalWrite(ball_Y_dirPin,ball_Y_dir);
-            firstCheck = 1;
-            setAngle(startAngle,speed);
-        }else if(firstAt == 2){//B선공 
-            ball_Y_dir = 1;
-            digitalWrite(ball_Y_dirPin,ball_Y_dir);
-            firstCheck = 1;
-            angle = getAngle(startAngle,HORIZONTAL);
-            setAngle(angle,speed);
+    }
+    // 현재 y 좌표와 목적지 y 좌료가 틀릴 경우             
+    if (ball_Y_Cood != ndy && y_move_check == 0) {
+        // 아래쪽에 있을 경우
+        if (ndy > ball_Y_Cood) {// 계속 위로 이동
+            if(ball_Y_dir != 0){
+                ball_Y_dir = 0; digitalWrite(ball_Y_dirPin,ball_Y_dir);
+            }
+            y_move_check = 1;
+        } else if (ndy < ball_Y_Cood) { // 위쪽에 있을 경우
+            if(ball_Y_dir != 1){
+                ball_Y_dir = 1; digitalWrite(ball_Y_dirPin,ball_Y_dir);
+            }
+            y_move_check = 1;
         }
-    }else if(firstCheck == 1){ // 선공게임 정해진 후 ( 게임 중 )
-        if (ndx == ball_X_Cood && ndy == ball_Y_Cood) {
-            // 현재 좌표와 목적지 좌표가 같 경우
-            line_step();
+    }
+}
+void limitSwitchCheck(void)
+{
+    //스위치 체크 
+    if(digitalRead(ball_X_limitSwitch1) == LOW && ball_X_dir == 0){
+        ball_X_dir = 1;
+        digitalWrite(ball_X_dirPin,ball_X_dir);
+        ball_X_Cood = 0;
+        wall_crash = 1; 
+        ball_X_speedCheck = 0;
+        ball_X_timerLimit = 8;
+        ball_X_timerCnt = 0;
+        digitalWrite(led_left_pin,HIGH);
+        int new_angle = getAngle(angle,VERTICAL);
+        setAngle(new_angle,speed);
+        left_startCnt = 1; 
+    }
+    if(digitalRead(ball_X_limitSwitch2) == LOW && ball_X_dir == 1){
+        ball_X_dir = 0;
+        digitalWrite(ball_X_dirPin,ball_X_dir);
+        ball_X_Cood = 1154;
+        wall_crash = 1;
+        ball_X_speedCheck = 0;
+        ball_X_timerLimit = 8;
+        ball_X_timerCnt = 0;
+        digitalWrite(led_right_pin,HIGH);
+        int new_angle = getAngle(angle,VERTICAL);
+        setAngle(new_angle,speed);
+        right_startCnt = 1;
+    }
+    if(digitalRead(ball_Y_limitSwitch1) == LOW && ball_Y_dir == 1){
+        ball_Y_dir = 0;
+        digitalWrite(ball_Y_dirPin,ball_Y_dir);
+        collision_check2 = 1;
+        ball_Y_Cood = 0;
+        ball_Y_speedCheck = 0;
+        ball_Y_timerLimit = 12;
+        ball_Y_timerCnt = 0;
+        if(A_hacking_check == 1)
+            A_hacking_check = 0;
+        A_Collision_check();
+        B_item = 0;
+    }
+    if(digitalRead(ball_Y_limitSwitch2) == LOW && ball_Y_dir == 0){
+        ball_Y_dir = 1;
+        digitalWrite(ball_Y_dirPin,ball_Y_dir);
+        collision_check2 = 1;
+        ball_Y_Cood = 1343;
+        ball_Y_speedCheck = 0;
+        ball_Y_timerLimit = 12;
+        ball_Y_timerCnt = 0;
+        if(B_hacking_check == 1)
+            B_hacking_check = 0;
+        B_Collision_check();
+        A_item = 0;
+    }
+    if(digitalRead(A_X_limitSwitch1) == LOW && A_X_dir == 0){
+        A_X_dir = 1; digitalWrite(A_X_dirPin,A_X_dir);
+        A_X_Cood = 0; A_X_timerLimit = 8;
+        A_X_timerCnt = 0;
+    }
+    if(digitalRead(A_X_limitSwitch2) == LOW && A_X_dir == 1){
+        A_X_dir = 0; digitalWrite(A_X_dirPin,A_X_dir);
+        A_X_Cood = X; A_X_timerLimit = 8;
+        A_X_timerCnt = 0;
+    }
+    if(digitalRead(B_X_limitSwitch1) == LOW && B_X_dir == 1){
+        B_X_dir = 0; digitalWrite(B_X_dirPin,B_X_dir);
+        B_X_Cood = 0; B_X_timerLimit = 8;
+        B_X_timerCnt = 0;
+    }
+    if(digitalRead(B_X_limitSwitch2) == LOW && B_X_dir == 0){
+        B_X_dir = 1; digitalWrite(B_X_dirPin,B_X_dir);
+        B_X_Cood = X; B_X_timerLimit = 8;
+        B_X_timerCnt = 0;
+    }
+}
+void ballMoveControl(void)
+{
+    //move
+    if(ball_X_timerCnt >= ball_X_timerLimit && collision_check2 == 0 
+        && x_move_check == 1){ //ball X motor timer
+        if(ball_X_timercheck == 0){
+            digitalWrite(ball_X_stpPin,HIGH);
+            ball_X_timercheck = 1;
+            if(ball_X_dir == 0 && ball_X_Cood > 0 )
+                ball_X_Cood--;
+            else if(ball_X_dir == 1 && ball_X_Cood < 1160)
+                ball_X_Cood++;
+        }else if(ball_X_timercheck == 1){
+            digitalWrite(ball_X_stpPin,LOW);
+            ball_X_timercheck = 0;
             x_move_check = 0;
+        }
+        ball_X_timerCnt = 0;
+        ball_X_speedCheck++;
+        if(ball_X_timerLimit > 6 && ball_X_speedCheck == 100){
+            ball_X_timerLimit-=1;
+            ball_X_speedCheck=0;
+        }
+    }
+    if(ball_Y_timerCnt >= ball_Y_timerLimit && collision_check2 == 0
+            &&y_move_check == 1){//ball Y Motor timer
+        if(ball_Y_timercheck == 0){
+            digitalWrite(ball_Y_stpPin,HIGH);
+            ball_Y_timercheck = 1;
+            if(ball_Y_dir == 0 && ball_Y_Cood < 1345 )
+                ball_Y_Cood++;
+            else if(ball_Y_dir == 1 && ball_Y_Cood > 0)
+                ball_Y_Cood--;
+            if(A_item == 2 || B_item == 2)
+                tornadoCnt++;
+        }else if(ball_Y_timercheck == 1){
+            digitalWrite(ball_Y_stpPin,LOW);
+            ball_Y_timercheck = 0;
             y_move_check = 0;
         }
-        if (ndx != ball_X_Cood && x_move_check == 0) { // 현재 x좌
-            if (ndx > ball_X_Cood) {
-                if(ball_X_dir != 1){
-                    ball_X_dir = 1; digitalWrite(ball_X_dirPin,ball_X_dir);
-                }
-                x_move_check = 1;
-            } else if (ndx < ball_X_Cood ) { // 좌측에 있을 경우
-                if(ball_X_dir != 0){
-                    ball_X_dir = 0; digitalWrite(ball_X_dirPin,ball_X_dir);   
-                }
-                x_move_check = 1;
-            }
-        }
-        // 현재 y 좌표와 목적지 y 좌료가 틀릴 경우             
-        if (ball_Y_Cood != ndy && y_move_check == 0) {
-            // 아래쪽에 있을 경우
-            if (ndy > ball_Y_Cood) {// 계속 위로 이동
-                if(ball_Y_dir != 0){
-                    ball_Y_dir = 0; digitalWrite(ball_Y_dirPin,ball_Y_dir);
-                }
-                y_move_check = 1;
-            } else if (ndy < ball_Y_Cood) { // 위쪽에 있을 경우
-                if(ball_Y_dir != 1){
-                    ball_Y_dir = 1; digitalWrite(ball_Y_dirPin,ball_Y_dir);
-                }
-                y_move_check = 1;
-            }
-        }
-        //스위치 체크 
-        if(digitalRead(ball_X_limitSwitch1) == LOW && ball_X_dir == 0){
-            ball_X_dir = 1;
-            digitalWrite(ball_X_dirPin,ball_X_dir);
-            ball_X_Cood = 0;
-            wall_crash = 1; 
-            ball_X_speedCheck = 0;
-            ball_X_timerLimit = 8;
-            ball_X_timerCnt = 0;
-            digitalWrite(led_left_pin,HIGH);
-            int new_angle = getAngle(angle,VERTICAL);
-            setAngle(new_angle,speed);
-            left_startCnt = 1; 
-        }
-        if(digitalRead(ball_X_limitSwitch2) == LOW && ball_X_dir == 1){
-            ball_X_dir = 0;
-            digitalWrite(ball_X_dirPin,ball_X_dir);
-            ball_X_Cood = 1154;
-            wall_crash = 1;
-            ball_X_speedCheck = 0;
-            ball_X_timerLimit = 8;
-            ball_X_timerCnt = 0;
-            digitalWrite(led_right_pin,HIGH);
-            int new_angle = getAngle(angle,VERTICAL);
-            setAngle(new_angle,speed);
-            right_startCnt = 1;
-        }
-        if(digitalRead(ball_Y_limitSwitch1) == LOW && ball_Y_dir == 1){
-            ball_Y_dir = 0;
-            digitalWrite(ball_Y_dirPin,ball_Y_dir);
-            collision_check2 = 1;
-            ball_Y_Cood = 0;
+        ball_Y_timerCnt = 0;
+        ball_Y_speedCheck++;
+        if(ball_Y_timerLimit > 8 && ball_Y_speedCheck == 300){//가
+            ball_Y_timerLimit-=1;
             ball_Y_speedCheck = 0;
-            ball_Y_timerLimit = 12;
-            ball_Y_timerCnt = 0;
-            if(A_hacking_check == 1)
-                A_hacking_check = 0;
-            A_Collision_check();
-            B_item = 0;
         }
-        if(digitalRead(ball_Y_limitSwitch2) == LOW && ball_Y_dir == 0){
-            ball_Y_dir = 1;
-            digitalWrite(ball_Y_dirPin,ball_Y_dir);
-            collision_check2 = 1;
-            ball_Y_Cood = 1343;
-            ball_Y_speedCheck = 0;
-            ball_Y_timerLimit = 12;
-            ball_Y_timerCnt = 0;
-            if(B_hacking_check == 1)
-                B_hacking_check = 0;
-            B_Collision_check();
-            A_item = 0;
-        }
-        if(digitalRead(A_X_limitSwitch1) == LOW && A_X_dir == 0){
-            A_X_dir = 1; digitalWrite(A_X_dirPin,A_X_dir);
-            A_X_Cood = 0; A_X_timerLimit = 8;
+    }
+}
+void rackectMoveControl(void)
+{
+    if(A_moveCtl != 0){  // Racket A motor
+        if(A_X_timerCnt >= A_X_timerLimit){
+            if(A_X_timercheck == 0){
+                digitalWrite(A_X_stpPin,HIGH);
+                A_X_timercheck = 1;
+                if(A_X_dir == 1){
+                    A_X_Cood++;
+                }else if(A_X_dir == 0){
+                    A_X_Cood--;
+                }
+            }else if(A_X_timercheck == 1){
+                digitalWrite(A_X_stpPin,LOW);
+                A_X_timercheck = 0;
+            }
             A_X_timerCnt = 0;
+            A_X_speedCheck++;
         }
-        if(digitalRead(A_X_limitSwitch2) == LOW && A_X_dir == 1){
-            A_X_dir = 0; digitalWrite(A_X_dirPin,A_X_dir);
-            A_X_Cood = X; A_X_timerLimit = 8;
-            A_X_timerCnt = 0;
-        }
-        if(digitalRead(B_X_limitSwitch1) == LOW && B_X_dir == 1){
-            B_X_dir = 0; digitalWrite(B_X_dirPin,B_X_dir);
-            B_X_Cood = 0; B_X_timerLimit = 8;
+    }
+    if(B_moveCtl != 0){ // Racket B Motor
+        if(B_X_timerCnt >= B_X_timerLimit){
+            if(B_X_timercheck == 0){
+                digitalWrite(B_X_stpPin,HIGH);
+                B_X_timercheck = 1;
+                if(B_X_dir == 1){
+                    B_X_Cood--;
+                }else if(B_X_dir == 0){
+                    B_X_Cood++;
+                }
+            }else if(B_X_timercheck == 1){
+                digitalWrite(B_X_stpPin,LOW);
+                B_X_timercheck = 0;
+            }
             B_X_timerCnt = 0;
+            B_X_speedCheck++;
         }
-        if(digitalRead(B_X_limitSwitch2) == LOW && B_X_dir == 0){
-            B_X_dir = 1; digitalWrite(B_X_dirPin,B_X_dir);
-            B_X_Cood = X; B_X_timerLimit = 8;
-            B_X_timerCnt = 0;
-        }
-        //move
-        if(ball_X_timerCnt >= ball_X_timerLimit && collision_check2 == 0 
-            && x_move_check == 1){ //ball X motor timer
-            if(ball_X_timercheck == 0){
-                digitalWrite(ball_X_stpPin,HIGH);
-                ball_X_timercheck = 1;
-                if(ball_X_dir == 0 && ball_X_Cood > 0 )
-                    ball_X_Cood--;
-                else if(ball_X_dir == 1 && ball_X_Cood < 1160)
-                    ball_X_Cood++;
-            }else if(ball_X_timercheck == 1){
-                digitalWrite(ball_X_stpPin,LOW);
-                ball_X_timercheck = 0;
-                x_move_check = 0;
-            }
-            ball_X_timerCnt = 0;
-            ball_X_speedCheck++;
-            if(ball_X_timerLimit > 6 && ball_X_speedCheck == 100){
-                ball_X_timerLimit-=1;
-                ball_X_speedCheck=0;
-            }
-        }
-        if(ball_Y_timerCnt >= ball_Y_timerLimit && collision_check2 == 0
-            &&y_move_check == 1){//ball Y Motor timer
-            if(ball_Y_timercheck == 0){
-                digitalWrite(ball_Y_stpPin,HIGH);
-                ball_Y_timercheck = 1;
-                if(ball_Y_dir == 0 && ball_Y_Cood < 1345 )
-                    ball_Y_Cood++;
-                else if(ball_Y_dir == 1 && ball_Y_Cood > 0)
-                    ball_Y_Cood--;
-                if(A_item == 2 || B_item == 2)
-                    tornadoCnt++;
-            }else if(ball_Y_timercheck == 1){
-                digitalWrite(ball_Y_stpPin,LOW);
-                ball_Y_timercheck = 0;
-                y_move_check = 0;
-            }
-            ball_Y_timerCnt = 0;
-            ball_Y_speedCheck++;
-            if(ball_Y_timerLimit > 8 && ball_Y_speedCheck == 300){//가
-                ball_Y_timerLimit-=1;
-                ball_Y_speedCheck = 0;
-            }
-        }
-        if(A_moveCtl != 0){  // Racket A motor
-            if(A_X_timerCnt >= A_X_timerLimit){
-                if(A_X_timercheck == 0){
-                    digitalWrite(A_X_stpPin,HIGH);
-                    A_X_timercheck = 1;
-                    if(A_X_dir == 1){
-                        A_X_Cood++;
-                    }else if(A_X_dir == 0){
-                        A_X_Cood--;
-                    }
-                }else if(A_X_timercheck == 1){
-                    digitalWrite(A_X_stpPin,LOW);
-                    A_X_timercheck = 0;
-                }
-                A_X_timerCnt = 0;
-                A_X_speedCheck++;
-            }
-        }
-        if(B_moveCtl != 0){ // Racket B Motor
-            if(B_X_timerCnt >= B_X_timerLimit){
-                if(B_X_timercheck == 0){
-                    digitalWrite(B_X_stpPin,HIGH);
-                    B_X_timercheck = 1;
-                    if(B_X_dir == 1){
-                        B_X_Cood--;
-                    }else if(B_X_dir == 0){
-                        B_X_Cood++;
-                    }
-                }else if(B_X_timercheck == 1){
-                    digitalWrite(B_X_stpPin,LOW);
-                    B_X_timercheck = 0;
-                }
-                B_X_timerCnt = 0;
-                B_X_speedCheck++;
-            }
-        }
-        //led
-        if(left_startCnt == 1)
-            led_left_count++;
-        if(led_left_count >= 20000){
-            digitalWrite(led_left_pin,LOW);
-            led_left_count = 0;
-            left_startCnt = 0;
-        }
-        if(right_startCnt == 1)
-            led_right_count++;
-        if(led_right_count >= 20000){
-            digitalWrite(led_right_pin,LOW);
-            led_right_count = 0;
-            right_startCnt = 0;
-        }
-        //item
-        if(A_item == 1){ // fireball
-            if(ball_Y_dir == 0){
-                if(ball_Y_Cood < ((int)(Y * 0.58))){
-                    angle = 90;
-                    setAngle(angle,speed);
-                }
-                if(ball_Y_Cood >= ((int)(Y * 0.58))){
-                    angle = rand() % 100 + 40;
-                    setAngle(angle,speed);
-                    A_item = 0;
-                }
-            }
-        }
-        if(B_item == 1){
-            if(ball_Y_dir == 1){
-                if(ball_Y_Cood > ((int)(Y * 0.34))){
-                    angle = 270;
-                    setAngle(angle,speed);
-                }else if(ball_Y_Cood <= ((int)(Y * 0.34))){
-                    angle = rand() % 100 + 220;
-                    setAngle(angle,speed);
-                    B_item = 0;
-                }
-            }
-        }    
-        if(A_item == 2){ // tornado
-            if(ball_Y_dir == 0){
-                if(ball_X_Cood < ((int)(X * 0.24))){
-                    if(ball_Y_Cood < ((int)(Y * 0.18)) && tornadoCheck == 0){
-                        tornadoCheck++;
-                        angle = 90;
-                        setAngle(angle,speed);
-                    }
-                    if(ball_Y_Cood >= ((int)(Y * 0.18)) && tornadoCheck == 1){
-                        tornadoCheck++;
-                        angle = 80;
-                        setAngle(angle,speed);
-                    }
-                    if(ball_Y_Cood >= ((int)(Y * 0.36)) && tornadoCheck == 2){//휘기 시작
-                        if(tornadoCnt >= 8 && angle > 40){
-                        //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
-                            angle -= 1;
-                            tornadoCnt = 0;
-                            setAngle(angle,speed);
-                            if(angle == 40)
-                                A_item = 0;
-                        }
-                    }
-                }
-                else if(((int)(X * 0.24))<= ball_X_Cood && ball_X_Cood < ((int)(X * 0.42))){
-                    if(ball_Y_Cood < ((int)(Y * 0.18)) && tornadoCheck == 0){
-                        tornadoCheck++;
-                        angle = 110;
-                        setAngle(angle,speed);
-                    }
-                    if(ball_Y_Cood >= ((int)(Y * 0.18)) && tornadoCheck == 1){
-                        tornadoCheck++;
-                        angle = 100;
-                        setAngle(angle,speed);
-                    }
-                    if(ball_Y_Cood >= ((int)(Y * 0.36)) && tornadoCheck == 2){//휘기 시작
-                        if(tornadoCnt >= 8 && angle > 40){
-                        //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
-                        angle -= 1;
-                        tornadoCnt = 0;
-                        setAngle(angle,speed);
-                        if(angle == 40)
-                            A_item = 0;
-                        }
-                    }   
-                }
-                else if(((int)(X * 0.42)) <= ball_X_Cood && ball_X_Cood < ((int)(X * 0.74))){
-                    if(ball_Y_Cood < ((int)(Y * 0.18)) && tornadoCheck == 0){
-                        tornadoCheck++;
-                        angle = 70;
-                        setAngle(angle,speed);
-                    }
-                    if(ball_Y_Cood >= ((int)(Y * 0.18)) && tornadoCheck == 1){
-                        tornadoCheck++;
-                        angle = 80;
-                        setAngle(angle,speed);
-                    }
-                    if(ball_Y_Cood >= ((int)(Y * 0.36)) && tornadoCheck == 2){//휘기 시작
-                        if(tornadoCnt >= 8 && angle < 140){
-                        //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
-                            angle += 1;
-                            tornadoCnt = 0;
-                            setAngle(angle,speed);
-                            if(angle == 140)
-                                A_item = 0;
-                        }
-                    }
-                }
-                else if(ball_X_Cood >= ((int)(X * 0.74))){
-                    if(ball_Y_Cood < ((int)(Y * 0.18)) && tornadoCheck == 0){
-                        tornadoCheck++;
-                        angle = 90;
-                        setAngle(angle,speed);
-                    }
-                    if(ball_Y_Cood >= ((int)(Y * 0.18)) && tornadoCheck == 1){
-                        tornadoCheck++;
-                        angle = 100;
-                        setAngle(angle,speed);
-                    }
-                    if(ball_Y_Cood >= ((int)(Y * 0.36)) && tornadoCheck == 2){//휘기 시작
-                        if(tornadoCnt >= 8 && angle < 140){
-                        //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
-                            angle += 1;
-                            tornadoCnt = 0;
-                            setAngle(angle,speed);
-                            if(angle == 140)
-                                A_item = 0;
-                        }
-                    }
-                }
-            }
-        }
-        if(B_item == 2){
-            if(ball_Y_dir == 1){
-                if(ball_X_Cood < ((int)(X * 0.24))){ 
-                    if(ball_Y_Cood > ((int)(Y * 0.74)) && tornadoCheck == 0){
-                        tornadoCheck++;
-                        angle = 270;
-                        setAngle(angle,speed);
-                    }
-                    if(ball_Y_Cood <= ((int)(Y * 0.74)) && tornadoCheck == 1){
-                        tornadoCheck++;
-                        angle = 280;
-                        setAngle(angle,speed);
-                    }
-                    if(ball_Y_Cood <= ((int)(Y * 0.41)) && tornadoCheck == 2){//휘기 시작
-                        if(tornadoCnt >= 8 && angle < 320){
-                        //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
-                            angle += 1;
-                            tornadoCnt = 0;
-                            setAngle(angle,speed);
-                            if(angle == 320)
-                                B_item = 0;
-                        }
-                    }
-                }
-                else if(((int)(X * 0.24)) <= ball_X_Cood && ball_X_Cood < ((int)(X * 0.42))){
-                    if(ball_Y_Cood > ((int)(Y * 0.74)) && tornadoCheck == 0){
-                        tornadoCheck++;
-                        angle = 250;
-                        setAngle(angle,speed);
-                    }
-                    if(ball_Y_Cood <= ((int)(Y * 0.74)) && tornadoCheck == 1){
-                        tornadoCheck++;
-                        angle = 260;
-                        setAngle(angle,speed);
-                    }
-                    if(ball_Y_Cood <= ((int)(Y * 0.41)) && tornadoCheck == 2){//휘기 시작
-                        if(tornadoCnt >= 8 && angle < 320){
-                        //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
-                            angle += 1;
-                            tornadoCnt = 0;
-                            setAngle(angle,speed);
-                            if(angle == 320)
-                                B_item = 0;
-                        }
-                    }
-                }
-                else if(((int)(X * 0.42)) <= ball_X_Cood && ball_X_Cood < ((int)(X * 0.74))){
-                    if(ball_Y_Cood > ((int)(Y * 0.74)) && tornadoCheck == 0){
-                        tornadoCheck++;
-                        angle = 300;
-                        setAngle(angle,speed);
-                    }
-                    if(ball_Y_Cood <= ((int)(Y * 0.74)) && tornadoCheck == 1){
-                        tornadoCheck++;
-                        angle = 290;
-                        setAngle(angle,speed);
-                    }
-                    if(ball_Y_Cood >= ((int)(Y * 0.41)) && tornadoCheck == 2){//휘기 시작
-                        if(tornadoCnt >= 8 && angle > 220){
-                        //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
-                            angle -= 1;
-                            tornadoCnt = 0;
-                            setAngle(angle,speed);
-                            if(angle == 220)
-                                B_item = 0;
-                        }
-                    }
-                }
-                else if(ball_X_Cood >= ((int)(X * 0.74))){
-                    if(ball_Y_Cood > ((int)(Y * 0.74)) && tornadoCheck == 0){
-                        tornadoCheck++;
-                        angle = 270;
-                        setAngle(angle,speed);
-                    }
-                    if(ball_Y_Cood <= ((int)(Y * 0.74)) && tornadoCheck == 1){
-                        tornadoCheck++;
-                        angle = 260;
-                        setAngle(angle,speed);
-                    }
-                    if(ball_Y_Cood >= ((int)(Y * 0.41)) && tornadoCheck == 2){//휘기 시작
-                        if(tornadoCnt >= 8 && angle > 220){
-                        //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
-                            angle -= 1;
-                            tornadoCnt = 0;
-                            setAngle(angle,speed);
-                            if(angle == 220)
-                                B_item = 0;
-                        }
-                    }
-                }
-            }
-        }
-        if(A_item == 3){ // change up
-            if(changeUpCheck == 0) 
-                changeUpCheck+=1;
-            if(ball_Y_dir == 0){
-                if(( ball_Y_Cood == ((int)(Y * 0.11)) && changeUpCheck == 1) ||
-                    (ball_Y_Cood == ((int)(Y * 0.34)) && changeUpCheck == 2) ||
-                    (ball_Y_Cood == ((int)(Y * 0.46)) && changeUpCheck == 3) ||
-                    (ball_Y_Cood == ((int)(Y * 0.57)) && changeUpCheck == 4) ){
-                        if(ball_X_dir == 0)
-                            angle = rand() % 20 + 30; // 30 ~ 50 도
-                        else if(ball_X_dir == 1)
-                            angle = rand() % 20 + 130;// 130 ~ 150 도
-                        changeUpCheck++;
-                        setAngle(angle,speed);
-                }else if(ball_Y_Cood == 1113 && changeUpCheck == 5){
-                    if(ball_X_dir == 0)
-                        angle = rand() % 20 + 30; // 30 ~ 50 도
-                    else if(ball_X_dir == 1)
-                        angle = rand() % 20 + 130;// 130 ~ 150 도
-                    changeUpCheck = 0;
-                    A_item = 0;
-                    setAngle(angle,speed);
-                }       
-            }
-        }
-        if(B_item == 3){
-            if(changeUpCheck == 0) 
-                changeUpCheck+=1;
-            if(ball_Y_dir == 1){
-                if((ball_Y_Cood == ((int)(Y * 0.81)) && changeUpCheck == 1) ||
-                    (ball_Y_Cood == ((int)(Y * 0.57)) && changeUpCheck == 2) ||
-                    (ball_Y_Cood == ((int)(Y * 0.46)) && changeUpCheck == 3) ||
-                    (ball_Y_Cood == ((int)(Y * 0.34)) && changeUpCheck == 4) ){
-                        if(ball_X_dir == 0)
-                            angle = rand() % 20 + 310; // 310 ~ 330 도
-                        else if(ball_X_dir == 1)
-                            angle  = rand() % 20 + 210; // 210 ~ 210도
-                        changeUpCheck++;
-                        setAngle(angle,speed);
-                }else if(ball_Y_Cood == 159 && changeUpCheck == 5){
-                    if(ball_X_dir == 0)
-                        angle = rand() % 20 + 310; // 310 ~ 330 도
-                    else if(ball_X_dir == 1)
-                        angle  = rand() % 20 + 210; // 210 ~ 210도
-                    changeUpCheck = 0;
-                    B_item = 0;
-                    setAngle(angle,speed);
-                }
-            }
-        }
+    }
+}
+void ledControl(void)
+{
+ //led
+    if(left_startCnt == 1)
+        led_left_count++;
+    if(led_left_count >= 20000){
+        digitalWrite(led_left_pin,LOW);
+        led_left_count = 0;
+        left_startCnt = 0;
+    }
+    if(right_startCnt == 1)
+        led_right_count++;
+    if(led_right_count >= 20000){
+        digitalWrite(led_right_pin,LOW);
+        led_right_count = 0;
+        right_startCnt = 0;
     }
     if(restartCnt >= 3000){
         collision_check2 = 0;
@@ -795,7 +548,286 @@ void loop(){
         digitalWrite(led_top_pin,LOW);
         restartCnt = 0;
         restart_check = 0;
+    }   
+}
+void itemControl(void)
+{   
+    if(A_item == 1){ // fireball
+        if(ball_Y_dir == 0){
+            if(ball_Y_Cood < ((int)(Y * 0.58))){
+                angle = 90;
+                setAngle(angle,speed);
+            }
+            if(ball_Y_Cood >= ((int)(Y * 0.58))){
+                angle = rand() % 100 + 40;
+                setAngle(angle,speed);
+                A_item = 0;
+            }
+        }
     }
+    if(B_item == 1){
+        if(ball_Y_dir == 1){
+            if(ball_Y_Cood > ((int)(Y * 0.34))){
+                angle = 270;
+                setAngle(angle,speed);
+            }else if(ball_Y_Cood <= ((int)(Y * 0.34))){
+                angle = rand() % 100 + 220;
+                setAngle(angle,speed);
+                B_item = 0;
+            }
+        }
+    }    
+    if(A_item == 2){ // tornado
+        if(ball_Y_dir == 0){
+            if(ball_X_Cood < ((int)(X * 0.24))){
+                if(ball_Y_Cood < ((int)(Y * 0.18)) && tornadoCheck == 0){
+                    tornadoCheck++;
+                    angle = 90;
+                    setAngle(angle,speed);
+                }
+                if(ball_Y_Cood >= ((int)(Y * 0.18)) && tornadoCheck == 1){
+                    tornadoCheck++;
+                    angle = 80;
+                    setAngle(angle,speed);
+                }
+                if(ball_Y_Cood >= ((int)(Y * 0.36)) && tornadoCheck == 2){//휘기 시작
+                    if(tornadoCnt >= 8 && angle > 40){
+                    //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
+                        angle -= 1;
+                        tornadoCnt = 0;
+                        setAngle(angle,speed);
+                        if(angle == 40)
+                            A_item = 0;
+                    }
+                }
+            }
+            else if(((int)(X * 0.24))<= ball_X_Cood && ball_X_Cood < ((int)(X * 0.42))){
+                if(ball_Y_Cood < ((int)(Y * 0.18)) && tornadoCheck == 0){
+                    tornadoCheck++;
+                    angle = 110;
+                    setAngle(angle,speed);
+                }
+                if(ball_Y_Cood >= ((int)(Y * 0.18)) && tornadoCheck == 1){
+                    tornadoCheck++;
+                    angle = 100;
+                    setAngle(angle,speed);
+                }
+                if(ball_Y_Cood >= ((int)(Y * 0.36)) && tornadoCheck == 2){//휘기 시작
+                    if(tornadoCnt >= 8 && angle > 40){
+                    //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
+                    angle -= 1;
+                    tornadoCnt = 0;
+                    setAngle(angle,speed);
+                    if(angle == 40)
+                        A_item = 0;
+                    }
+                }   
+            }
+            else if(((int)(X * 0.42)) <= ball_X_Cood && ball_X_Cood < ((int)(X * 0.74))){
+                if(ball_Y_Cood < ((int)(Y * 0.18)) && tornadoCheck == 0){
+                    tornadoCheck++;
+                    angle = 70;
+                    setAngle(angle,speed);
+                }
+                if(ball_Y_Cood >= ((int)(Y * 0.18)) && tornadoCheck == 1){
+                    tornadoCheck++;
+                    angle = 80;
+                    setAngle(angle,speed);
+                }
+                if(ball_Y_Cood >= ((int)(Y * 0.36)) && tornadoCheck == 2){//휘기 시작
+                    if(tornadoCnt >= 8 && angle < 140){
+                    //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
+                        angle += 1;
+                        tornadoCnt = 0;
+                        setAngle(angle,speed);
+                        if(angle == 140)
+                            A_item = 0;
+                    }
+                }
+            }
+            else if(ball_X_Cood >= ((int)(X * 0.74))){
+                if(ball_Y_Cood < ((int)(Y * 0.18)) && tornadoCheck == 0){
+                    tornadoCheck++;
+                    angle = 90;
+                    setAngle(angle,speed);
+                }
+                if(ball_Y_Cood >= ((int)(Y * 0.18)) && tornadoCheck == 1){
+                    tornadoCheck++;
+                    angle = 100;
+                    setAngle(angle,speed);
+                }
+                if(ball_Y_Cood >= ((int)(Y * 0.36)) && tornadoCheck == 2){//휘기 시작
+                    if(tornadoCnt >= 8 && angle < 140){
+                    //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
+                        angle += 1;
+                        tornadoCnt = 0;
+                        setAngle(angle,speed);
+                        if(angle == 140)
+                            A_item = 0;
+                    }
+                }
+            }
+        }
+    }
+    if(B_item == 2){
+        if(ball_Y_dir == 1){
+            if(ball_X_Cood < ((int)(X * 0.24))){ 
+                if(ball_Y_Cood > ((int)(Y * 0.74)) && tornadoCheck == 0){
+                    tornadoCheck++;
+                    angle = 270;
+                    setAngle(angle,speed);
+                }
+                if(ball_Y_Cood <= ((int)(Y * 0.74)) && tornadoCheck == 1){
+                    tornadoCheck++;
+                    angle = 280;
+                    setAngle(angle,speed);
+                }
+                if(ball_Y_Cood <= ((int)(Y * 0.41)) && tornadoCheck == 2){//휘기 시작
+                    if(tornadoCnt >= 8 && angle < 320){
+                    //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
+                        angle += 1;
+                        tornadoCnt = 0;
+                        setAngle(angle,speed);
+                        if(angle == 320)
+                            B_item = 0;
+                    }
+                }
+            }
+            else if(((int)(X * 0.24)) <= ball_X_Cood && ball_X_Cood < ((int)(X * 0.42))){
+                if(ball_Y_Cood > ((int)(Y * 0.74)) && tornadoCheck == 0){
+                    tornadoCheck++;
+                    angle = 250;
+                    setAngle(angle,speed);
+                }
+                if(ball_Y_Cood <= ((int)(Y * 0.74)) && tornadoCheck == 1){
+                    tornadoCheck++;
+                    angle = 260;
+                    setAngle(angle,speed);
+                }
+                if(ball_Y_Cood <= ((int)(Y * 0.41)) && tornadoCheck == 2){//휘기 시작
+                    if(tornadoCnt >= 8 && angle < 320){
+                    //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
+                        angle += 1;
+                        tornadoCnt = 0;
+                        setAngle(angle,speed);
+                        if(angle == 320)
+                            B_item = 0;
+                    }
+                }
+            }
+            else if(((int)(X * 0.42)) <= ball_X_Cood && ball_X_Cood < ((int)(X * 0.74))){
+                if(ball_Y_Cood > ((int)(Y * 0.74)) && tornadoCheck == 0){
+                    tornadoCheck++;
+                    angle = 300;
+                    setAngle(angle,speed);
+                }
+                if(ball_Y_Cood <= ((int)(Y * 0.74)) && tornadoCheck == 1){
+                    tornadoCheck++;
+                    angle = 290;
+                    setAngle(angle,speed);
+                }
+                if(ball_Y_Cood >= ((int)(Y * 0.41)) && tornadoCheck == 2){//휘기 시작
+                    if(tornadoCnt >= 8 && angle > 220){
+                    //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
+                        angle -= 1;
+                        tornadoCnt = 0;
+                        setAngle(angle,speed);
+                        if(angle == 220)
+                            B_item = 0;
+                    }
+                }
+            }
+            else if(ball_X_Cood >= ((int)(X * 0.74))){
+                if(ball_Y_Cood > ((int)(Y * 0.74)) && tornadoCheck == 0){
+                    tornadoCheck++;
+                    angle = 270;
+                    setAngle(angle,speed);
+                }
+                if(ball_Y_Cood <= ((int)(Y * 0.74)) && tornadoCheck == 1){
+                    tornadoCheck++;
+                    angle = 260;
+                    setAngle(angle,speed);
+                }
+                if(ball_Y_Cood >= ((int)(Y * 0.41)) && tornadoCheck == 2){//휘기 시작
+                    if(tornadoCnt >= 8 && angle > 220){
+                    //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
+                        angle -= 1;
+                        tornadoCnt = 0;
+                        setAngle(angle,speed);
+                        if(angle == 220)
+                            B_item = 0;
+                    }
+                }
+            }
+        }
+    }
+    if(A_item == 3){ // change up
+        if(changeUpCheck == 0) 
+            changeUpCheck+=1;
+        if(ball_Y_dir == 0){
+            if(( ball_Y_Cood == ((int)(Y * 0.11)) && changeUpCheck == 1) ||
+                (ball_Y_Cood == ((int)(Y * 0.34)) && changeUpCheck == 2) ||
+                (ball_Y_Cood == ((int)(Y * 0.46)) && changeUpCheck == 3) ||
+                (ball_Y_Cood == ((int)(Y * 0.57)) && changeUpCheck == 4) ){
+                    if(ball_X_dir == 0)
+                        angle = rand() % 20 + 30; // 30 ~ 50 도
+                    else if(ball_X_dir == 1)
+                        angle = rand() % 20 + 130;// 130 ~ 150 도
+                    changeUpCheck++;
+                    setAngle(angle,speed);
+            }else if(ball_Y_Cood == 1113 && changeUpCheck == 5){
+                if(ball_X_dir == 0)
+                    angle = rand() % 20 + 30; // 30 ~ 50 도
+                else if(ball_X_dir == 1)
+                    angle = rand() % 20 + 130;// 130 ~ 150 도
+                changeUpCheck = 0;
+                A_item = 0;
+                setAngle(angle,speed);
+            }       
+        }
+    }
+    if(B_item == 3){
+        if(changeUpCheck == 0) 
+            changeUpCheck+=1;
+        if(ball_Y_dir == 1){
+            if((ball_Y_Cood == ((int)(Y * 0.81)) && changeUpCheck == 1) ||
+                (ball_Y_Cood == ((int)(Y * 0.57)) && changeUpCheck == 2) ||
+                (ball_Y_Cood == ((int)(Y * 0.46)) && changeUpCheck == 3) ||
+                (ball_Y_Cood == ((int)(Y * 0.34)) && changeUpCheck == 4) ){
+                    if(ball_X_dir == 0)
+                        angle = rand() % 20 + 310; // 310 ~ 330 도
+                    else if(ball_X_dir == 1)
+                        angle  = rand() % 20 + 210; // 210 ~ 210도
+                    changeUpCheck++;
+                    setAngle(angle,speed);
+            }else if(ball_Y_Cood == 159 && changeUpCheck == 5){
+                if(ball_X_dir == 0)
+                    angle = rand() % 20 + 310; // 310 ~ 330 도
+                else if(ball_X_dir == 1)
+                    angle  = rand() % 20 + 210; // 210 ~ 210도
+                changeUpCheck = 0;
+                B_item = 0;
+                setAngle(angle,speed);
+            }
+        }
+    }
+}
+void gameControl(void)
+{
+    coordinateCheck();
+    limitSwitchCheck();
+    ballMoveControl();
+    rackectMoveControl();
+    ledControl();
+    itemControl();
+}
+void loop(){
+    if(firstCheck == 0){// 선공게임이 정해지지 않았을때 ( 게임 시작 전 )
+        firstCheckFuntion();
+    }else if(firstCheck == 1){ // 선공게임 정해진 후 ( 게임 중 )
+        gameControl();
+    }
+    
 }
 void initing(){
     char check = 0;

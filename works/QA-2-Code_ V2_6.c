@@ -1729,16 +1729,6 @@ void B_Collision_check(){
             setAngle(angle,speed);
             collision_check2 = 0;
             B_return = 1;
-        }else if(B_X_Cood + 57 <= ball_X_Cood && ball_X_Cood <= B_X_Cood + 70){//40
-            angle = 320;
-            setAngle(angle,speed);
-            collision_check2 = 0;
-            B_return = 1;
-        }else if(B_X_Cood + 70 <= ball_X_Cood && ball_X_Cood <= B_X_Cood + 106){//40
-            angle = 320;
-            setAngle(angle,speed);
-            collision_check2 = 0;
-            B_return = 1;
         }
     }else if(ball_X_Cood == B_X_Cood){//4번
         angle = 270;

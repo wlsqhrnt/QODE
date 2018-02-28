@@ -3,6 +3,7 @@
 #define VERTICAL 2
 #define X 1154
 #define Y 1373
+#define RACKETSIZE (int)(9*X)/74
 
 int startCheck = 0;
 char send_buffer[22];
@@ -206,47 +207,60 @@ int B_item = 0;
 int restart_check = 0;
 int restartCnt = 0;
 //function prototype
-void serial_send_data();
-void ball_X_Cood_function();
-void ball_Y_Cood_function();
-void ball_check_function();
-void A_X_Cood_function();
-void A_game_ready_function();
-void A_use_item_function();
-void A_move_function();
-void B_X_Cood_function();
-void B_game_ready_function();
-void B_use_item_function();
-void B_move_function();
-void insert_coin_function();
-void reset_data_after_send();
-void ball_move_item();
-void ball_receive_move();
-void ball_stat();
-void A_using_item();
-void A_get_item();
-void A_choose();
-void B_using_item();
-void B_get_item();
-void B_choose();
-void initing();
-void fireball();
-void tornado();
-void changeup();
-void BallMove60Angle();
-void BallMove45Angle();
-void BallMove30Angle();
-void A_change_left_dir();
-void A_change_rigth_dir();
-void B_change_left_dir();
-void B_change_right_dir();
-void line_step();
+void serial_send_data(void);
+void ball_X_Cood_function(void);
+void ball_Y_Cood_function(void);
+void ball_check_function(void);
+void A_X_Cood_function(void);
+void A_game_ready_function(void);
+void A_use_item_function(void);
+void A_move_function(void);
+void B_X_Cood_function(void);
+void B_game_ready_function(void);
+void B_use_item_function(void);
+void B_move_function(void);
+void insert_coin_function(void);
+void reset_data_after_send(void);
+void ball_move_item(void);
+void ball_receive_move(void);
+void ball_stat(void);
+void A_using_item(void);
+void A_get_item(void);
+void A_choose(void);
+void B_using_item(void);
+void B_get_item(void);
+void B_choose(void);
+void initing(void);
+void fireball(void);
+void tornado(void);
+void changeup(void);
+void BallMove60Angle(void);
+void BallMove45Angle(void);
+void BallMove30Angle(void);
+void A_change_left_dir(void);
+void A_change_rigth_dir(void);
+void B_change_left_dir(void);
+void B_change_right_dir(void);
+void line_step(void);
 void line(int,int,int,int);
 int getAngle(int,int);
 void setAngle(int,double);
-void A_Collision_check();
-void B_Collision_check();
-void restart();
+void A_Collision_check(void);
+void B_Collision_check(void);
+void restart(void);
+void initRandomFunction(void);
+void initPinConfiguration(void);
+void initTimer(void);
+void initSerial(void);
+void firstCheckFuntion(void);
+void gameControl(void);
+void coordinateCheck(void);
+void limitSwitchCheck(void);
+void ballMoveControl(void);
+void rackectMoveControl(void);
+void ledControl(void);
+void itemControl(void);
+
 
 void initRandomFunction(void)
 {

@@ -492,8 +492,10 @@ void ballMoveControl(void)
                 ball_Y_Cood++;
             else if(ball_Y_dir == 1 && ball_Y_Cood > 0)
                 ball_Y_Cood--;
-            if(A_item == 2 || B_item == 2)
-                tornadoCnt++;
+            if(A_item == 2)
+                A_tornadoCnt++;
+            if(B_item == 2)
+                B_tornadoCnt++;
         }else if(ball_Y_timercheck == 1){
             digitalWrite(ball_Y_stpPin,LOW);
             ball_Y_timercheck = 0;
@@ -580,7 +582,12 @@ void itemControl(void)
                 setAngle(angle,speed);
             }
             if(ball_Y_Cood >= ((int)(Y * 0.58))){
-                angle = rand() % 100 + 40;
+                int randNum = rand() % 2;
+                if(randNum == 0){
+                    angle = rand() % 20 + 40;
+                }else if(randNum == 1){
+                    angle = rand() % 20 + 120;
+                }
                 setAngle(angle,speed);
                 A_item = 0;
             }
@@ -592,7 +599,12 @@ void itemControl(void)
                 angle = 270;
                 setAngle(angle,speed);
             }else if(ball_Y_Cood <= ((int)(Y * 0.34))){
-                angle = rand() % 100 + 220;
+                int randNum = rand() % 2;
+                if(randNum == 0){
+                    angle = rand() % 20 + 220;
+                }else if(randNum == 1){
+                    angle = rand() % 20 + 300;
+                }
                 setAngle(angle,speed);
                 B_item = 0;
             }
@@ -617,8 +629,10 @@ void itemControl(void)
                         angle -= 1;
                         A_tornadoCnt = 0;
                         setAngle(angle,speed);
-                        if(angle == 40)
+                        if(angle == 40){
                             A_item = 0;
+                            A_tornadoCheck = 0;
+                        }
                     }
                 }
             }
@@ -635,12 +649,14 @@ void itemControl(void)
                 }
                 if(ball_Y_Cood >= ((int)(Y * 0.36)) && A_tornadoCheck == 2){//휘기 시작
                     if(A_tornadoCnt >= 8 && angle > 40){
-                    //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
-                    angle -= 1;
-                    A_tornadoCnt = 0;
-                    setAngle(angle,speed);
-                    if(angle == 40)
-                        A_item = 0;
+                        //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
+                        angle -= 1;
+                        A_tornadoCnt = 0;
+                        setAngle(angle,speed);
+                        if(angle == 40){
+                            A_item = 0;
+                            A_tornadoCheck = 0;
+                        }
                     }
                 }   
             }
@@ -661,8 +677,10 @@ void itemControl(void)
                         angle += 1;
                         A_tornadoCnt = 0;
                         setAngle(angle,speed);
-                        if(angle == 140)
+                        if(angle == 140){
+                            A_tornadoCheck = 0;
                             A_item = 0;
+                        }
                     }
                 }
             }
@@ -683,8 +701,10 @@ void itemControl(void)
                         angle += 1;
                         A_tornadoCnt = 0;
                         setAngle(angle,speed);
-                        if(angle == 140)
+                        if(angle == 140){
                             A_item = 0;
+                            A_tornadoCheck = 0;
+                        }
                     }
                 }
             }
@@ -709,8 +729,10 @@ void itemControl(void)
                         angle += 1;
                         B_tornadoCnt = 0;
                         setAngle(angle,speed);
-                        if(angle == 320)
+                        if(angle == 320){
+                            B_tornadoCheck = 0;
                             B_item = 0;
+                        }
                     }
                 }
             }
@@ -731,8 +753,10 @@ void itemControl(void)
                         angle += 1;
                         B_tornadoCnt = 0;
                         setAngle(angle,speed);
-                        if(angle == 320)
+                        if(angle == 320){
+                            B_tornadoCheck = 0;
                             B_item = 0;
+                        }
                     }
                 }
             }
@@ -753,8 +777,10 @@ void itemControl(void)
                         angle -= 1;
                         B_tornadoCnt = 0;
                         setAngle(angle,speed);
-                        if(angle == 220)
+                        if(angle == 220){
+                            B_tornadoCheck = 0;
                             B_item = 0;
+                        }
                     }
                 }
             }
@@ -775,8 +801,10 @@ void itemControl(void)
                         angle -= 1;
                         B_tornadoCnt = 0;
                         setAngle(angle,speed);
-                        if(angle == 220)
+                        if(angle == 220){
+                            B_tornadoCheck = 0;
                             B_item = 0;
+                        }
                     }
                 }
             }

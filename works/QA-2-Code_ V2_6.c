@@ -195,11 +195,16 @@ long speed = maxX + maxY; // 각도로 이동을 시키기 때문에 기본이�
 int x_move_check = 0;
 int y_move_check = 0;
 //item variable
-int tornado_stat = 0;
-int tornadoCnt = 0;
-int changeUpCheck = 0;
-int tornadoCheck = 0;
+int A_tornado_stat = 0;
+int A_tornadoCnt = 0;
 int A_item = 0;
+int A_changeUpCheck = 0;
+int A_tornadoCheck = 0;
+
+int B_tornado_stat = 0;
+int B_tornadoCnt = 0;
+int B_changeUpCheck = 0;
+int B_tornadoCheck = 0;
 int B_item = 0;
 
 //
@@ -594,21 +599,21 @@ void itemControl(void)
     if(A_item == 2){ // tornado
         if(ball_Y_dir == 0){
             if(ball_X_Cood < ((int)(X * 0.24))){
-                if(ball_Y_Cood < ((int)(Y * 0.18)) && tornadoCheck == 0){
-                    tornadoCheck++;
+                if(ball_Y_Cood < ((int)(Y * 0.18)) && A_tornadoCheck == 0){
+                    A_tornadoCheck++;
                     angle = 90;
                     setAngle(angle,speed);
                 }
-                if(ball_Y_Cood >= ((int)(Y * 0.18)) && tornadoCheck == 1){
-                    tornadoCheck++;
+                if(ball_Y_Cood >= ((int)(Y * 0.18)) && A_tornadoCheck == 1){
+                    A_tornadoCheck++;
                     angle = 80;
                     setAngle(angle,speed);
                 }
-                if(ball_Y_Cood >= ((int)(Y * 0.36)) && tornadoCheck == 2){//휘기 시작
-                    if(tornadoCnt >= 8 && angle > 40){
+                if(ball_Y_Cood >= ((int)(Y * 0.36)) && A_tornadoCheck == 2){//휘기 시작
+                    if(A_tornadoCnt >= 8 && angle > 40){
                     //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
                         angle -= 1;
-                        tornadoCnt = 0;
+                        A_tornadoCnt = 0;
                         setAngle(angle,speed);
                         if(angle == 40)
                             A_item = 0;
@@ -616,21 +621,21 @@ void itemControl(void)
                 }
             }
             else if(((int)(X * 0.24))<= ball_X_Cood && ball_X_Cood < ((int)(X * 0.42))){
-                if(ball_Y_Cood < ((int)(Y * 0.18)) && tornadoCheck == 0){
-                    tornadoCheck++;
+                if(ball_Y_Cood < ((int)(Y * 0.18)) && A_tornadoCheck == 0){
+                    A_tornadoCheck++;
                     angle = 110;
                     setAngle(angle,speed);
                 }
-                if(ball_Y_Cood >= ((int)(Y * 0.18)) && tornadoCheck == 1){
-                    tornadoCheck++;
+                if(ball_Y_Cood >= ((int)(Y * 0.18)) && A_tornadoCheck == 1){
+                    A_tornadoCheck++;
                     angle = 100;
                     setAngle(angle,speed);
                 }
-                if(ball_Y_Cood >= ((int)(Y * 0.36)) && tornadoCheck == 2){//휘기 시작
-                    if(tornadoCnt >= 8 && angle > 40){
+                if(ball_Y_Cood >= ((int)(Y * 0.36)) && A_tornadoCheck == 2){//휘기 시작
+                    if(A_tornadoCnt >= 8 && angle > 40){
                     //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
                     angle -= 1;
-                    tornadoCnt = 0;
+                    A_tornadoCnt = 0;
                     setAngle(angle,speed);
                     if(angle == 40)
                         A_item = 0;
@@ -638,21 +643,21 @@ void itemControl(void)
                 }   
             }
             else if(((int)(X * 0.42)) <= ball_X_Cood && ball_X_Cood < ((int)(X * 0.74))){
-                if(ball_Y_Cood < ((int)(Y * 0.18)) && tornadoCheck == 0){
-                    tornadoCheck++;
+                if(ball_Y_Cood < ((int)(Y * 0.18)) && A_tornadoCheck == 0){
+                    A_tornadoCheck++;
                     angle = 70;
                     setAngle(angle,speed);
                 }
-                if(ball_Y_Cood >= ((int)(Y * 0.18)) && tornadoCheck == 1){
-                    tornadoCheck++;
+                if(ball_Y_Cood >= ((int)(Y * 0.18)) && A_tornadoCheck == 1){
+                    A_tornadoCheck++;
                     angle = 80;
                     setAngle(angle,speed);
                 }
-                if(ball_Y_Cood >= ((int)(Y * 0.36)) && tornadoCheck == 2){//휘기 시작
-                    if(tornadoCnt >= 8 && angle < 140){
+                if(ball_Y_Cood >= ((int)(Y * 0.36)) && A_tornadoCheck == 2){//휘기 시작
+                    if(A_tornadoCnt >= 8 && angle < 140){
                     //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
                         angle += 1;
-                        tornadoCnt = 0;
+                        A_tornadoCnt = 0;
                         setAngle(angle,speed);
                         if(angle == 140)
                             A_item = 0;
@@ -660,21 +665,21 @@ void itemControl(void)
                 }
             }
             else if(ball_X_Cood >= ((int)(X * 0.74))){
-                if(ball_Y_Cood < ((int)(Y * 0.18)) && tornadoCheck == 0){
-                    tornadoCheck++;
+                if(ball_Y_Cood < ((int)(Y * 0.18)) && A_tornadoCheck == 0){
+                    A_tornadoCheck++;
                     angle = 90;
                     setAngle(angle,speed);
                 }
-                if(ball_Y_Cood >= ((int)(Y * 0.18)) && tornadoCheck == 1){
-                    tornadoCheck++;
+                if(ball_Y_Cood >= ((int)(Y * 0.18)) && A_tornadoCheck == 1){
+                    A_tornadoCheck++;
                     angle = 100;
                     setAngle(angle,speed);
                 }
-                if(ball_Y_Cood >= ((int)(Y * 0.36)) && tornadoCheck == 2){//휘기 시작
-                    if(tornadoCnt >= 8 && angle < 140){
+                if(ball_Y_Cood >= ((int)(Y * 0.36)) && A_tornadoCheck == 2){//휘기 시작
+                    if(A_tornadoCnt >= 8 && angle < 140){
                     //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
                         angle += 1;
-                        tornadoCnt = 0;
+                        A_tornadoCnt = 0;
                         setAngle(angle,speed);
                         if(angle == 140)
                             A_item = 0;
@@ -686,21 +691,21 @@ void itemControl(void)
     if(B_item == 2){
         if(ball_Y_dir == 1){
             if(ball_X_Cood < ((int)(X * 0.24))){ 
-                if(ball_Y_Cood > ((int)(Y * 0.74)) && tornadoCheck == 0){
-                    tornadoCheck++;
+                if(ball_Y_Cood > ((int)(Y * 0.74)) && B_tornadoCheck == 0){
+                    B_tornadoCheck++;
                     angle = 270;
                     setAngle(angle,speed);
                 }
-                if(ball_Y_Cood <= ((int)(Y * 0.74)) && tornadoCheck == 1){
-                    tornadoCheck++;
+                if(ball_Y_Cood <= ((int)(Y * 0.74)) && B_tornadoCheck == 1){
+                    B_tornadoCheck++;
                     angle = 280;
                     setAngle(angle,speed);
                 }
-                if(ball_Y_Cood <= ((int)(Y * 0.41)) && tornadoCheck == 2){//휘기 시작
-                    if(tornadoCnt >= 8 && angle < 320){
+                if(ball_Y_Cood <= ((int)(Y * 0.41)) && B_tornadoCheck == 2){//휘기 시작
+                    if(B_tornadoCnt >= 8 && angle < 320){
                     //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
                         angle += 1;
-                        tornadoCnt = 0;
+                        B_tornadoCnt = 0;
                         setAngle(angle,speed);
                         if(angle == 320)
                             B_item = 0;
@@ -708,21 +713,21 @@ void itemControl(void)
                 }
             }
             else if(((int)(X * 0.24)) <= ball_X_Cood && ball_X_Cood < ((int)(X * 0.42))){
-                if(ball_Y_Cood > ((int)(Y * 0.74)) && tornadoCheck == 0){
-                    tornadoCheck++;
+                if(ball_Y_Cood > ((int)(Y * 0.74)) && B_tornadoCheck == 0){
+                    B_tornadoCheck++;
                     angle = 250;
                     setAngle(angle,speed);
                 }
-                if(ball_Y_Cood <= ((int)(Y * 0.74)) && tornadoCheck == 1){
-                    tornadoCheck++;
+                if(ball_Y_Cood <= ((int)(Y * 0.74)) && B_tornadoCheck == 1){
+                    B_tornadoCheck++;
                     angle = 260;
                     setAngle(angle,speed);
                 }
-                if(ball_Y_Cood <= ((int)(Y * 0.41)) && tornadoCheck == 2){//휘기 시작
-                    if(tornadoCnt >= 8 && angle < 320){
+                if(ball_Y_Cood <= ((int)(Y * 0.41)) && B_tornadoCheck == 2){//휘기 시작
+                    if(B_tornadoCnt >= 8 && angle < 320){
                     //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
                         angle += 1;
-                        tornadoCnt = 0;
+                        B_tornadoCnt = 0;
                         setAngle(angle,speed);
                         if(angle == 320)
                             B_item = 0;
@@ -730,21 +735,21 @@ void itemControl(void)
                 }
             }
             else if(((int)(X * 0.42)) <= ball_X_Cood && ball_X_Cood < ((int)(X * 0.74))){
-                if(ball_Y_Cood > ((int)(Y * 0.74)) && tornadoCheck == 0){
-                    tornadoCheck++;
+                if(ball_Y_Cood > ((int)(Y * 0.74)) && B_tornadoCheck == 0){
+                    B_tornadoCheck++;
                     angle = 300;
                     setAngle(angle,speed);
                 }
-                if(ball_Y_Cood <= ((int)(Y * 0.74)) && tornadoCheck == 1){
-                    tornadoCheck++;
+                if(ball_Y_Cood <= ((int)(Y * 0.74)) && B_tornadoCheck == 1){
+                    B_tornadoCheck++;
                     angle = 290;
                     setAngle(angle,speed);
                 }
-                if(ball_Y_Cood >= ((int)(Y * 0.41)) && tornadoCheck == 2){//휘기 시작
-                    if(tornadoCnt >= 8 && angle > 220){
+                if(ball_Y_Cood >= ((int)(Y * 0.41)) && B_tornadoCheck == 2){//휘기 시작
+                    if(B_ornadoCnt >= 8 && angle > 220){
                     //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
                         angle -= 1;
-                        tornadoCnt = 0;
+                        B_tornadoCnt = 0;
                         setAngle(angle,speed);
                         if(angle == 220)
                             B_item = 0;
@@ -752,21 +757,21 @@ void itemControl(void)
                 }
             }
             else if(ball_X_Cood >= ((int)(X * 0.74))){
-                if(ball_Y_Cood > ((int)(Y * 0.74)) && tornadoCheck == 0){
-                    tornadoCheck++;
+                if(ball_Y_Cood > ((int)(Y * 0.74)) && B_tornadoCheck == 0){
+                    B_tornadoCheck++;
                     angle = 270;
                     setAngle(angle,speed);
                 }
-                if(ball_Y_Cood <= ((int)(Y * 0.74)) && tornadoCheck == 1){
-                    tornadoCheck++;
+                if(ball_Y_Cood <= ((int)(Y * 0.74)) && B_tornadoCheck == 1){
+                    B_tornadoCheck++;
                     angle = 260;
                     setAngle(angle,speed);
                 }
-                if(ball_Y_Cood >= ((int)(Y * 0.41)) && tornadoCheck == 2){//휘기 시작
-                    if(tornadoCnt >= 8 && angle > 220){
+                if(ball_Y_Cood >= ((int)(Y * 0.41)) && B_tornadoCheck == 2){//휘기 시작
+                    if(B_tornadoCnt >= 8 && angle > 220){
                     //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
                         angle -= 1;
-                        tornadoCnt = 0;
+                        B_tornadoCnt = 0;
                         setAngle(angle,speed);
                         if(angle == 220)
                             B_item = 0;
@@ -776,50 +781,50 @@ void itemControl(void)
         }
     }
     if(A_item == 3){ // change up
-        if(changeUpCheck == 0) 
-            changeUpCheck+=1;
+        if(A_changeUpCheck == 0) 
+            A_changeUpCheck+=1;
         if(ball_Y_dir == 0){
-            if(( ball_Y_Cood == ((int)(Y * 0.11)) && changeUpCheck == 1) ||
-                (ball_Y_Cood == ((int)(Y * 0.34)) && changeUpCheck == 2) ||
-                (ball_Y_Cood == ((int)(Y * 0.46)) && changeUpCheck == 3) ||
-                (ball_Y_Cood == ((int)(Y * 0.57)) && changeUpCheck == 4) ){
+            if(( ball_Y_Cood == ((int)(Y * 0.11)) && A_changeUpCheck == 1) ||
+                (ball_Y_Cood == ((int)(Y * 0.34)) && A_changeUpCheck == 2) ||
+                (ball_Y_Cood == ((int)(Y * 0.46)) && A_changeUpCheck == 3) ||
+                (ball_Y_Cood == ((int)(Y * 0.57)) && A_changeUpCheck == 4) ){
                     if(ball_X_dir == 0)
                         angle = rand() % 20 + 30; // 30 ~ 50 도
                     else if(ball_X_dir == 1)
                         angle = rand() % 20 + 130;// 130 ~ 150 도
-                    changeUpCheck++;
+                    A_changeUpCheck++;
                     setAngle(angle,speed);
-            }else if(ball_Y_Cood == 1113 && changeUpCheck == 5){
+            }else if(ball_Y_Cood == 1113 && A_changeUpCheck == 5){
                 if(ball_X_dir == 0)
                     angle = rand() % 20 + 30; // 30 ~ 50 도
                 else if(ball_X_dir == 1)
                     angle = rand() % 20 + 130;// 130 ~ 150 도
-                changeUpCheck = 0;
+                A_changeUpCheck = 0;
                 A_item = 0;
                 setAngle(angle,speed);
             }       
         }
     }
     if(B_item == 3){
-        if(changeUpCheck == 0) 
-            changeUpCheck+=1;
+        if(B_changeUpCheck == 0) 
+            B_changeUpCheck+=1;
         if(ball_Y_dir == 1){
-            if((ball_Y_Cood == ((int)(Y * 0.81)) && changeUpCheck == 1) ||
-                (ball_Y_Cood == ((int)(Y * 0.57)) && changeUpCheck == 2) ||
-                (ball_Y_Cood == ((int)(Y * 0.46)) && changeUpCheck == 3) ||
-                (ball_Y_Cood == ((int)(Y * 0.34)) && changeUpCheck == 4) ){
+            if((ball_Y_Cood == ((int)(Y * 0.81)) && B_changeUpCheck == 1) ||
+                (ball_Y_Cood == ((int)(Y * 0.57)) && B_changeUpCheck == 2) ||
+                (ball_Y_Cood == ((int)(Y * 0.46)) && B_changeUpCheck == 3) ||
+                (ball_Y_Cood == ((int)(Y * 0.34)) && B_changeUpCheck == 4) ){
                     if(ball_X_dir == 0)
                         angle = rand() % 20 + 310; // 310 ~ 330 도
                     else if(ball_X_dir == 1)
                         angle  = rand() % 20 + 210; // 210 ~ 210도
-                    changeUpCheck++;
+                    B_changeUpCheck++;
                     setAngle(angle,speed);
-            }else if(ball_Y_Cood == 159 && changeUpCheck == 5){
+            }else if(ball_Y_Cood == 159 && B_changeUpCheck == 5){
                 if(ball_X_dir == 0)
                     angle = rand() % 20 + 310; // 310 ~ 330 도
                 else if(ball_X_dir == 1)
                     angle  = rand() % 20 + 210; // 210 ~ 210도
-                changeUpCheck = 0;
+                B_changeUpCheck = 0;
                 B_item = 0;
                 setAngle(angle,speed);
             }
@@ -834,14 +839,6 @@ void gameControl(void)
     rackectMoveControl();
     ledControl();
     itemControl();
-}
-void loop(){
-    if(firstCheck == 0){// 선공게임이 정해지지 않았을때 ( 게임 시작 전 )
-        firstCheckFuntion();
-    }else if(firstCheck == 1){ // 선공게임 정해진 후 ( 게임 중 )
-        gameControl();
-    }
-    
 }
 void initing(){
     char check = 0;
@@ -1797,4 +1794,13 @@ void B_change_right_dir(){
         digitalWrite(B_X_dirPin,B_X_dir);
     }
     B_move_right = 1;
+}
+
+void loop(){
+    if(firstCheck == 0){// 선공게임이 정해지지 않았을때 ( 게임 시작 전 )
+        firstCheckFuntion();
+    }else if(firstCheck == 1){ // 선공게임 정해진 후 ( 게임 중 )
+        gameControl();
+    }
+    
 }

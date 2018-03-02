@@ -4,6 +4,8 @@
 #define X 1154
 #define Y 1373
 #define RACKETSIZE (int)(9*X)/74
+#define BALLSIZE (int)(5.5*X)/74
+#define RACKETSECTOR (int)RACKETSIZE/15
 
 int startCheck = 0;
 char send_buffer[22];
@@ -1619,55 +1621,65 @@ void B_choose(){//3번째 데이터
 //******************************************************************************************************************//
 void A_Collision_check(){
     if(ball_X_Cood < A_X_Cood){//라켓의 왼쪽
-        if(A_X_Cood - 5 <= ball_X_Cood && ball_X_Cood <= A_X_Cood){//90
+        if(A_X_Cood - RACKETSECTOR/2 <= ball_X_Cood){//90
             angle = 90;
             setAngle(angle,speed);
             collision_check2 = 0;
             A_return = 1;
-        }else if(A_X_Cood - 18 <= ball_X_Cood && ball_X_Cood <= A_X_Cood - 5){//70
+        }else if(A_X_Cood - RACKETSECTOR*3/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood - RACKETSECTOR/2){//70
             angle = 110;
             setAngle(angle,speed);
             collision_check2 = 0;
             A_return = 1;
-        }else if(A_X_Cood - 31 <= ball_X_Cood && ball_X_Cood <= A_X_Cood - 18){//60
+        }else if(A_X_Cood - RACKETSECTOR*5/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood - RACKETSECTOR*3/2){//60
             angle = 120;
             setAngle(angle,speed);
             collision_check2 = 0;
             A_return = 1;
-        }else if(A_X_Cood - 44 <= ball_X_Cood && ball_X_Cood <= A_X_Cood - 31){//50
+        }else if(A_X_Cood - RACKETSECTOR*9/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood - RACKETSECTOR*5/2){//50
             angle = 130;
             setAngle(angle,speed);
             collision_check2 = 0;
             A_return = 1;
-        }else if(A_X_Cood - 106 <= ball_X_Cood && ball_X_Cood <= A_X_Cood - 44){//40
+        }else if(A_X_Cood - RACKETSECTOR*15/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood - RACKETSECTOR*9/2){//40
             angle = 140;
+            setAngle(angle,speed);
+            collision_check2 = 0;
+            A_return = 1;
+        }else if(ball_X_Cood - BALLSIZE/2 <= A_X_Cood - RACKETSECTOR*15/2 && A_X_Cood - RACKETSECTOR*15/2 <= ball_X_Cood + BALLSIZE/2){//30
+            angle = 150;
             setAngle(angle,speed);
             collision_check2 = 0;
             A_return = 1;
         }
     }else if(ball_X_Cood > A_X_Cood){//라켓의 오른쪽
-        if(A_X_Cood <= ball_X_Cood && ball_X_Cood <= A_X_Cood + 5){//90
+        if(ball_X_Cood <= A_X_Cood + RACKETSECTOR/2){//90
             angle = 90;
             setAngle(angle,speed);
             collision_check2 = 0;
             A_return = 1;
-        }else if(A_X_Cood + 5 <= ball_X_Cood && ball_X_Cood <= A_X_Cood + 18){//70
+        }else if(A_X_Cood + RACKETSECTOR/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood + RACKETSECTOR*3/2){//70
             angle = 70;
             setAngle(angle,speed);
             collision_check2 = 0;
             A_return = 1;
-        }else if(A_X_Cood + 18 <= ball_X_Cood && ball_X_Cood <= A_X_Cood + 31){//60
+        }else if(A_X_Cood + RACKETSECTOR*3/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood + RACKETSECTOR*5/2){//60
             angle = 60;
             setAngle(angle,speed);
             collision_check2 = 0;
             A_return = 1;
-        }else if(A_X_Cood + 31 <= ball_X_Cood && ball_X_Cood <= A_X_Cood + 44){//50
+        }else if(A_X_Cood + RACKETSECTOR*5/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood + RACKETSECTOR*9/2){//50
             angle = 50;
             setAngle(angle,speed);
             collision_check2 = 0;
             A_return = 1;
-        }else if(A_X_Cood + 44 <= ball_X_Cood && ball_X_Cood <= A_X_Cood + 106){//40
+        }else if(A_X_Cood + RACKETSECTOR*9/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood + RACKETSECTOR*15/2){//40
             angle = 40;
+            setAngle(angle,speed);
+            collision_check2 = 0;
+            A_return = 1;
+        }else if(ball_X_Cood - BALLSIZE/2 <= A_X_Cood + RACKETSECTOR*15/2 && A_X_Cood + RACKETSECTOR*15/2 <= ball_X_Cood + BALLSIZE/2){//30
+            angle = 30;
             setAngle(angle,speed);
             collision_check2 = 0;
             A_return = 1;
@@ -1688,55 +1700,66 @@ void A_Collision_check(){
 }
 void B_Collision_check(){
     if(ball_X_Cood < B_X_Cood){
-        if(B_X_Cood - 5 <= ball_X_Cood && ball_X_Cood <= B_X_Cood){//90
+        if(B_X_Cood - RACKETSECTOR/2 <= ball_X_Cood){//90
             angle = 270;
             setAngle(angle,speed);
             collision_check2 = 0;
             B_return = 1;
-        }else if(B_X_Cood - 18 <= ball_X_Cood && ball_X_Cood <= B_X_Cood - 5){//70
+        }else if(B_X_Cood - RACKETSECTOR*3/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood - RACKETSECTOR/2){//70
             angle = 250;
             setAngle(angle,speed);
             collision_check2 = 0;
             B_return = 1;
-        }else if(B_X_Cood - 31 <= ball_X_Cood && ball_X_Cood <= B_X_Cood - 18){//60
+        }else if(B_X_Cood - RACKETSECTOR*5/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood - RACKETSECTOR*3/2){//60
             angle = 240;
             setAngle(angle,speed);
             collision_check2 = 0;
             B_return = 1;
-        }else if(B_X_Cood - 44 <= ball_X_Cood && ball_X_Cood <= B_X_Cood - 31){//50
+        }else if(B_X_Cood - RACKETSECTOR*9/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood - RACKETSECTOR*5/2){//50
             angle = 230;
             setAngle(angle,speed);
             collision_check2 = 0;
             B_return = 1;
-        }else if(B_X_Cood - 106 <= ball_X_Cood && ball_X_Cood <= B_X_Cood - 44){//40
+        }else if(B_X_Cood - RACKETSECTOR*15/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood - RACKETSECTOR*9/2){//40
             angle = 220;
+            setAngle(angle,speed);
+            collision_check2 = 0;
+            B_return = 1;
+        }else if(ball_X_Cood - BALLSIZE/2 <= B_X_Cood - RACKETSECTOR*15/2 && B_X_Cood - RACKETSECTOR*15/2 <= ball_X_Cood + BALLSIZE/2){//30
+            angle = 210;
             setAngle(angle,speed);
             collision_check2 = 0;
             B_return = 1;
         }
     }else if(ball_X_Cood > B_X_Cood){
-        if(B_X_Cood <= ball_X_Cood && ball_X_Cood <= B_X_Cood + 5){//90
+        if(ball_X_Cood <= B_X_Cood + RACKETSECTOR/2 ){//90
             angle = 270;
             setAngle(angle,speed);
             collision_check2 = 0;
             B_return = 1;
-        }else if(B_X_Cood + 5 <= ball_X_Cood && ball_X_Cood <= B_X_Cood + 18){//70
+        }else if(B_X_Cood + RACKETSECTOR/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood + RACKETSECTOR*3/2){//70
             angle = 290;
             setAngle(angle,speed);
             collision_check2 = 0;
             B_return = 1;
-        }else if(B_X_Cood + 18 <= ball_X_Cood && ball_X_Cood <= B_X_Cood + 31){//60
+        }else if(B_X_Cood + RACKETSECTOR*3/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood + RACKETSECTOR*5/2){//60
             angle = 300;
             setAngle(angle,speed);
             collision_check2 = 0;
             B_return = 1;
-        }else if(B_X_Cood + 31 <= ball_X_Cood && ball_X_Cood <= B_X_Cood + 44){//50
+        }else if(B_X_Cood + RACKETSECTOR*5/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood + RACKETSECTOR*9/2){//50
             angle = 310;
             setAngle(angle,speed);
             collision_check2 = 0;
             B_return = 1;
-        }else if(B_X_Cood + 44 <= ball_X_Cood && ball_X_Cood <= B_X_Cood + 106){//40
+        }else if(B_X_Cood + RACKETSECTOR*9/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood + RACKETSECTOR*15/2){//40
             angle = 320;
+            setAngle(angle,speed);
+            collision_check2 = 0;
+            B_return = 1;
+        }
+        else if(ball_X_Cood - BALLSIZE/2 <= B_X_Cood + RACKETSECTOR*15/2 && B_X_Cood + RACKETSECTOR*15/2 <= ball_X_Cood + BALLSIZE/2){//30
+            angle = 330;
             setAngle(angle,speed);
             collision_check2 = 0;
             B_return = 1;

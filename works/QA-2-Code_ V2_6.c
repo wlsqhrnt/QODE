@@ -773,7 +773,7 @@ void itemControl(void)
                     setAngle(angle,speed);
                 }
                 if(ball_Y_Cood >= ((int)(Y * 0.41)) && B_tornadoCheck == 2){//휘기 시작
-                    if(B_ornadoCnt >= 8 && angle > 220){
+                    if(B_tornadoCnt >= 8 && angle > 220){
                     //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
                         angle -= 1;
                         B_tornadoCnt = 0;

@@ -356,14 +356,14 @@ void coordinateCheck(void)
         y_move_check = 0;
     }
     if (ndx != ball_X_Cood && x_move_check == 0) { // 현재 x좌
-        if (ndx > ball_X_Cood) {
-            if(ball_X_dir != 1){
-                ball_X_dir = 1; digitalWrite(ball_X_dirPin,ball_X_dir);
+        if (ndx > ball_X_Cood) { // 우측으로 가야하는 경우
+            if(ball_X_dir != 0){ 
+                ball_X_dir = 0; digitalWrite(ball_X_dirPin,ball_X_dir);
             }
             x_move_check = 1;
-        } else if (ndx < ball_X_Cood ) { // 좌측에 있을 경우
-            if(ball_X_dir != 0){
-                ball_X_dir = 0; digitalWrite(ball_X_dirPin,ball_X_dir);   
+        } else if (ndx < ball_X_Cood ) { // 좌측으로 가야하는 경우
+            if(ball_X_dir != 1){
+                ball_X_dir = 1; digitalWrite(ball_X_dirPin,ball_X_dir);   
             }
             x_move_check = 1;
         }
@@ -536,9 +536,9 @@ void rackectMoveControl(void)
                 digitalWrite(B_X_stpPin,HIGH);
                 B_X_timercheck = 1;
                 if(B_X_dir == 1){
-                    B_X_Cood--;
-                }else if(B_X_dir == 0){
                     B_X_Cood++;
+                }else if(B_X_dir == 0){
+                    B_X_Cood--;
                 }
             }else if(B_X_timercheck == 1){
                 digitalWrite(B_X_stpPin,LOW);
@@ -819,16 +819,16 @@ void itemControl(void)
                 (ball_Y_Cood == ((int)(Y * 0.34)) && A_changeUpCheck == 2) ||
                 (ball_Y_Cood == ((int)(Y * 0.46)) && A_changeUpCheck == 3) ||
                 (ball_Y_Cood == ((int)(Y * 0.57)) && A_changeUpCheck == 4) ){
-                    if(ball_X_dir == 0)
+                    if(ball_X_dir == 1)
                         angle = rand() % 20 + 30; // 30 ~ 50 도
-                    else if(ball_X_dir == 1)
+                    else if(ball_X_dir == 0)
                         angle = rand() % 20 + 130;// 130 ~ 150 도
                     A_changeUpCheck++;
                     setAngle(angle,speed);
             }else if(ball_Y_Cood == 1113 && A_changeUpCheck == 5){
-                if(ball_X_dir == 0)
+                if(ball_X_dir == 1)
                     angle = rand() % 20 + 30; // 30 ~ 50 도
-                else if(ball_X_dir == 1)
+                else if(ball_X_dir == 0)
                     angle = rand() % 20 + 130;// 130 ~ 150 도
                 A_changeUpCheck = 0;
                 A_item = 0;
@@ -844,16 +844,16 @@ void itemControl(void)
                 (ball_Y_Cood == ((int)(Y * 0.57)) && B_changeUpCheck == 2) ||
                 (ball_Y_Cood == ((int)(Y * 0.46)) && B_changeUpCheck == 3) ||
                 (ball_Y_Cood == ((int)(Y * 0.34)) && B_changeUpCheck == 4) ){
-                    if(ball_X_dir == 0)
+                    if(ball_X_dir == 1)
                         angle = rand() % 20 + 310; // 310 ~ 330 도
-                    else if(ball_X_dir == 1)
+                    else if(ball_X_dir == 0)
                         angle  = rand() % 20 + 210; // 210 ~ 210도
                     B_changeUpCheck++;
                     setAngle(angle,speed);
             }else if(ball_Y_Cood == 159 && B_changeUpCheck == 5){
-                if(ball_X_dir == 0)
+                if(ball_X_dir == 1)
                     angle = rand() % 20 + 310; // 310 ~ 330 도
-                else if(ball_X_dir == 1)
+                else if(ball_X_dir == 0)
                     angle  = rand() % 20 + 210; // 210 ~ 210도
                 B_changeUpCheck = 0;
                 B_item = 0;

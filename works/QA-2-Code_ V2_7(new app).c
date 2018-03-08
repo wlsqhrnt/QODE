@@ -163,21 +163,21 @@ char left_startCnt = 0;
 char right_startCnt = 0;
 //timer variable
 int ball_X_timerCnt = 0;
-int ball_X_timerLimit = 8;//start speed
+int ball_X_timerLimit = 3;//start speed
 int ball_X_timercheck = 0;
 int ball_X_speedCheck = 0;
 int ball_X_maxSpeed = 0;
 int ball_Y_timerCnt = 0;
-int ball_Y_timerLimit = 15;//start speed
+int ball_Y_timerLimit = 3;//start speed
 int ball_Y_timercheck = 0;
 int ball_Y_speedCheck = 0;
 int ball_Y_maxSpeed = 0;
 int A_X_timerCnt = 0;
-int A_X_timerLimit = 8;//start speed
+int A_X_timerLimit = 3;//start speed
 int A_X_timercheck = 0;
 int A_X_speedCheck = 0;
 int B_X_timerCnt = 0;
-int B_X_timerLimit = 8;//start speed
+int B_X_timerLimit = 3;//start speed
 int B_X_timercheck = 0;
 int B_X_speedCheck = 0;
 long p_value = 0; // line 함수 내부에서 사용하는 전역 변수
@@ -333,7 +333,12 @@ void firstCheckFuntion(void)
 {
     if(startCheck == 0){
         initing();
-        startAngle = rand() % 100 + 40; // 40~ 140;
+        int randMum = rand() % 2;
+        if(randMum == 0){
+            startAngle = 45;
+        }else if(randMum){
+            startAngle = 135;
+        }
         startCheck = 1;
     }
     if(firstAt == 1){ //A 선공
@@ -363,13 +368,13 @@ void coordinateCheck(void)
     }
     if (ndx != ball_X_Cood && x_move_check == 0) { // 현재 x좌
         if (ndx > ball_X_Cood) {
-            if(ball_X_dir != 1){
-                ball_X_dir = 1; digitalWrite(ball_X_dirPin,ball_X_dir);
+            if(ball_X_dir != 0){
+                ball_X_dir = 0; digitalWrite(ball_X_dirPin,ball_X_dir);
             }
             x_move_check = 1;
         } else if (ndx < ball_X_Cood ) { // 좌측에 있을 경우
-            if(ball_X_dir != 0){
-                ball_X_dir = 0; digitalWrite(ball_X_dirPin,ball_X_dir);   
+            if(ball_X_dir != 1){
+                ball_X_dir = 1; digitalWrite(ball_X_dirPin,ball_X_dir);   
             }
             x_move_check = 1;
         }
@@ -393,30 +398,30 @@ void coordinateCheck(void)
 void limitSwitchCheck(void)
 {
     //스위치 체크 
-    if(digitalRead(ball_X_limitSwitch1) == LOW && ball_X_dir == 0){
+    if(digitalRead(ball_X_limitSwitch1) == LOW && ball_X_dir == 1){
         Serial2.write('U');
         Serial3.write('U');
-        ball_X_dir = 1;
+        ball_X_dir = 0;
         digitalWrite(ball_X_dirPin,ball_X_dir);
         ball_X_Cood = 0;
         wall_crash = 1; 
         ball_X_speedCheck = 0;
-        ball_X_timerLimit = 8;
+        ball_X_timerLimit = 3;
         ball_X_timerCnt = 0;
         digitalWrite(led_left_pin,HIGH);
         int new_angle = getAngle(angle,VERTICAL);
         setAngle(new_angle,speed);
         left_startCnt = 1; 
     }
-    if(digitalRead(ball_X_limitSwitch2) == LOW && ball_X_dir == 1){
+    if(digitalRead(ball_X_limitSwitch2) == LOW && ball_X_dir == 0){
         Serial2.write('U');
         Serial3.write('U');
-        ball_X_dir = 0;
+        ball_X_dir = 1;
         digitalWrite(ball_X_dirPin,ball_X_dir);
-        ball_X_Cood = 1154;
+        ball_X_Cood = 1960;
         wall_crash = 1;
         ball_X_speedCheck = 0;
-        ball_X_timerLimit = 8;
+        ball_X_timerLimit = 3;
         ball_X_timerCnt = 0;
         digitalWrite(led_right_pin,HIGH);
         int new_angle = getAngle(angle,VERTICAL);
@@ -431,7 +436,7 @@ void limitSwitchCheck(void)
         collision_check2 = 1;
         ball_Y_Cood = 0;
         ball_Y_speedCheck = 0;
-        ball_Y_timerLimit = 12;
+        ball_Y_timerLimit = 3;
         ball_Y_timerCnt = 0;
         if(A_hacking_check == 1)
             A_hacking_check = 0;
@@ -444,9 +449,9 @@ void limitSwitchCheck(void)
         ball_Y_dir = 1;
         digitalWrite(ball_Y_dirPin,ball_Y_dir);
         collision_check2 = 1;
-        ball_Y_Cood = 1343;
+        ball_Y_Cood = 2720;
         ball_Y_speedCheck = 0;
-        ball_Y_timerLimit = 12;
+        ball_Y_timerLimit = 3;
         ball_Y_timerCnt = 0;
         if(B_hacking_check == 1)
             B_hacking_check = 0;
@@ -456,25 +461,25 @@ void limitSwitchCheck(void)
     if(digitalRead(A_X_limitSwitch1) == LOW && A_X_dir == 0){
         Serial2.write('U');
         A_X_dir = 1; digitalWrite(A_X_dirPin,A_X_dir);
-        A_X_Cood = 0; A_X_timerLimit = 8;
+        A_X_Cood = 0; A_X_timerLimit = 3;
         A_X_timerCnt = 0;
     }
     if(digitalRead(A_X_limitSwitch2) == LOW && A_X_dir == 1){
         Serial2.write('U');
         A_X_dir = 0; digitalWrite(A_X_dirPin,A_X_dir);
-        A_X_Cood = X; A_X_timerLimit = 8;
+        A_X_Cood = X; A_X_timerLimit = 3;
         A_X_timerCnt = 0;
     }
-    if(digitalRead(B_X_limitSwitch1) == LOW && B_X_dir == 1){
-        Serial3.write('U');
-        B_X_dir = 0; digitalWrite(B_X_dirPin,B_X_dir);
-        B_X_Cood = 0; B_X_timerLimit = 8;
-        B_X_timerCnt = 0;
-    }
-    if(digitalRead(B_X_limitSwitch2) == LOW && B_X_dir == 0){
+    if(digitalRead(B_X_limitSwitch1) == LOW && B_X_dir == 0){
         Serial3.write('U');
         B_X_dir = 1; digitalWrite(B_X_dirPin,B_X_dir);
-        B_X_Cood = X; B_X_timerLimit = 8;
+        B_X_Cood = 0; B_X_timerLimit = 3;
+        B_X_timerCnt = 0;
+    }
+    if(digitalRead(B_X_limitSwitch2) == LOW && B_X_dir == 1){
+        Serial3.write('U');
+        B_X_dir = 0; digitalWrite(B_X_dirPin,B_X_dir);
+        B_X_Cood = X; B_X_timerLimit = 3;
         B_X_timerCnt = 0;
     }
 }
@@ -486,9 +491,9 @@ void ballMoveControl(void)
         if(ball_X_timercheck == 0){
             digitalWrite(ball_X_stpPin,HIGH);
             ball_X_timercheck = 1;
-            if(ball_X_dir == 0 && ball_X_Cood > 0 )
+            if(ball_X_dir == 1 && ball_X_Cood > 0 )
                 ball_X_Cood--;
-            else if(ball_X_dir == 1 && ball_X_Cood < 1160)
+            else if(ball_X_dir == 0 && ball_X_Cood < 1960)
                 ball_X_Cood++;
         }else if(ball_X_timercheck == 1){
             digitalWrite(ball_X_stpPin,LOW);
@@ -497,8 +502,8 @@ void ballMoveControl(void)
         }
         ball_X_timerCnt = 0;
         ball_X_speedCheck++;
-        if(ball_X_timerLimit > 6 && ball_X_speedCheck == 100){
-            ball_X_timerLimit-=1;
+        if(ball_X_timerLimit > 20 && ball_X_speedCheck == 100){
+            //ball_X_timerLimit-=1;
             ball_X_speedCheck=0;
         }
     }
@@ -507,7 +512,7 @@ void ballMoveControl(void)
         if(ball_Y_timercheck == 0){
             digitalWrite(ball_Y_stpPin,HIGH);
             ball_Y_timercheck = 1;
-            if(ball_Y_dir == 0 && ball_Y_Cood < 1345 )
+            if(ball_Y_dir == 0 && ball_Y_Cood < 2720 )
                 ball_Y_Cood++;
             else if(ball_Y_dir == 1 && ball_Y_Cood > 0)
                 ball_Y_Cood--;
@@ -522,8 +527,8 @@ void ballMoveControl(void)
         }
         ball_Y_timerCnt = 0;
         ball_Y_speedCheck++;
-        if(ball_Y_timerLimit > 8 && ball_Y_speedCheck == 300){//가
-            ball_Y_timerLimit-=1;
+        if(ball_Y_timerLimit > 20 && ball_Y_speedCheck == 100){//가
+            //ball_Y_timerLimit-=1;
             ball_Y_speedCheck = 0;
         }
     }
@@ -554,9 +559,9 @@ void rackectMoveControl(void)
                 digitalWrite(B_X_stpPin,HIGH);
                 B_X_timercheck = 1;
                 if(B_X_dir == 1){
-                    B_X_Cood--;
-                }else if(B_X_dir == 0){
                     B_X_Cood++;
+                }else if(B_X_dir == 0){
+                    B_X_Cood--;
                 }
             }else if(B_X_timercheck == 1){
                 digitalWrite(B_X_stpPin,LOW);
@@ -837,16 +842,16 @@ void itemControl(void)
                 (ball_Y_Cood == ((int)(Y * 0.34)) && A_changeUpCheck == 2) ||
                 (ball_Y_Cood == ((int)(Y * 0.46)) && A_changeUpCheck == 3) ||
                 (ball_Y_Cood == ((int)(Y * 0.57)) && A_changeUpCheck == 4) ){
-                    if(ball_X_dir == 0)
+                    if(ball_X_dir == 1)
                         angle = rand() % 20 + 30; // 30 ~ 50 도
-                    else if(ball_X_dir == 1)
+                    else if(ball_X_dir == 0)
                         angle = rand() % 20 + 130;// 130 ~ 150 도
                     A_changeUpCheck++;
                     setAngle(angle,speed);
             }else if(ball_Y_Cood == 1113 && A_changeUpCheck == 5){
-                if(ball_X_dir == 0)
+                if(ball_X_dir == 1)
                     angle = rand() % 20 + 30; // 30 ~ 50 도
-                else if(ball_X_dir == 1)
+                else if(ball_X_dir == 0)
                     angle = rand() % 20 + 130;// 130 ~ 150 도
                 A_changeUpCheck = 0;
                 A_item = 0;
@@ -862,16 +867,16 @@ void itemControl(void)
                 (ball_Y_Cood == ((int)(Y * 0.57)) && B_changeUpCheck == 2) ||
                 (ball_Y_Cood == ((int)(Y * 0.46)) && B_changeUpCheck == 3) ||
                 (ball_Y_Cood == ((int)(Y * 0.34)) && B_changeUpCheck == 4) ){
-                    if(ball_X_dir == 0)
+                    if(ball_X_dir == 1)
                         angle = rand() % 20 + 310; // 310 ~ 330 도
-                    else if(ball_X_dir == 1)
+                    else if(ball_X_dir == 0)
                         angle  = rand() % 20 + 210; // 210 ~ 210도
                     B_changeUpCheck++;
                     setAngle(angle,speed);
             }else if(ball_Y_Cood == 159 && B_changeUpCheck == 5){
-                if(ball_X_dir == 0)
+                if(ball_X_dir == 1)
                     angle = rand() % 20 + 310; // 310 ~ 330 도
-                else if(ball_X_dir == 1)
+                else if(ball_X_dir == 0)
                     angle  = rand() % 20 + 210; // 210 ~ 210도
                 B_changeUpCheck = 0;
                 B_item = 0;
@@ -895,15 +900,15 @@ void initing(){
     char ball_Y_check = 0;
     char A_X_check = 0;
     char B_X_check = 0;
-    int delay_ = 350;
-    int delay_for_Y = 200;
+    int delay_ = 100;
+    int delay_for_Y = 300;
     digitalWrite(ball_X_dirPin, 1);
     digitalWrite(ball_Y_dirPin, 1);
     digitalWrite(A_X_dirPin,0);
-    digitalWrite(B_X_dirPin,1);
+    digitalWrite(B_X_dirPin,0);
     while(check != 3){
         if(ball_X_check == 0){
-            if(digitalRead(ball_X_limitSwitch2) == LOW){
+            if(digitalRead(ball_X_limitSwitch1) == LOW){
                 ball_X_check = 1;
                 check += 1;
                 delay_+=100;
@@ -938,38 +943,38 @@ void initing(){
     }
     while(!(digitalRead(ball_Y_limitSwitch1) == LOW)){
         digitalWrite(ball_Y_stpPin, HIGH);
-        delayMicroseconds(1200);
+        delayMicroseconds(400);
         digitalWrite(ball_Y_stpPin, LOW);
-        delayMicroseconds(1200);
+        delayMicroseconds(400);
     }
     digitalWrite(ball_X_dirPin, 0);
     digitalWrite(ball_Y_dirPin, 0);
     digitalWrite(A_X_dirPin,1);
-    digitalWrite(B_X_dirPin,0);
+    digitalWrite(B_X_dirPin,1);
     ball_X_Cood = X; ball_Y_Cood=0; A_X_Cood = 0; B_X_Cood = 0;
-    ball_X_dir = 0; ball_Y_dir = 0; A_X_dir = 1; B_X_dir =0;
-    
+    ball_X_dir = 0; ball_Y_dir = 0; A_X_dir = 1; B_X_dir =1;
+
     for (int i = 0; i < X/2; i++) {
         digitalWrite(ball_X_stpPin, HIGH);digitalWrite(ball_Y_stpPin, HIGH);
         digitalWrite(A_X_stpPin,HIGH);digitalWrite(B_X_stpPin,HIGH);
-        delayMicroseconds(1200);
+        delayMicroseconds(400);
         digitalWrite(ball_X_stpPin, LOW );
         digitalWrite(ball_Y_stpPin, LOW);
         digitalWrite(A_X_stpPin,LOW);
         digitalWrite(B_X_stpPin,LOW);
-        delayMicroseconds(1200);
-        ball_X_Cood--;
+        delayMicroseconds(400);
+        ball_X_Cood++;
         ball_Y_Cood++;
         A_X_Cood++;
         B_X_Cood++;
     }
     for (int i = 0; i < ((int)(Y/2) - (int)(X/2)) ; i++) {
         digitalWrite(ball_Y_stpPin, HIGH);
-        delayMicroseconds(1200);
+        delayMicroseconds(400);
         digitalWrite(ball_Y_stpPin, LOW);
-        delayMicroseconds(1200);
+        delayMicroseconds(400);
         ball_Y_Cood++;
-    } 
+    }
 }
 //****************************************************************************************************************//
 //**************************************** Bresenham Algorithm function ******************************************//
@@ -1190,56 +1195,58 @@ void serialEvent1(){//PC
 void serialEvent2(){
     if((A_bluetooth_data = Serial2.read()) != -1){ //스마트폰 -> 아두이노 -> PC
         switch(A_bluetooth_data){
-            case 'a' : completion_of_money_input = 1; break; // 동전 투입 완료
-            case 'b' : A_mode_selection_left = 1; break;// 모드 선택 좌
-            case 'c' : A_mode_selection_right = 1; break;// 모드 선택 우
-            case 'd' : A_mode_selected = 1; break;// 모드 선택
-            case 'e' : A_controller_left = 1; break;// 컨트롤러 선택 좌
-            case 'f' : A_controller_right = 1; break;// 컨트롤러 선택 우
-            case 'g' : A_controller_selected = 1; break;// 컨트롤러 선택
-            case 'h' : A_pre_game_selected = 1; break;// 선공 게임 선택
-            case 'j' : A_moveCtl = 1; A_X_timerLimit = 18; A_change_left_dir(); break;//왼쪽으로 1속도 이동
-            case 'k' : A_moveCtl = 2; A_X_timerLimit = 15; A_change_left_dir(); break;//왼쪽으로 2속도 이동
-            case 'l' : A_moveCtl = 3; A_X_timerLimit = 12; A_change_left_dir(); break;//왼쪽으로 3속도 이동
-            case 'm' : A_moveCtl = 4; A_X_timerLimit = 9; A_change_left_dir(); break;//왼쪽으로 4속도 이동
-            case 'n' : A_moveCtl = 5; A_X_timerLimit = 6; A_change_left_dir(); break;//왼쪽으로 5속도 이동
-            case 'o' : A_moveCtl = 0;  A_move_stop = 1; break;// 정지
-            case 'p' : A_moveCtl = 1; A_X_timerLimit = 18; A_change_right_dir(); break;//오른쪽으로 1속도 이동
-            case 'q' : A_moveCtl = 2; A_X_timerLimit = 15; A_change_right_dir(); break;//오른쪽으로 2속도 이동
-            case 'r' : A_moveCtl = 3; A_X_timerLimit = 12; A_change_right_dir(); break;//오른쪽으로 3속도 이동
-            case 's' : A_moveCtl = 4; A_X_timerLimit = 9; A_change_right_dir(); break;//오른쪽으로 4속도 이동
-            case 't' : A_moveCtl = 5; A_X_timerLimit = 6; A_change_right_dir(); break;//오른쪽으로 5속도 이동
-            case 'u' : A_use_fireball = 1; break; //파이어볼사용
-            case 'v' : A_use_tornado = 1; break;//토네이도 사용
-            case 'w' : A_use_hacking = 1; break;//해킹 사용
-            case 'x' : A_use_EMP = 1; break;//EMP 사용
-            case 'y' : A_use_changeup = 1; break;//CHANGE UP 사용
+            case 'C' : completion_of_money_input = 1; break; // 동전 투입 완료
+            case '[' : A_mode_selection_left = 1; break;// 모드 선택 좌
+            case ']' : A_mode_selection_right = 1; break;// 모드 선택 우
+            case 'F' : A_mode_selected = 1; break;// 모드 선택
+            case 'G' : A_controller_left = 1; break;// 컨트롤러 선택 좌
+            case 'H' : A_controller_right = 1; break;// 컨트롤러 선택 우
+            case 'I' : A_controller_selected = 1; break;// 컨트롤러 선택
+            case 'O' : A_pre_game_selected = 1; break;// 선공 게임 선택
+            case '!' : A_moveCtl = 1; A_X_timerLimit = 7; A_change_left_dir(); break;//왼쪽으로 1속도 이동
+            case '"' : A_moveCtl = 2; A_X_timerLimit = 6; A_change_left_dir(); break;//왼쪽으로 2속도 이동
+            case '#' : A_moveCtl = 3; A_X_timerLimit = 5; A_change_left_dir(); break;//왼쪽으로 3속도 이동
+            case '$' : A_moveCtl = 4; A_X_timerLimit = 4; A_change_left_dir(); break;//왼쪽으로 4속도 이동
+            case '&' : A_moveCtl = 5; A_X_timerLimit = 3; A_change_left_dir(); break;//왼쪽으로 5속도 이동
+            case '(' : A_moveCtl = 0;  A_move_stop = 1; break;// 정지
+            case 'Z' : A_moveCtl = 1; A_X_timerLimit = 7; A_change_right_dir(); break;//오른쪽으로 1속도 이동
+            case 'a' : A_moveCtl = 2; A_X_timerLimit = 6; A_change_right_dir(); break;//오른쪽으로 2속도 이동
+            case 'b' : A_moveCtl = 3; A_X_timerLimit = 5; A_change_right_dir(); break;//오른쪽으로 3속도 이동
+            case 'c' : A_moveCtl = 4; A_X_timerLimit = 4; A_change_right_dir(); break;//오른쪽으로 4속도 이동
+            case 'd' : A_moveCtl = 5; A_X_timerLimit = 3; A_change_right_dir(); break;//오른쪽으로 5속도 이동
+            case 'P' : A_use_fireball = 1; break; //파이어볼사용
+            case 'Q' : A_use_tornado = 1; break;//토네이도 사용
+            case 'R' : A_use_hacking = 1; break;//해킹 사용
+            case 'S' : A_use_EMP = 1; break;//EMP 사용
+            case 'T' : A_use_changeup = 1; break;//CHANGE UP 사용
+            case '6' : A_hacking_check = 0; break;//해킹해제
         }
     }
 }
 void serialEvent3(){
     if((B_bluetooth_data = Serial3.read()) != -1){ //스마트폰 -> 아두이노 -> PC
         switch(B_bluetooth_data){
-            case 'e' : B_controller_left = 1; break;// 컨트롤러 선택 좌
-            case 'f' : B_controller_right = 1; break;// 컨트롤러 선택 우
-            case 'g' : B_controller_selected = 1; break;// 컨트롤러 선택
-            case 'h' : B_pre_game_selected = 1; break;// 선공 게임 선택
-            case 'j' : B_moveCtl = 1; B_X_timerLimit = 18; B_change_left_dir(); break;//왼쪽으로 1속도 이동
-            case 'k' : B_moveCtl = 2; B_X_timerLimit = 15; B_change_left_dir(); break;//왼쪽으로 2속도 이동
-            case 'l' : B_moveCtl = 3; B_X_timerLimit = 12; B_change_left_dir(); break;//왼쪽으로 3속도 이동
-            case 'n' : B_moveCtl = 4; B_X_timerLimit = 9; B_change_left_dir(); break;//왼쪽으로 4속도 이동
-            case 'm' : B_moveCtl = 5; B_X_timerLimit = 6; B_change_left_dir(); break;//왼쪽으로 5속도 이동
-            case 'o' : B_moveCtl = 0; B_move_stop = 1; break;// 정지
-            case 'p' : B_moveCtl = 1; B_X_timerLimit = 18; B_change_right_dir(); break;//오른쪽으로 1속도 이동
-            case 'q' : B_moveCtl = 2; B_X_timerLimit = 15; B_change_right_dir(); break;//오른쪽으로 2속도 이동
-            case 'r' : B_moveCtl = 3; B_X_timerLimit = 12; B_change_right_dir(); break;//오른쪽으로 3속도 이동
-            case 's' : B_moveCtl = 4; B_X_timerLimit = 9; B_change_right_dir(); break;//오른쪽으로 4속도 이동
-            case 't' : B_moveCtl = 5; B_X_timerLimit = 6; B_change_right_dir(); break;//오른쪽으로 5속도 이동
-            case 'u' : B_use_fireball = 1; break;//파이어볼사용
-            case 'v' : B_use_tornado = 1; break;//토네이도 사용
-            case 'w' : B_use_hacking = 1; break;//해킹 사용
-            case 'x' : B_use_EMP = 1; break; //EMP 사용
-            case 'y' : B_use_changeup = 1; break;//CHANGE UP 사용
+            case 'G' : B_controller_left = 1; break;// 컨트롤러 선택 좌
+            case 'H' : B_controller_right = 1; break;// 컨트롤러 선택 우
+            case 'I' : B_controller_selected = 1; break;// 컨트롤러 선택
+            case 'O' : B_pre_game_selected = 1; break;// 선공 게임 선택
+            case '!' : B_moveCtl = 1; B_X_timerLimit = 7; B_change_left_dir(); break;//왼쪽으로 1속도 이동
+            case '"' : B_moveCtl = 2; B_X_timerLimit = 6; B_change_left_dir(); break;//왼쪽으로 2속도 이동
+            case '#' : B_moveCtl = 3; B_X_timerLimit = 5; B_change_left_dir(); break;//왼쪽으로 3속도 이동
+            case '$' : B_moveCtl = 4; B_X_timerLimit = 4; B_change_left_dir(); break;//왼쪽으로 4속도 이동
+            case '&' : B_moveCtl = 5; B_X_timerLimit = 3; B_change_left_dir(); break;//왼쪽으로 5속도 이동
+            case '(' : B_moveCtl = 0; B_move_stop = 1; break;// 정지
+            case 'Z' : B_moveCtl = 1; B_X_timerLimit = 7; B_change_right_dir(); break;//오른쪽으로 1속도 이동
+            case 'a' : B_moveCtl = 2; B_X_timerLimit = 6; B_change_right_dir(); break;//오른쪽으로 2속도 이동
+            case 'b' : B_moveCtl = 3; B_X_timerLimit = 5; B_change_right_dir(); break;//오른쪽으로 3속도 이동
+            case 'c' : B_moveCtl = 4; B_X_timerLimit = 4; B_change_right_dir(); break;//오른쪽으로 4속도 이동
+            case 'd' : B_moveCtl = 5; B_X_timerLimit = 3; B_change_right_dir(); break;//오른쪽으로 5속도 이동
+            case 'P' : B_use_fireball = 1; break;//파이어볼사용
+            case 'Q' : B_use_tornado = 1; break;//토네이도 사용
+            case 'R' : B_use_hacking = 1; break;//해킹 사용
+            case 'S' : B_use_EMP = 1; break; //EMP 사용
+            case 'T' : B_use_changeup = 1; break;//CHANGE UP 사용
+            case '6' : B_hacking_check = 0; break;//해킹해제
         }
     }
 }
@@ -1850,20 +1857,20 @@ void A_change_right_dir(){
 }
 void B_change_left_dir(){
     if(B_hacking_check==0){ // 해킹 아닐때
-        B_X_dir = 0;
+        B_X_dir = 1;
         digitalWrite(B_X_dirPin,B_X_dir);
     }else if(B_hacking_check == 1){ // 해킹일때
-        B_X_dir = 1;
+        B_X_dir = 0;
         digitalWrite(B_X_dirPin,B_X_dir);
     }
     B_move_left = 1;
 }
 void B_change_right_dir(){
     if(B_hacking_check==0){ // 해킹 아닐때
-        B_X_dir = 1;
+        B_X_dir = 0;
         digitalWrite(B_X_dirPin,B_X_dir);
     }else if(B_hacking_check == 1){ //해킹 일때
-        B_X_dir = 0;
+        B_X_dir = 1;
         digitalWrite(B_X_dirPin,B_X_dir);
     }
     B_move_right = 1;

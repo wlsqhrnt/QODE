@@ -796,7 +796,7 @@ void itemControl(void)
                     setAngle(angle,speed);
                 }
                 if(ball_Y_Cood >= ((int)(Y * 0.41)) && B_tornadoCheck == 2){//휘기 시작
-                    if(B_ornadoCnt >= 8 && angle > 220){
+                    if(B_tornadoCnt >= 8 && angle > 220){
                     //tornadoCnt 크면 각 휘는 빈도수 증가, Anlge 최종적 휘는 정도
                         angle -= 1;
                         B_tornadoCnt = 0;
@@ -1195,61 +1195,60 @@ void serialEvent1(){//PC
 void serialEvent2(){
     if((A_bluetooth_data = Serial2.read()) != -1){ //스마트폰 -> 아두이노 -> PC
         switch(A_bluetooth_data){
-            case 'C' : completion_of_money_input = 1; break; // 동전 투입 완료
-            case '[' : A_mode_selection_left = 1; break;// 모드 선택 좌
-            case ']' : A_mode_selection_right = 1; break;// 모드 선택 우
-            case 'F' : A_mode_selected = 1; break;// 모드 선택
-            case 'G' : A_controller_left = 1; break;// 컨트롤러 선택 좌
-            case 'H' : A_controller_right = 1; break;// 컨트롤러 선택 우
-            case 'I' : A_controller_selected = 1; break;// 컨트롤러 선택
-            case 'O' : A_pre_game_selected = 1; break;// 선공 게임 선택
-            case '!' : A_moveCtl = 1; A_X_timerLimit = 7; A_change_left_dir(); break;//왼쪽으로 1속도 이동
-            case '"' : A_moveCtl = 2; A_X_timerLimit = 6; A_change_left_dir(); break;//왼쪽으로 2속도 이동
-            case '#' : A_moveCtl = 3; A_X_timerLimit = 5; A_change_left_dir(); break;//왼쪽으로 3속도 이동
-            case '$' : A_moveCtl = 4; A_X_timerLimit = 4; A_change_left_dir(); break;//왼쪽으로 4속도 이동
-            case '&' : A_moveCtl = 5; A_X_timerLimit = 3; A_change_left_dir(); break;//왼쪽으로 5속도 이동
-            case '(' : A_moveCtl = 0;  A_move_stop = 1; break;// 정지
-            case 'Z' : A_moveCtl = 1; A_X_timerLimit = 7; A_change_right_dir(); break;//오른쪽으로 1속도 이동
-            case 'a' : A_moveCtl = 2; A_X_timerLimit = 6; A_change_right_dir(); break;//오른쪽으로 2속도 이동
-            case 'b' : A_moveCtl = 3; A_X_timerLimit = 5; A_change_right_dir(); break;//오른쪽으로 3속도 이동
-            case 'c' : A_moveCtl = 4; A_X_timerLimit = 4; A_change_right_dir(); break;//오른쪽으로 4속도 이동
-            case 'd' : A_moveCtl = 5; A_X_timerLimit = 3; A_change_right_dir(); break;//오른쪽으로 5속도 이동
-            case 'P' : A_use_fireball = 1; break; //파이어볼사용
-            case 'Q' : A_use_tornado = 1; break;//토네이도 사용
-            case 'R' : A_use_hacking = 1; break;//해킹 사용
-            case 'S' : A_use_EMP = 1; break;//EMP 사용
-            case 'T' : A_use_changeup = 1; break;//CHANGE UP 사용
-            case '6' : A_hacking_check = 0; break;//해킹해제
+            case 'a' : completion_of_money_input = 1; break; // 동전 투입 완료
+            case 'b' : A_mode_selection_left = 1; break;// 모드 선택 좌
+            case 'c' : A_mode_selection_right = 1; break;// 모드 선택 우
+            case 'd' : A_mode_selected = 1; break;// 모드 선택
+            case 'e' : A_controller_left = 1; break;// 컨트롤러 선택 좌
+            case 'f' : A_controller_right = 1; break;// 컨트롤러 선택 우
+            case 'g' : A_controller_selected = 1; break;// 컨트롤러 선택
+            case 'h' : A_pre_game_selected = 1; break;// 선공 게임 선택
+            case 'j' : A_moveCtl = 1; A_X_timerLimit = 7; A_change_left_dir(); break;//왼쪽으로 1속도 이동
+            case 'k' : A_moveCtl = 2; A_X_timerLimit = 6; A_change_left_dir(); break;//왼쪽으로 2속도 이동
+            case 'l' : A_moveCtl = 3; A_X_timerLimit = 5; A_change_left_dir(); break;//왼쪽으로 3속도 이동
+            case 'm' : A_moveCtl = 4; A_X_timerLimit = 4; A_change_left_dir(); break;//왼쪽으로 4속도 이동
+            case 'n' : A_moveCtl = 5; A_X_timerLimit = 3; A_change_left_dir(); break;//왼쪽으로 5속도 이동
+            case 'o' : A_moveCtl = 0;  A_move_stop = 1; break;// 정지
+            case 'p' : A_moveCtl = 1; A_X_timerLimit = 7; A_change_right_dir(); break;//오른쪽으로 1속도 이동
+            case 'q' : A_moveCtl = 2; A_X_timerLimit = 6; A_change_right_dir(); break;//오른쪽으로 2속도 이동
+            case 'r' : A_moveCtl = 3; A_X_timerLimit = 5; A_change_right_dir(); break;//오른쪽으로 3속도 이동
+            case 's' : A_moveCtl = 4; A_X_timerLimit = 4; A_change_right_dir(); break;//오른쪽으로 4속도 이동
+            case 't' : A_moveCtl = 5; A_X_timerLimit = 3; A_change_right_dir(); break;//오른쪽으로 5속도 이동
+            case 'u' : A_use_fireball = 1; break; //파이어볼사용
+            case 'v' : A_use_tornado = 1; break;//토네이도 사용
+            case 'w' : A_use_hacking = 1; break;//해킹 사용
+            case 'x' : A_use_EMP = 1; break;//EMP 사용
+            case 'y' : A_use_changeup = 1; break;//CHANGE UP 사용
         }
     }
 }
 void serialEvent3(){
     if((B_bluetooth_data = Serial3.read()) != -1){ //스마트폰 -> 아두이노 -> PC
         switch(B_bluetooth_data){
-            case 'G' : B_controller_left = 1; break;// 컨트롤러 선택 좌
-            case 'H' : B_controller_right = 1; break;// 컨트롤러 선택 우
-            case 'I' : B_controller_selected = 1; break;// 컨트롤러 선택
-            case 'O' : B_pre_game_selected = 1; break;// 선공 게임 선택
-            case '!' : B_moveCtl = 1; B_X_timerLimit = 7; B_change_left_dir(); break;//왼쪽으로 1속도 이동
-            case '"' : B_moveCtl = 2; B_X_timerLimit = 6; B_change_left_dir(); break;//왼쪽으로 2속도 이동
-            case '#' : B_moveCtl = 3; B_X_timerLimit = 5; B_change_left_dir(); break;//왼쪽으로 3속도 이동
-            case '$' : B_moveCtl = 4; B_X_timerLimit = 4; B_change_left_dir(); break;//왼쪽으로 4속도 이동
-            case '&' : B_moveCtl = 5; B_X_timerLimit = 3; B_change_left_dir(); break;//왼쪽으로 5속도 이동
-            case '(' : B_moveCtl = 0; B_move_stop = 1; break;// 정지
-            case 'Z' : B_moveCtl = 1; B_X_timerLimit = 7; B_change_right_dir(); break;//오른쪽으로 1속도 이동
-            case 'a' : B_moveCtl = 2; B_X_timerLimit = 6; B_change_right_dir(); break;//오른쪽으로 2속도 이동
-            case 'b' : B_moveCtl = 3; B_X_timerLimit = 5; B_change_right_dir(); break;//오른쪽으로 3속도 이동
-            case 'c' : B_moveCtl = 4; B_X_timerLimit = 4; B_change_right_dir(); break;//오른쪽으로 4속도 이동
-            case 'd' : B_moveCtl = 5; B_X_timerLimit = 3; B_change_right_dir(); break;//오른쪽으로 5속도 이동
-            case 'P' : B_use_fireball = 1; break;//파이어볼사용
-            case 'Q' : B_use_tornado = 1; break;//토네이도 사용
-            case 'R' : B_use_hacking = 1; break;//해킹 사용
-            case 'S' : B_use_EMP = 1; break; //EMP 사용
-            case 'T' : B_use_changeup = 1; break;//CHANGE UP 사용
-            case '6' : B_hacking_check = 0; break;//해킹해제
+            case 'e' : B_controller_left = 1; break;// 컨트롤러 선택 좌
+            case 'f' : B_controller_right = 1; break;// 컨트롤러 선택 우
+            case 'g' : B_controller_selected = 1; break;// 컨트롤러 선택
+            case 'h' : B_pre_game_selected = 1; break;// 선공 게임 선택
+            case 'j' : B_moveCtl = 1; B_X_timerLimit = 7; B_change_left_dir(); break;//왼쪽으로 1속도 이동
+            case 'k' : B_moveCtl = 2; B_X_timerLimit = 6; B_change_left_dir(); break;//왼쪽으로 2속도 이동
+            case 'l' : B_moveCtl = 3; B_X_timerLimit = 5; B_change_left_dir(); break;//왼쪽으로 3속도 이동
+            case 'n' : B_moveCtl = 4; B_X_timerLimit = 4; B_change_left_dir(); break;//왼쪽으로 4속도 이동
+            case 'm' : B_moveCtl = 5; B_X_timerLimit = 3; B_change_left_dir(); break;//왼쪽으로 5속도 이동
+            case 'o' : B_moveCtl = 0; B_move_stop = 1; break;// 정지
+            case 'p' : B_moveCtl = 1; B_X_timerLimit = 7; B_change_right_dir(); break;//오른쪽으로 1속도 이동
+            case 'q' : B_moveCtl = 2; B_X_timerLimit = 6; B_change_right_dir(); break;//오른쪽으로 2속도 이동
+            case 'r' : B_moveCtl = 3; B_X_timerLimit = 5; B_change_right_dir(); break;//오른쪽으로 3속도 이동
+            case 's' : B_moveCtl = 4; B_X_timerLimit = 4; B_change_right_dir(); break;//오른쪽으로 4속도 이동
+            case 't' : B_moveCtl = 5; B_X_timerLimit = 3; B_change_right_dir(); break;//오른쪽으로 5속도 이동
+            case 'u' : B_use_fireball = 1; break;//파이어볼사용
+            case 'v' : B_use_tornado = 1; break;//토네이도 사용
+            case 'w' : B_use_hacking = 1; break;//해킹 사용
+            case 'x' : B_use_EMP = 1; break; //EMP 사용
+            case 'y' : B_use_changeup = 1; break;//CHANGE UP 사용
         }
     }
 }
+
 
 //***************************************************************************************************************//
 //********************************************* function definition *********************************************//
@@ -1621,7 +1620,7 @@ void A_using_item(){//8번째 데이터 A 아이템 사용
     if(new_receive_buffer[4] != 0){
         if((new_receive_buffer[4] & 1) == 1 && (old_receive_buffer[4] & 1)== 0) Serial2.write('O');//파이어볼 사용
         else if((new_receive_buffer[4] & 2) == 2 && (old_receive_buffer[4] & 2)== 0) Serial2.write('P');//토네이도 사용
-        else if((new_receive_buffer[4] & 4) == 4 && (old_receive_buffer[4] & 4)== 0){ B_hacking_check = 1; Serial2.write('Q')}//해킹 사용
+        else if((new_receive_buffer[4] & 4) == 4 && (old_receive_buffer[4] & 4)== 0){ B_hacking_check = 1; Serial2.write('Q');}//해킹 사용
         else if((new_receive_buffer[4] & 8) == 8 && (old_receive_buffer[4] & 8)== 0) B_hacking_check = 0;
         else if((new_receive_buffer[4] & 16) == 16 && (old_receive_buffer[4] & 16)== 0) Serial2.write('R');//EMP 사용
         else if((new_receive_buffer[4] & 32) == 32 && (old_receive_buffer[4] & 32)== 0) Serial2.write('S');//체인지업 사용
@@ -1648,7 +1647,7 @@ void B_using_item(){//5번째 데이터
     if(new_receive_buffer[7] != 0){
         if((new_receive_buffer[7] & 1) == 1 && (old_receive_buffer[7] & 1)== 0) Serial3.write('O');//파이어볼 사용
         else if((new_receive_buffer[7] & 2) == 2 && (old_receive_buffer[7] & 2)== 0) Serial3.write('P');//토네이도 사용
-        else if((new_receive_buffer[7] & 4) == 4 && (old_receive_buffer[7] & 4)== 0){ A_hacking_check = 1; Serial3.write('Q')}//해킹 사용
+        else if((new_receive_buffer[7] & 4) == 4 && (old_receive_buffer[7] & 4)== 0){ A_hacking_check = 1; Serial3.write('Q');}//해킹 사용
         else if((new_receive_buffer[7] & 8) == 8 && (old_receive_buffer[7] & 8)== 0) A_hacking_check = 0;
         else if((new_receive_buffer[7] & 16) == 16 && (old_receive_buffer[7] & 16)== 0) Serial3.write('R');// EMP 사용
         else if((new_receive_buffer[7] & 32) == 32 && (old_receive_buffer[7] & 32)== 0) Serial3.write('S');// 체인지업 사용

@@ -936,7 +936,7 @@ void initing(){
     digitalWrite(ball_Y_dirPin, 0);
     digitalWrite(A_X_dirPin,1);
     digitalWrite(B_X_dirPin,1);
-    ball_X_Cood = X; ball_Y_Cood=0; A_X_Cood = 0; B_X_Cood = 0;
+    ball_X_Cood = 0; ball_Y_Cood=0; A_X_Cood = 0; B_X_Cood = 0;
     ball_X_dir = 0; ball_Y_dir = 0; A_X_dir = 1; B_X_dir =1;
 
     for (int i = 0; i < X/2; i++) {

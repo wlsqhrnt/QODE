@@ -1,8 +1,8 @@
 #include <DueTimer.h>
 #define HORIZONTAL 1
 #define VERTICAL 2
-#define X 1154
-#define Y 1373
+#define X 1960
+#define Y 2710
 #define RACKETSIZE (int)(9*X)/74
 #define BALLSIZE (int)(5.5*X)/74
 #define RACKETSECTOR (int)RACKETSIZE/15
@@ -951,7 +951,6 @@ void initing(){
     digitalWrite(ball_Y_dirPin, 0);
     digitalWrite(A_X_dirPin,1);
     digitalWrite(B_X_dirPin,1);
-    ball_X_Cood = X; ball_Y_Cood=0; A_X_Cood = 0; B_X_Cood = 0;
     ball_X_dir = 0; ball_Y_dir = 0; A_X_dir = 1; B_X_dir =1;
 
     for (int i = 0; i < X/2; i++) {
@@ -963,18 +962,17 @@ void initing(){
         digitalWrite(A_X_stpPin,LOW);
         digitalWrite(B_X_stpPin,LOW);
         delayMicroseconds(400);
-        ball_X_Cood++;
-        ball_Y_Cood++;
-        A_X_Cood++;
-        B_X_Cood++;
     }
     for (int i = 0; i < ((int)(Y/2) - (int)(X/2)) ; i++) {
         digitalWrite(ball_Y_stpPin, HIGH);
         delayMicroseconds(400);
         digitalWrite(ball_Y_stpPin, LOW);
         delayMicroseconds(400);
-        ball_Y_Cood++;
     }
+    ball_X_Cood = X/2;
+    ball_Y_Cood = Y/2;
+    A_X_Cood = X/2;
+    B_X_Cood = X/2;
 }
 //****************************************************************************************************************//
 //**************************************** Bresenham Algorithm function ******************************************//
@@ -1225,6 +1223,10 @@ void serialEvent2(){
 void serialEvent3(){
     if((B_bluetooth_data = Serial3.read()) != -1){ //스마트폰 -> 아두이노 -> PC
         switch(B_bluetooth_data){
+            case 'a' : completion_of_money_input = 1; break; // 동전 투입 완료
+            case 'b' : A_mode_selection_left = 1; break;// 모드 선택 좌
+            case 'c' : A_mode_selection_right = 1; break;// 모드 선택 우
+            case 'd' : A_mode_selected = 1; break;// 모드 선택
             case 'e' : B_controller_left = 1; break;// 컨트롤러 선택 좌
             case 'f' : B_controller_right = 1; break;// 컨트롤러 선택 우
             case 'g' : B_controller_selected = 1; break;// 컨트롤러 선택

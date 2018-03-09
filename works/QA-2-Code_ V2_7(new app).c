@@ -1594,19 +1594,19 @@ void ball_stat(){//9번째 데이터
         startDir = 0;
         step_ = 0;
         ball_X_timerCnt = 0;
-        ball_X_timerLimit = 8;//start speed
+        ball_X_timerLimit = 3;//start speed
         ball_X_timercheck = 0;
         ball_X_speedCheck = 0;
         ball_Y_timerCnt = 0;
-        ball_Y_timerLimit = 15;//start speed
+        ball_Y_timerLimit = 3;//start speed
         ball_Y_timercheck = 0;
         ball_Y_speedCheck = 0;
         A_X_timerCnt = 0;
-        A_X_timerLimit = 8;//start speed
+        A_X_timerLimit = 3;//start speed
         A_X_timercheck = 0;
         A_X_speedCheck = 0;
         B_X_timerCnt = 0;
-        B_X_timerLimit = 8;//start speed
+        B_X_timerLimit = 3;//start speed
         B_X_timercheck = 0;
         B_X_speedCheck = 0;
         collision_check2 = 0;
@@ -1695,12 +1695,12 @@ void A_Collision_check(){
             setAngle(angle,speed);
             collision_check2 = 0;
             A_return = 1;
-        }else if(A_X_Cood - RACKETSECTOR*15/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood - RACKETSECTOR*9/2){//40
+        }else if(A_X_Cood - RACKETSECTOR*17/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood - RACKETSECTOR*9/2){//40
             angle = 140;
             setAngle(angle,speed);
             collision_check2 = 0;
             A_return = 1;
-        }else if(ball_X_Cood - BALLSIZE/2 <= A_X_Cood - RACKETSECTOR*15/2 && A_X_Cood - RACKETSECTOR*15/2 <= ball_X_Cood + BALLSIZE/2){//30
+        }else if(ball_X_Cood - BALLSIZE/2 <= A_X_Cood - RACKETSECTOR*17/2 && A_X_Cood - RACKETSECTOR*17/2 <= ball_X_Cood + BALLSIZE/2){//30
             angle = 150;
             setAngle(angle,speed);
             collision_check2 = 0;
@@ -1727,12 +1727,12 @@ void A_Collision_check(){
             setAngle(angle,speed);
             collision_check2 = 0;
             A_return = 1;
-        }else if(A_X_Cood + RACKETSECTOR*9/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood + RACKETSECTOR*15/2){//40
+        }else if(A_X_Cood + RACKETSECTOR*9/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood + RACKETSECTOR*17/2){//40
             angle = 40;
             setAngle(angle,speed);
             collision_check2 = 0;
             A_return = 1;
-        }else if(ball_X_Cood - BALLSIZE/2 <= A_X_Cood + RACKETSECTOR*15/2 && A_X_Cood + RACKETSECTOR*15/2 <= ball_X_Cood + BALLSIZE/2){//30
+        }else if(ball_X_Cood - BALLSIZE/2 <= A_X_Cood + RACKETSECTOR*17/2 && A_X_Cood + RACKETSECTOR*17/2 <= ball_X_Cood + BALLSIZE/2){//30
             angle = 30;
             setAngle(angle,speed);
             collision_check2 = 0;
@@ -1746,12 +1746,12 @@ void A_Collision_check(){
     }
     if(collision_check2 == 1){//Goal B득점
         Serial2.write('W');
-        Serial3.write('W');
         B_get_score = 1;
         restart_check = 1;
         angle = getAngle(angle,HORIZONTAL);
         setAngle(angle,speed);
         digitalWrite(led_bottom_pin,HIGH);
+        Serial3.write('W');
     }
 }
 void B_Collision_check(){
@@ -1776,12 +1776,12 @@ void B_Collision_check(){
             setAngle(angle,speed);
             collision_check2 = 0;
             B_return = 1;
-        }else if(B_X_Cood - RACKETSECTOR*15/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood - RACKETSECTOR*9/2){//40
+        }else if(B_X_Cood - RACKETSECTOR*17/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood - RACKETSECTOR*9/2){//40
             angle = 220;
             setAngle(angle,speed);
             collision_check2 = 0;
             B_return = 1;
-        }else if(ball_X_Cood - BALLSIZE/2 <= B_X_Cood - RACKETSECTOR*15/2 && B_X_Cood - RACKETSECTOR*15/2 <= ball_X_Cood + BALLSIZE/2){//30
+        }else if(ball_X_Cood - BALLSIZE/2 <= B_X_Cood - RACKETSECTOR*17/2 && B_X_Cood - RACKETSECTOR*17/2 <= ball_X_Cood + BALLSIZE/2){//30
             angle = 210;
             setAngle(angle,speed);
             collision_check2 = 0;
@@ -1808,13 +1808,13 @@ void B_Collision_check(){
             setAngle(angle,speed);
             collision_check2 = 0;
             B_return = 1;
-        }else if(B_X_Cood + RACKETSECTOR*9/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood + RACKETSECTOR*15/2){//40
+        }else if(B_X_Cood + RACKETSECTOR*9/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood + RACKETSECTOR*17/2){//40
             angle = 320;
             setAngle(angle,speed);
             collision_check2 = 0;
             B_return = 1;
         }
-        else if(ball_X_Cood - BALLSIZE/2 <= B_X_Cood + RACKETSECTOR*15/2 && B_X_Cood + RACKETSECTOR*15/2 <= ball_X_Cood + BALLSIZE/2){//30
+        else if(ball_X_Cood - BALLSIZE/2 <= B_X_Cood + RACKETSECTOR*17/2 && B_X_Cood + RACKETSECTOR*17/2 <= ball_X_Cood + BALLSIZE/2){//30
             angle = 330;
             setAngle(angle,speed);
             collision_check2 = 0;
@@ -1828,12 +1828,12 @@ void B_Collision_check(){
     }
     if(collision_check2 == 1){//Goal A득점
         Serial2.write('V');
-        Serial3.write('V');
         A_get_score = 1;
         restart_check = 1;
         angle = getAngle(angle,HORIZONTAL);
         setAngle(angle,speed);
         digitalWrite(led_top_pin,HIGH);
+        Serial3.write('V');
     }
 }
 void A_change_left_dir(){

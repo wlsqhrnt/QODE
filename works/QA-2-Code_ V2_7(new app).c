@@ -1193,10 +1193,10 @@ void serialEvent1(){//PC
 void serialEvent2(){
     if((A_bluetooth_data = Serial2.read()) != -1){ //스마트폰 -> 아두이노 -> PC
         switch(A_bluetooth_data){
-            case 'a' : completion_of_money_input = 1; break; // 동전 투입 완료
+            case 'a' : completion_of_money_input = 1; Serial3.write('A'); break; // 동전 투입 완료
             case 'b' : A_mode_selection_left = 1; break;// 모드 선택 좌
             case 'c' : A_mode_selection_right = 1; break;// 모드 선택 우
-            case 'd' : A_mode_selected = 1; break;// 모드 선택
+            case 'd' : A_mode_selected = 1; Serial3.write('D'); break;// 모드 선택
             case 'e' : A_controller_left = 1; break;// 컨트롤러 선택 좌
             case 'f' : A_controller_right = 1; break;// 컨트롤러 선택 우
             case 'g' : A_controller_selected = 1; break;// 컨트롤러 선택
@@ -1223,10 +1223,10 @@ void serialEvent2(){
 void serialEvent3(){
     if((B_bluetooth_data = Serial3.read()) != -1){ //스마트폰 -> 아두이노 -> PC
         switch(B_bluetooth_data){
-            case 'a' : completion_of_money_input = 1; break; // 동전 투입 완료
+            case 'a' : completion_of_money_input = 1; Serial2.write('A'); break; // 동전 투입 완료
             case 'b' : A_mode_selection_left = 1; break;// 모드 선택 좌
             case 'c' : A_mode_selection_right = 1; break;// 모드 선택 우
-            case 'd' : A_mode_selected = 1; break;// 모드 선택
+            case 'd' : A_mode_selected = 1; Serial2.write('D'); break;// 모드 선택
             case 'e' : B_controller_left = 1; break;// 컨트롤러 선택 좌
             case 'f' : B_controller_right = 1; break;// 컨트롤러 선택 우
             case 'g' : B_controller_selected = 1; break;// 컨트롤러 선택

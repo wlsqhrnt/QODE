@@ -959,7 +959,7 @@ void initing(){
             delayMicroseconds(delay_);
         }
     }
-    while(!(digitalRead(ball_Y_limitSwitch1_1) == LOW)){
+    while(!(digitalRead(ball_Y_limitSwitch1_2) == LOW)){
         digitalWrite(ball_Y_stpPin, HIGH);
         delayMicroseconds(400);
         digitalWrite(ball_Y_stpPin, LOW);

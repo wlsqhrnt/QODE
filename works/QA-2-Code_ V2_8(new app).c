@@ -1817,6 +1817,7 @@ void A_Collision_check(){
         setAngle(angle,speed);
         digitalWrite(led_bottom_pin,HIGH);
         Serial3.write('W');
+        racketReset();
     }
 }
 void B_Collision_check(){
@@ -1899,6 +1900,7 @@ void B_Collision_check(){
         setAngle(angle,speed);
         digitalWrite(led_top_pin,HIGH);
         Serial3.write('V');
+        racketReset();
     }
 }
 void A_change_left_dir(){

@@ -1691,6 +1691,53 @@ void B_choose(){//3번째 데이터
 //******************************************************************************************************************//
 //*********************************************** The others function **********************************************//
 //******************************************************************************************************************//
+void racketReset()
+{
+    char check = 0;
+    char A_X_check = 0;
+    char B_X_check = 0;
+    int delay_ = 100;
+    digitalWrite(A_X_dirPin,0);
+    digitalWrite(B_X_dirPin,0);
+    while(check != 2){
+        if(A_X_check == 0){
+            if(digitalRead(A_X_limitSwitch1) == LOW){
+                A_X_check = 1;
+                check += 1;
+                delay_+=100;
+            }
+            digitalWrite(A_X_stpPin, HIGH);
+            delayMicroseconds(delay_);
+            digitalWrite(A_X_stpPin, LOW);
+            delayMicroseconds(delay_);
+        }
+        if(B_X_check == 0){
+            if(digitalRead(B_X_limitSwitch1) == LOW){
+                B_X_check = 1;
+                check += 1;
+                delay_+=100;
+            }
+            digitalWrite(B_X_stpPin, HIGH);
+            delayMicroseconds(delay_);
+            digitalWrite(B_X_stpPin, LOW);
+            delayMicroseconds(delay_);
+        }
+    }
+    digitalWrite(A_X_dirPin,1);
+    digitalWrite(B_X_dirPin,1);
+    A_X_dir = 1; B_X_dir =1;
+    for (int i = 0; i < X/2; i++) {
+        digitalWrite(A_X_stpPin,HIGH);
+        digitalWrite(B_X_stpPin,HIGH);
+        delayMicroseconds(400);
+        digitalWrite(A_X_stpPin,LOW);
+        digitalWrite(B_X_stpPin,LOW);
+        delayMicroseconds(400);
+    }
+    A_X_Cood = X/2;
+    B_X_Cood = X/2;
+}
+
 void A_Collision_check(){
     if(ball_X_Cood < A_X_Cood){//라켓의 왼쪽
         if(A_X_Cood - RACKETSECTOR/2 <= ball_X_Cood){//90

@@ -444,6 +444,9 @@ void limitSwitchCheck(void)
     if(digitalRead(ball_Y_limitSwitch1_2) == LOW && ball_Y_dirCheck1 == 1 && ball_Y_dir == 1){
         Serial2.write('U');
         collision_check2 = 1;
+        ball_Y_dirCheck1 = 0;
+        ball_Y_dir = 0;
+        digitalWrite(ball_Y_dirPin,ball_Y_dir);
         ball_Y_Cood = 0;
         ball_Y_speedCheck = 0;
         ball_Y_timerLimit = 3;
@@ -453,9 +456,7 @@ void limitSwitchCheck(void)
         A_Collision_check();
         B_item = 0;
         Serial3.write('U');
-        ball_Y_dirCheck1 = 0;
-        ball_Y_dir = 0;
-        digitalWrite(ball_Y_dirPin,ball_Y_dir);
+        
     }
     if(digitalRead(ball_Y_limitSwitch2_1) == LOW && ball_Y_dirCheck2 == 0 && ball_Y_dir == 0){
         ball_Y_dirCheck2 = 1;
@@ -463,6 +464,9 @@ void limitSwitchCheck(void)
     if(digitalRead(ball_Y_limitSwitch2_2) == LOW && ball_Y_dirCheck2 == 1 && ball_Y_dir == 0){
         Serial2.write('U');
         collision_check2 = 1;
+        ball_Y_dirCheck2 = 0;
+        ball_Y_dir = 1;
+        digitalWrite(ball_Y_dirPin,ball_Y_dir);
         ball_Y_Cood = 2720;
         ball_Y_speedCheck = 0;
         ball_Y_timerLimit = 3;
@@ -472,9 +476,7 @@ void limitSwitchCheck(void)
         B_Collision_check();
         A_item = 0;
         Serial3.write('U');
-        ball_Y_dirCheck2 = 0;
-        ball_Y_dir = 1;
-        digitalWrite(ball_Y_dirPin,ball_Y_dir);
+        
     }
     if(digitalRead(A_X_limitSwitch1) == LOW && A_X_dir == 0){
         Serial2.write('U');

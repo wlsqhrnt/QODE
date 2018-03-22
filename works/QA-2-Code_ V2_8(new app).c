@@ -8,112 +8,112 @@
 #define RACKETSECTOR (int)RACKETSIZE/15
 
 int startCheck = 0;
-char send_buffer[22];
+volatile char send_buffer[22];
 int startAngle;
-unsigned char new_receive_buffer[14];
-unsigned char old_receive_buffer[14] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+volatile unsigned char new_receive_buffer[14];
+volatile unsigned char old_receive_buffer[14] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 // detail stat variable for check 상시 1 or 0 으로 바뀌며 PC쪽으로 데이터를 수신할때 하는 버퍼값을 정하는 변수 
 // send data variable
-char wall_crash = 0; //벽에 부딪힘
-char A_return = 0; //A 받아침
-char B_return = 0; //B 받아침
+volatile char wall_crash = 0; //벽에 부딪힘
+volatile char A_return = 0; //A 받아침
+volatile char B_return = 0; //B 받아침
 char A_get_score = 0; // A 득점
 char B_get_score = 0; // B 득점
-char completion_of_money_input = 0; // 동전 투입 완료
-char A_mode_selection_left = 0; //라켓 A 모드 선택 좌
-char A_mode_selection_right = 0; //라켓 A 모드 선택 우
-char A_mode_selected = 0; //라켓 A 모드 선택 완료
-char A_controller_left = 0; // 라켓 A 컨트롤러 선택 좌
-char A_controller_right = 0; // 라켓 A 컨트롤러 선택 우
-char A_controller_selected = 0; // 라켓 A 컨트롤러 선택 완료
-char A_pre_game_selected = 0; //라켓 A 선공게임 완료
-char A_use_fireball = 0; //라켓 A 파이어볼 사용
-char A_use_tornado = 0; //라켓 A 토네이도 사용
-char A_use_hacking = 0; //라켓 A 해킹 사용
-char A_release_hacking = 0; // 라켓 A 해킹 해제
-char A_use_EMP = 0; //라켓 A EMP사용
-char A_use_changeup = 0;//라켓 A change up 사용
-char A_move_right = 0;// 라켓 A 오른쪽으로 움직임
-char A_move_left = 0;//라켓 A 왼쪽으로 움직임
-char A_move_stop = 0;//라켓 A 멈춤
-char B_controller_left = 0;//라켓 B 컨트롤러 선택 좌
-char B_controller_right = 0;//라켓 B 컨트롤러 선택 우
-char B_controller_selected = 0; // 라켓 B 컨트롤러 선택 완료
-char B_pre_game_selected = 0;//라켓 B 선공게임 완료
-char B_use_fireball = 0;//라켓 B 파이어볼 사용
-char B_use_tornado = 0;//라켓 B 토네이도 사용
-char B_use_hacking = 0;//라켓 B 해킹 사용
-char B_release_hacking = 0;//라켓 B 해킹 해제
-char B_use_EMP = 0;// 라켓 B EMP사용
-char B_use_changeup = 0;//라켓 B changeup 사용
-char B_move_right = 0;//라켓 B 오른쪽 움직임
-char B_move_left = 0;//라켓 B 왼쪽으로 움직임
-char B_move_stop = 0;//라켓 B 멈춤
-char insert_coin_1000 = 0;//1000원 투입
-char insert_coin_5000 = 0;//5000원 투입
-char insert_coin_10000 = 0;//10000원 투입시
+volatile char completion_of_money_input = 0; // 동전 투입 완료
+volatile char A_mode_selection_left = 0; //라켓 A 모드 선택 좌
+volatile char A_mode_selection_right = 0; //라켓 A 모드 선택 우
+volatile char A_mode_selected = 0; //라켓 A 모드 선택 완료
+volatile char A_controller_left = 0; // 라켓 A 컨트롤러 선택 좌
+volatile char A_controller_right = 0; // 라켓 A 컨트롤러 선택 우
+volatile char A_controller_selected = 0; // 라켓 A 컨트롤러 선택 완료
+volatile char A_pre_game_selected = 0; //라켓 A 선공게임 완료
+volatile char A_use_fireball = 0; //라켓 A 파이어볼 사용
+volatile char A_use_tornado = 0; //라켓 A 토네이도 사용
+volatile char A_use_hacking = 0; //라켓 A 해킹 사용
+volatile char A_release_hacking = 0; // 라켓 A 해킹 해제
+volatile char A_use_EMP = 0; //라켓 A EMP사용
+volatile char A_use_changeup = 0;//라켓 A change up 사용
+volatile char A_move_right = 0;// 라켓 A 오른쪽으로 움직임
+volatile char A_move_left = 0;//라켓 A 왼쪽으로 움직임
+volatile char A_move_stop = 0;//라켓 A 멈춤
+volatile char B_controller_left = 0;//라켓 B 컨트롤러 선택 좌
+volatile char B_controller_right = 0;//라켓 B 컨트롤러 선택 우
+volatile char B_controller_selected = 0; // 라켓 B 컨트롤러 선택 완료
+volatile char B_pre_game_selected = 0;//라켓 B 선공게임 완료
+volatile char B_use_fireball = 0;//라켓 B 파이어볼 사용
+volatile char B_use_tornado = 0;//라켓 B 토네이도 사용
+volatile char B_use_hacking = 0;//라켓 B 해킹 사용
+volatile char B_release_hacking = 0;//라켓 B 해킹 해제
+volatile char B_use_EMP = 0;// 라켓 B EMP사용
+volatile char B_use_changeup = 0;//라켓 B changeup 사용
+volatile char B_move_right = 0;//라켓 B 오른쪽 움직임
+volatile char B_move_left = 0;//라켓 B 왼쪽으로 움직임
+volatile char B_move_stop = 0;//라켓 B 멈춤
+volatile char insert_coin_1000 = 0;//1000원 투입
+volatile char insert_coin_5000 = 0;//5000원 투입
+volatile char insert_coin_10000 = 0;//10000원 투입시
 // 3번 송신을 위한 카운트 변수
-char wall_crashCnt = 0;
-char A_returnCnt = 0; //A 받아침
-char B_returnCnt = 0; //B 받아침
-char A_get_scoreCnt = 0; // A 득점
-char B_get_scoreCnt = 0; // B 득점
-char A_pre_game_selectedCnt = 0;
-char A_controller_selectedCnt = 0;
-char A_controller_rightCnt = 0;
-char A_controller_leftCnt = 0;
-char A_mode_selectedCnt = 0;
-char A_mode_selection_rightCnt = 0;
-char A_mode_selection_leftCnt = 0;
-char completion_of_money_inputCnt = 0;
-char A_use_fireballCnt = 0;
-char A_use_tornadoCnt = 0;
-char A_use_hackingCnt = 0;
-char A_release_hackingCnt = 0;
-char A_use_EMPCnt = 0;
-char A_use_changeupCnt = 0;
-char B_pre_game_selectedCnt = 0;
-char B_controller_selectedCnt = 0;
-char B_controller_rightCnt = 0;
-char B_controller_leftCnt = 0;
-char B_use_fireballCnt = 0;
-char B_use_tornadoCnt = 0;
-char B_use_hackingCnt  = 0;
-char B_release_hackingCnt = 0;
-char B_use_EMPCnt = 0;
-char B_use_changeupCnt = 0;
-char insert_coin_1000Cnt = 0;
-char insert_coin_5000Cnt = 0;
-char insert_coin_10000Cnt = 0;
+volatile char wall_crashCnt = 0;
+volatile char A_returnCnt = 0; //A 받아침
+volatile char B_returnCnt = 0; //B 받아침
+volatile char A_get_scoreCnt = 0; // A 득점
+volatile char B_get_scoreCnt = 0; // B 득점
+volatile char A_pre_game_selectedCnt = 0;
+volatile char A_controller_selectedCnt = 0;
+volatile char A_controller_rightCnt = 0;
+volatile char A_controller_leftCnt = 0;
+volatile char A_mode_selectedCnt = 0;
+volatile char A_mode_selection_rightCnt = 0;
+volatile char A_mode_selection_leftCnt = 0;
+volatile char completion_of_money_inputCnt = 0;
+volatile char A_use_fireballCnt = 0;
+volatile char A_use_tornadoCnt = 0;
+volatile char A_use_hackingCnt = 0;
+volatile char A_release_hackingCnt = 0;
+volatile char A_use_EMPCnt = 0;
+volatile char A_use_changeupCnt = 0;
+volatile char B_pre_game_selectedCnt = 0;
+volatile char B_controller_selectedCnt = 0;
+volatile char B_controller_rightCnt = 0;
+volatile char B_controller_leftCnt = 0;
+volatile char B_use_fireballCnt = 0;
+volatile char B_use_tornadoCnt = 0;
+volatile char B_use_hackingCnt  = 0;
+volatile char B_release_hackingCnt = 0;
+volatile char B_use_EMPCnt = 0;
+volatile char B_use_changeupCnt = 0;
+volatile char insert_coin_1000Cnt = 0;
+volatile char insert_coin_5000Cnt = 0;
+volatile char insert_coin_10000Cnt = 0;
 //stat variable for check 디테일한 상태 변수들의 값을 확인하고 변하는 값들.
-unsigned char ball_check = 0; //벽 충돌 여부 및 득점인지 받아쳤는지를 알려주는 값
-unsigned char A_game_ready = 0;// A 플레이어의 게임 시작 전 상태를 알려주는 값
-unsigned char A_use_item = 0;// A 플레이어의 게임중 아이템 사용 상태를 알려주는 값
-unsigned char A_move = 0;// A 플레이어의 게임중 움직임 상태를 알려주는 값
-unsigned char B_game_ready = 0;// B 플레이어의 게임 시작 전 상태를 알려주는 값
-unsigned char B_use_item = 0;// B 플레이어의 게임중 아이템 사용 상태를 알려주는 값
-unsigned char B_move = 0;// B 플레이어의 게임중 움직임 상태를 알려주는 값
-unsigned char insert_coin = 0;// 플레이어들의 동전 투입 상태를 알려주는 값
+volatile unsigned char ball_check = 0; //벽 충돌 여부 및 득점인지 받아쳤는지를 알려주는 값
+volatile unsigned char A_game_ready = 0;// A 플레이어의 게임 시작 전 상태를 알려주는 값
+volatile unsigned char A_use_item = 0;// A 플레이어의 게임중 아이템 사용 상태를 알려주는 값
+volatile unsigned char A_move = 0;// A 플레이어의 게임중 움직임 상태를 알려주는 값
+volatile unsigned char B_game_ready = 0;// B 플레이어의 게임 시작 전 상태를 알려주는 값
+volatile unsigned char B_use_item = 0;// B 플레이어의 게임중 아이템 사용 상태를 알려주는 값
+volatile unsigned char B_move = 0;// B 플레이어의 게임중 움직임 상태를 알려주는 값
+volatile unsigned char insert_coin = 0;// 플레이어들의 동전 투입 상태를 알려주는 값
 // receive data variable
 //공 아이템 사용
-char move_fireball = 0;
-char move_tornado = 0;
-char move_change_up = 0;
+volatile char move_fireball = 0;
+volatile char move_tornado = 0;
+volatile char move_change_up = 0;
 //Coordinates
 long ball_X_Cood = 0; // 공의 X 좌표
 long ball_Y_Cood = 0;//  공의 Y 좌표
 long A_X_Cood = 0; // 라켓 A의 좌표
 long B_X_Cood = 0;// 라켓 B의 좌표
 //Coordinates for send data
-unsigned char ball_X_Cood_High = 0;
-unsigned char ball_X_Cood_Low = 0;
-unsigned char ball_Y_Cood_High = 0;
-unsigned char ball_Y_Cood_Low = 0;
-unsigned char A_X_Cood_High = 0;
-unsigned char A_X_Cood_Low = 0;
-unsigned char B_X_Cood_High = 0;
-unsigned char B_X_Cood_Low = 0;
-unsigned char checkSum = 0;// start와 end 필드를 제외한 나머지 필드들의 합 XOR FF 한 값.
+volatile unsigned char ball_X_Cood_High = 0;
+volatile unsigned char ball_X_Cood_Low = 0;
+volatile unsigned char ball_Y_Cood_High = 0;
+volatile unsigned char ball_Y_Cood_Low = 0;
+volatile unsigned char A_X_Cood_High = 0;
+volatile unsigned char A_X_Cood_Low = 0;
+volatile unsigned char B_X_Cood_High = 0;
+volatile unsigned char B_X_Cood_Low = 0;
+volatile unsigned char checkSum = 0;// start와 end 필드를 제외한 나머지 필드들의 합 XOR FF 한 값.
 //ball variable
 char ball_X_dir = 0;
 char ball_Y_dir = 0;
@@ -134,30 +134,28 @@ int ball_Y_limitSwitch2_2 = 40;
 int ball_Y_dirCheck1 = 0;//레이저 센서 체크
 int ball_Y_dirCheck2 = 0;
 //A_racket variable
-char A_X_dir = 0;
+volatile char A_X_dir = 0;
 int A_X_stpPin = 6;
 int A_X_dirPin = 7;
 int A_X_limitSwitch1 = 26;
 int A_X_limitSwitch2 = 27;
-char A_bluetooth_data = 0;
-char A_hacking_check = 0; //상대방이 해킹 아이템을 사용하면 1 아니면 0
-char A_GoStop = 0;
-char A_moveCtl = 0;
+volatile char A_bluetooth_data = 0;
+volatile char A_hacking_check = 0; //상대방이 해킹 아이템을 사용하면 1 아니면 0
+volatile char A_moveCtl = 0;
 //B_racket variable
-char B_X_dir = 0;
+volatile char B_X_dir = 0;
 int B_X_stpPin = 8;
 int B_X_dirPin = 9;
 int B_X_limitSwitch1 = 28;
 int B_X_limitSwitch2 = 29;
-char B_bluetooth_data = 0;
-char B_hacking_check;//상대방이 해킹 아이템을 사용하면 1 아니면 0
-char B_GoStop = 0;
-char B_moveCtl = 0;
+volatile char B_bluetooth_data = 0;
+volatile char B_hacking_check;//상대방이 해킹 아이템을 사용하면 1 아니면 0
+volatile char B_moveCtl = 0;
 //ect variable
 char firstAt = 0; // 시작 방향이 어디인지.
 char startDir = 0;
-int step_ =  0;
-int data_len = 0;
+volatile int step_ =  0;
+volatile int data_len = 0;
 int collision_check2 = 0;
 int firstCheck = 0;
 //led GPIO
@@ -170,24 +168,25 @@ int led_right_count = 0;
 char left_startCnt = 0;
 char right_startCnt = 0;
 //timer variable
-int ball_X_timerCnt = 0;
-int ball_X_timerLimit = 3;//start speed
-int ball_X_timercheck = 0;
-int ball_X_speedCheck = 0;
-int ball_X_maxSpeed = 0;
-int ball_Y_timerCnt = 0;
-int ball_Y_timerLimit = 3;//start speed
-int ball_Y_timercheck = 0;
-int ball_Y_speedCheck = 0;
-int ball_Y_maxSpeed = 0;
-int A_X_timerCnt = 0;
-int A_X_timerLimit = 3;//start speed
-int A_X_timercheck = 0;
-int A_X_speedCheck = 0;
-int B_X_timerCnt = 0;
-int B_X_timerLimit = 3;//start speed
-int B_X_timercheck = 0;
-int B_X_speedCheck = 0;
+volatile int ball_X_timerCnt = 0;
+volatile int ball_X_timerLimit = 3;//start speed
+volatile int ball_X_timercheck = 0;
+volatile int ball_X_speedCheck = 0;
+volatile int ball_X_maxSpeed = 0;
+volatile int ball_Y_timerCnt = 0;
+volatile int ball_Y_timerLimit = 3;//start speed
+volatile int ball_Y_timercheck = 0;
+volatile int ball_Y_speedCheck = 0;
+volatile int ball_Y_maxSpeed = 0;
+volatile int A_X_timerCnt = 0;
+volatile int A_X_timerLimit = 3;//start speed
+volatile int A_X_timercheck = 0;
+volatile int A_X_speedCheck = 0;
+volatile int B_X_timerCnt = 0;
+volatile int B_X_timerLimit = 3;//start speed
+volatile int B_X_timercheck = 0;
+volatile int B_X_speedCheck = 0;
+//brensham variable
 long p_value = 0; // line 함수 내부에서 사용하는 전역 변수
 long inc_2dy = 0; // line 함수 내부에서 사용하는 전역 변수
 long inc_2dydx = 0; // line 함수 내부에서 사용하는 전역 변수
@@ -219,8 +218,8 @@ int B_item = 0;
 
 //
 
-int restart_check = 0;
-int restartCnt = 0;
+volatile int restart_check = 0;
+volatile int restartCnt = 0;
 //function prototype
 void serial_send_data();
 void ball_X_Cood_function();
@@ -1609,8 +1608,6 @@ void ball_stat(){//9번째 데이터
         ball_Y_dir = 0;
         A_X_dir = 0;
         B_X_dir = 0;
-        A_GoStop = 0;
-        B_GoStop = 0;
         startDir = 0;
         step_ = 0;
         ball_X_timerCnt = 0;

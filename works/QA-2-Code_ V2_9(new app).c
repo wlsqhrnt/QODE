@@ -263,8 +263,10 @@ void A_Collision_check(void);
 void B_Collision_check(void);
 void restart(void);
 
-void serial2Interrupt(void);
-void serial3Interrupt(void);
+void serial2InterruptBeforeInGame(void);
+void serial2InterruptAfterInGame(void);
+void serial3InterruptBeforeInGame(void);
+void serial3InterruptAfterInGame(void);
 
 void initRandomFunction(void);
 void initPinConfiguration(void);
@@ -351,6 +353,10 @@ void firstCheckFuntion(void)
         }
         startCheck = 1;
     }
+    if(A_bluetooth_data != 0)
+        serial2InterruptBeforeInGame();
+    if(B_bluetooth_data != 0)
+        serial3InterruptBeforeInGame();
     if(firstAt == 1){ //A 선공
         Serial2.write('U');
         Serial3.write('U');
@@ -914,9 +920,9 @@ void gameControl(void)
     ledControl();
     itemControl();
     if(A_bluetooth_data != 0)
-        serial2Interrupt();
+        serial2InterruptAfterInGame();
     if(B_bluetooth_data != 0)
-        serial3Interrupt();
+        serial3InterruptAfterInGame();
 }
 void initing(void)
 {
@@ -1936,7 +1942,7 @@ void B_change_right_dir(void)
     }
     B_move_right = 1;
 }
-void serial2Interrupt(void)
+void serial2InterruptBeforeInGame(void)
 {
     switch(A_bluetooth_data){
         case 'a' : completion_of_money_input = 1; Serial3.write('A'); break; // 동전 투입 완료
@@ -1947,6 +1953,12 @@ void serial2Interrupt(void)
         case 'f' : A_controller_right = 1; break;// 컨트롤러 선택 우
         case 'g' : A_controller_selected = 1; break;// 컨트롤러 선택
         case 'h' : A_pre_game_selected = 1; break;// 선공 게임 선택
+    }
+    A_bluetooth_data = 0;
+}
+void serial2InterruptAfterInGame(void)
+{
+    switch(A_bluetooth_data){
         case 'j' : A_moveCtl = 1; A_X_timerLimit = 7; A_change_left_dir(); break;//왼쪽으로 1속도 이동
         case 'k' : A_moveCtl = 2; A_X_timerLimit = 6; A_change_left_dir(); break;//왼쪽으로 2속도 이동
         case 'l' : A_moveCtl = 3; A_X_timerLimit = 5; A_change_left_dir(); break;//왼쪽으로 3속도 이동
@@ -1966,7 +1978,7 @@ void serial2Interrupt(void)
     }
     A_bluetooth_data = 0;
 }
-void serial3Interrupt(void)
+void serial3InterruptBeforeInGame(void)
 {
     switch(B_bluetooth_data){
         case 'a' : completion_of_money_input = 1; Serial2.write('A'); break; // 동전 투입 완료
@@ -1977,6 +1989,12 @@ void serial3Interrupt(void)
         case 'f' : B_controller_right = 1; break;// 컨트롤러 선택 우
         case 'g' : B_controller_selected = 1; break;// 컨트롤러 선택
         case 'h' : B_pre_game_selected = 1; break;// 선공 게임 선택
+    } 
+    B_bluetooth_data = 0;
+}
+void serial3InterruptAfterInGame(void)
+{
+    switch(B_bluetooth_data){
         case 'j' : B_moveCtl = 1; B_X_timerLimit = 7; B_change_left_dir(); break;//왼쪽으로 1속도 이동
         case 'k' : B_moveCtl = 2; B_X_timerLimit = 6; B_change_left_dir(); break;//왼쪽으로 2속도 이동
         case 'l' : B_moveCtl = 3; B_X_timerLimit = 5; B_change_left_dir(); break;//왼쪽으로 3속도 이동

@@ -13,6 +13,9 @@ int startAngle;
 volatile unsigned char new_receive_buffer[14];
 volatile unsigned char old_receive_buffer[14] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 // detail stat variable for check 상시 1 or 0 으로 바뀌며 PC쪽으로 데이터를 수신할때 하는 버퍼값을 정하는 변수 
+
+volatile char serial1InterruptCheck = 0;
+
 // send data variable
 volatile char wall_crash = 0; //벽에 부딪힘
 volatile char A_return = 0; //A 받아침
@@ -263,6 +266,7 @@ void A_Collision_check(void);
 void B_Collision_check(void);
 void restart(void);
 
+void serial1Interrupt(void);
 void serial2InterruptBeforeInGame(void);
 void serial2InterruptAfterInGame(void);
 void serial3InterruptBeforeInGame(void);
@@ -353,6 +357,8 @@ void firstCheckFuntion(void)
         }
         startCheck = 1;
     }
+    if(serial1InterruptCheck != 0)
+        serial1Interrupt();
     if(A_bluetooth_data != 0)
         serial2InterruptBeforeInGame();
     if(B_bluetooth_data != 0)
@@ -920,6 +926,8 @@ void gameControl(void)
     rackectMoveControl();
     ledControl();
     itemControl();
+    if(serial1InterruptCheck != 0)
+        serial1Interrupt();
     if(A_bluetooth_data != 0)
         serial2InterruptAfterInGame();
     if(B_bluetooth_data != 0)
@@ -1210,28 +1218,34 @@ void serialEvent1(void)
                 checkSum_check = checkSum_check ^ 0xFF;
                 if(checkSum_check == data){
                     new_receive_buffer[step_] = data;
-                    serial_send_data();
-                    ball_move_item();
-                    ball_stat();
-                    A_using_item();
-                    A_get_item();
-                    B_using_item();
-                    B_get_item();
-                    if(firstCheck == 0){
-                        A_choose();
-                        B_choose(); 
-                    }
                 }
                 checkSum_check = 0;
                 step_ = 0;
-                for(int i = 0;i<14;i++){
-                    old_receive_buffer[i] = new_receive_buffer[i];
-                }
+                serial1InterruptCheck = 1;
             }
         }
     }
 }
-
+void serial1Interrupt(void)
+{
+    if(serial1InterruptCheck == 1){
+        serial_send_data();
+        ball_move_item();
+        ball_stat();
+        A_using_item();
+        A_get_item();
+        B_using_item();
+        B_get_item();
+        if(firstCheck == 0){
+            A_choose();
+            B_choose(); 
+        }
+        for(int i = 0;i<14;i++){
+            old_receive_buffer[i] = new_receive_buffer[i];
+        }
+        serial1InterruptCheck = 0;
+    }
+}
 void serialEvent2(void)
 {
     if((A_bluetooth_data = Serial2.read()) != -1){ //스마트폰 -> 아두이노 -> PC
@@ -2021,6 +2035,5 @@ void loop(void)
         firstCheckFuntion();
     }else if(firstCheck == 1){ // 선공게임 정해진 후 ( 게임 중 )
         gameControl();
-    }
-    
+    }  
 }

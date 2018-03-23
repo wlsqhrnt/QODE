@@ -349,12 +349,7 @@ void firstCheckFuntion(void)
 {
     if(startCheck == 0){
         initing();
-        int randMum = rand() % 2;
-        if(randMum == 0){
-            startAngle = 45;
-        }else if(randMum){
-            startAngle = 135;
-        }
+        startAngle = 90;
         startCheck = 1;
     }
     if(serial1InterruptCheck != 0)
@@ -366,17 +361,17 @@ void firstCheckFuntion(void)
     if(firstAt == 1){ //A 선공
         Serial2.write('U');
         Serial3.write('U');
-        ball_Y_dir = 0;
+        angle = getAngle(startAngle,HORIZONTAL);
+        ball_Y_dir = 1;
         digitalWrite(ball_Y_dirPin,ball_Y_dir);
         firstCheck = 1;
         setAngle(startAngle,speed);
     }else if(firstAt == 2){//B선공 
         Serial2.write('U');
         Serial3.write('U');
-        ball_Y_dir = 1;
+        ball_Y_dir = 0;
         digitalWrite(ball_Y_dirPin,ball_Y_dir);
         firstCheck = 1;
-        angle = getAngle(startAngle,HORIZONTAL);
         setAngle(angle,speed);
     }
 }

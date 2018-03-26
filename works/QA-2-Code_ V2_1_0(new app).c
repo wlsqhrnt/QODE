@@ -303,7 +303,7 @@ void initTimer(void)//timer interrupt
     Timer2.attachInterrupt(ball_Y_timerHandler).start(100);
     Timer3.attachInterrupt(A_X_timerHandler).start(100);
     Timer4.attachInterrupt(B_X_timerHandler).start(100); //100us
-    Timer5.attachInterrupt(restart).start(1000);//1ms
+    Timer5.attachInterrupt(restart).start(1000000);//1s
 }
 void initPinConfiguration(void)
 {
@@ -617,7 +617,7 @@ void ledControl(void)
         led_right_count = 0;
         right_startCnt = 0;
     }
-    if(restartCnt >= 3000){
+    if(restartCnt >= 3){
         collision_check2 = 0;
         digitalWrite(led_bottom_pin,LOW);
         digitalWrite(led_top_pin,LOW);
@@ -1657,10 +1657,10 @@ void A_get_item(void)
 void A_choose(void)
 {//6번째 데이터
     if(new_receive_buffer[6] != 0){
-        if((new_receive_buffer[6] & 1) == 1 && (old_receive_buffer[6] & 1)== 0) Serial2.write('A');//동전 투입 완료
-        else if((new_receive_buffer[6] & 2) == 2 && (old_receive_buffer[6] & 2)== 0) Serial2.write('D');//모드 선택 완료
-        else if((new_receive_buffer[6] & 4) == 4 && (old_receive_buffer[6] & 4)== 0) Serial2.write('G');//컨트롤러 선택 완료
-        else if((new_receive_buffer[6] & 8) == 8 && (old_receive_buffer[6] & 8)== 0) Serial2.write('H');//선공 게임 선택 완료
+        if((new_receive_buffer[6] & 1) == 1 && (old_receive_buffer[6] & 1)== 0) //Serial2.write('A');//동전 투입 완료
+        else if((new_receive_buffer[6] & 2) == 2 && (old_receive_buffer[6] & 2)== 0) //Serial2.write('D');//모드 선택 완료
+        else if((new_receive_buffer[6] & 4) == 4 && (old_receive_buffer[6] & 4)== 0) //Serial2.write('G');//컨트롤러 선택 완료
+        else if((new_receive_buffer[6] & 8) == 8 && (old_receive_buffer[6] & 8)== 0) //Serial2.write('H');//선공 게임 선택 완료
     }
 }
 void B_using_item(void)
@@ -1687,8 +1687,8 @@ void B_get_item(void)
 void B_choose(void)
 {//3번째 데이터
     if(new_receive_buffer[9] != 0){
-        if((new_receive_buffer[9] & 1) == 1 && (old_receive_buffer[9] & 1)== 0) Serial3.write('G');//컨트롤러 선택 완료
-        else if((new_receive_buffer[9] & 2) == 2 && (old_receive_buffer[9] & 2)== 0) Serial3.write('H');//선공 게임 선택 완료
+        if((new_receive_buffer[9] & 1) == 1 && (old_receive_buffer[9] & 1)== 0) //Serial3.write('G');//컨트롤러 선택 완료
+        else if((new_receive_buffer[9] & 2) == 2 && (old_receive_buffer[9] & 2)== 0) //Serial3.write('H');//선공 게임 선택 완료
     }
 }
 //******************************************************************************************************************//

@@ -365,7 +365,7 @@ void firstCheckFuntion(void)
         ball_Y_dir = 1;
         digitalWrite(ball_Y_dirPin,ball_Y_dir);
         firstCheck = 1;
-        setAngle(startAngle,speed);
+        setAngle(angle,speed);
     }else if(firstAt == 2){//B선공 
         Serial2.write('U');
         Serial3.write('U');
@@ -451,8 +451,8 @@ void limitSwitchCheck(void)
     if((digitalRead(ball_Y_limitSwitch1_2) == LOW && ball_Y_dirCheck1 == 1 ) && ball_Y_dir == 1){
         Serial2.write('U');
         collision_check2 = 1;
-        ball_Y_dirCheck1 = 0;
-
+        ball_Y_dirCheck1 = 2;
+        ball_Y_dirCheck2 = 0;
         ball_Y_dir = 0;
         digitalWrite(ball_Y_dirPin,ball_Y_dir);
         ball_Y_Cood = 0;
@@ -461,10 +461,9 @@ void limitSwitchCheck(void)
         ball_Y_timerCnt = 0;
         if(A_hacking_check == 1)
             A_hacking_check = 0;
-        A_Collision_check();
         B_item = 0;
         Serial3.write('U');
-        
+        A_Collision_check();
     }
     if((digitalRead(ball_Y_limitSwitch2_1) == LOW && ball_Y_dirCheck2 == 0 ) && ball_Y_dir == 0){
         ball_Y_dirCheck2 = 1;
@@ -472,7 +471,8 @@ void limitSwitchCheck(void)
     if((digitalRead(ball_Y_limitSwitch2_2) == LOW && ball_Y_dirCheck2 == 1 ) && ball_Y_dir == 0){
         Serial2.write('U');
         collision_check2 = 1;
-        ball_Y_dirCheck2 = 0;
+        ball_Y_dirCheck2 = 2;
+        ball_Y_dirCheck1 = 0;
         ball_Y_dir = 1;
         digitalWrite(ball_Y_dirPin,ball_Y_dir);
         ball_Y_Cood = 2720;
@@ -481,10 +481,9 @@ void limitSwitchCheck(void)
         ball_Y_timerCnt = 0;
         if(B_hacking_check == 1)
             B_hacking_check = 0;
-        B_Collision_check();
         A_item = 0;
         Serial3.write('U');
-        
+        B_Collision_check();
     }
     if(digitalRead(A_X_limitSwitch1) == LOW && A_X_dir == 0){
         Serial2.write('U');

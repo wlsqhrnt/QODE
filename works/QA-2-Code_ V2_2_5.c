@@ -1,3 +1,8 @@
+//레이저 센서 적용
+//골먹힐 때 라켓 리셋 적용 -> 통신 안되는 문제
+//
+//
+//
 #include <DueTimer.h>
 #define HORIZONTAL 1
 #define VERTICAL 2
@@ -361,7 +366,7 @@ void firstCheckFuntion(void)
     if(firstAt == 1){ //A 선공
         Serial2.write('U');
         Serial3.write('U');
-        angle = getAngle(startAngle,HORIZONTAL);
+        angle = 270;
         ball_Y_dir = 1;
         digitalWrite(ball_Y_dirPin,ball_Y_dir);
         firstCheck = 1;
@@ -1130,7 +1135,6 @@ void setAngle(int r, long length)
     long y = (long)((double)ball_Y_Cood + sin(radian) * (double)length);
     angle = r;
     speed = length;
-    //Serial.println(angle);
     line(ball_X_Cood, ball_Y_Cood , x, y);
 }
 //***************************************************************************************************************//
@@ -1277,7 +1281,7 @@ void serial_send_data(void)
         //insert_coin_function();
     }
     send_buffer[21] = 0xFF;
-    send_buffer[20] = 0xFF;//CMD
+    send_buffer[20] = 0xFF;//
     send_buffer[19] = 4;//CMD
     send_buffer[18] = ball_X_Cood_High;
     send_buffer[17] = ball_X_Cood_Low;
@@ -1626,6 +1630,8 @@ void ball_stat(void)
         collision_check2 = 0;
         A_item = 0;
         B_item = 0;
+        ball_Y_dirCheck1 = 0;
+        ball_Y_dirCheck2 = 0;
         digitalWrite(led_top_pin,LOW);
         digitalWrite(led_left_pin,LOW);
         digitalWrite(led_right_pin,LOW);
@@ -1656,10 +1662,10 @@ void A_get_item(void)
 void A_choose(void)
 {//6번째 데이터
     if(new_receive_buffer[6] != 0){
-        if((new_receive_buffer[6] & 1) == 1 && (old_receive_buffer[6] & 1)== 0) //Serial2.write('A');//동전 투입 완료
+       /* if((new_receive_buffer[6] & 1) == 1 && (old_receive_buffer[6] & 1)== 0) //Serial2.write('A');//동전 투입 완료
         else if((new_receive_buffer[6] & 2) == 2 && (old_receive_buffer[6] & 2)== 0) //Serial2.write('D');//모드 선택 완료
         else if((new_receive_buffer[6] & 4) == 4 && (old_receive_buffer[6] & 4)== 0) //Serial2.write('G');//컨트롤러 선택 완료
-        else if((new_receive_buffer[6] & 8) == 8 && (old_receive_buffer[6] & 8)== 0) //Serial2.write('H');//선공 게임 선택 완료
+        else if((new_receive_buffer[6] & 8) == 8 && (old_receive_buffer[6] & 8)== 0) //Serial2.write('H');//선공 게임 선택 완료*/
     }
 }
 void B_using_item(void)
@@ -1686,8 +1692,8 @@ void B_get_item(void)
 void B_choose(void)
 {//3번째 데이터
     if(new_receive_buffer[9] != 0){
-        if((new_receive_buffer[9] & 1) == 1 && (old_receive_buffer[9] & 1)== 0) //Serial3.write('G');//컨트롤러 선택 완료
-        else if((new_receive_buffer[9] & 2) == 2 && (old_receive_buffer[9] & 2)== 0) //Serial3.write('H');//선공 게임 선택 완료
+        /*if((new_receive_buffer[9] & 1) == 1 && (old_receive_buffer[9] & 1)== 0) //Serial3.write('G');//컨트롤러 선택 완료
+        else if((new_receive_buffer[9] & 2) == 2 && (old_receive_buffer[9] & 2)== 0) //Serial3.write('H');//선공 게임 선택 완료*/
     }
 }
 //******************************************************************************************************************//

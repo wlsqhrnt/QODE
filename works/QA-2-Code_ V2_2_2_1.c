@@ -46,12 +46,12 @@ volatile char A_use_mine_3 = 0;//라켓 A 지뢰 3위치 사용
 volatile char A_use_defender_1 = 0;//라켓 A 수비수 1위치 사용
 volatile char A_use_defender_2 = 0;//라켓 A 수비수 2위치 사용
 volatile char A_use_defender_3 = 0;//라켓 A 수비수 3위치 사용
-volatile char A_activated_mine1 = 0;//라켓 A 지뢰 1위치 발동
-volatile char A_activated_mine2 = 0;//라켓 A 지뢰 2위치 발동
-volatile char A_activated_mine3 = 0;//라켓 A 지뢰 3위치 발동
-volatile char A_activated_defender1 = 0;//라켓 A 수비수 1위치 발동
-volatile char A_activated_defender2 = 0;//라켓 A 수비수 2위치 발동
-volatile char A_activated_defender3 = 0;//라켓 A 수비수 3위치 발동
+volatile char A_activated_mine_1 = 0;//라켓 A 지뢰 1위치 발동
+volatile char A_activated_mine_2 = 0;//라켓 A 지뢰 2위치 발동
+volatile char A_activated_mine_3 = 0;//라켓 A 지뢰 3위치 발동
+volatile char A_activated_defender_1 = 0;//라켓 A 수비수 1위치 발동
+volatile char A_activated_defender_2 = 0;//라켓 A 수비수 2위치 발동
+volatile char A_activated_defender_3 = 0;//라켓 A 수비수 3위치 발동
 volatile char A_delete_mine = 0; //라켓 A 지뢰 소멸
 volatile char A_delete_defender = 0;//라켓 A 수비수 소멸
 volatile char A_move_right = 0;// 라켓 A 오른쪽으로 움직임
@@ -73,12 +73,12 @@ volatile char B_use_mine_3 = 0;//라켓 B 지뢰 3위치 사용
 volatile char B_use_defender_1 = 0;//라켓 B 수비수 1위치 사용
 volatile char B_use_defender_2 = 0;//라켓 B 수비수 2위치 사용
 volatile char B_use_defender_3 = 0;//라켓 B 수비수 3위치 사용
-volatile char B_activated_mine1 = 0;//라켓 B 지뢰 1위치 발동
-volatile char B_activated_mine2 = 0;//라켓 B 지뢰 2위치 발동
-volatile char B_activated_mine3 = 0;//라켓 B 지뢰 3위치 발동
-volatile char B_activated_defender1 = 0;//라켓 B 수비수 1위치 발동
-volatile char B_activated_defender2 = 0;//라켓 B 수비수 2위치 발동
-volatile char B_activated_defender3 = 0;//라켓 B 수비수 3위치 발동
+volatile char B_activated_mine_1 = 0;//라켓 B 지뢰 1위치 발동
+volatile char B_activated_mine_2 = 0;//라켓 B 지뢰 2위치 발동
+volatile char B_activated_mine_3 = 0;//라켓 B 지뢰 3위치 발동
+volatile char B_activated_defender_1 = 0;//라켓 B 수비수 1위치 발동
+volatile char B_activated_defender_2 = 0;//라켓 B 수비수 2위치 발동
+volatile char B_activated_defender_3 = 0;//라켓 B 수비수 3위치 발동
 volatile char B_delete_mine = 0; //라켓 B 지뢰 소멸
 volatile char B_delete_defender = 0;//라켓 B 수비수 소멸
 volatile char B_move_right = 0;//라켓 B 오른쪽 움직임
@@ -113,12 +113,12 @@ volatile char A_use_mine_3Cnt = 0;//라켓 A 지뢰 3위치 사용
 volatile char A_use_defender_1Cnt = 0;//라켓 A 수비수 1위치 사용
 volatile char A_use_defender_2Cnt = 0;//라켓 A 수비수 2위치 사용
 volatile char A_use_defender_3Cnt = 0;//라켓 A 수비수 3위치 사용
-volatile char A_activated_mine1Cnt = 0;//라켓 A 지뢰 1위치 발동
-volatile char A_activated_mine2Cnt = 0;//라켓 A 지뢰 2위치 발동
-volatile char A_activated_mine3Cnt = 0;//라켓 A 지뢰 3위치 발동
-volatile char A_activated_defender1Cnt = 0;//라켓 A 수비수 1위치 발동
-volatile char A_activated_defender2Cnt = 0;//라켓 A 수비수 2위치 발동
-volatile char A_activated_defender3Cnt = 0;//라켓 A 수비수 3위치 발동
+volatile char A_activated_mine_1Cnt = 0;//라켓 A 지뢰 1위치 발동
+volatile char A_activated_mine_2Cnt = 0;//라켓 A 지뢰 2위치 발동
+volatile char A_activated_mine_3Cnt = 0;//라켓 A 지뢰 3위치 발동
+volatile char A_activated_defender_1Cnt = 0;//라켓 A 수비수 1위치 발동
+volatile char A_activated_defender_2Cnt = 0;//라켓 A 수비수 2위치 발동
+volatile char A_activated_defender_3Cnt = 0;//라켓 A 수비수 3위치 발동
 volatile char A_delete_mineCnt = 0; //라켓 A 지뢰 소멸
 volatile char A_delete_defenderCnt = 0;//라켓 A 수비수 소멸
 //B 통신 관련 카운트 변수
@@ -136,12 +136,12 @@ volatile char B_use_mine_3Cnt = 0;//라켓 B 지뢰 3위치 사용
 volatile char B_use_defender_1Cnt = 0;//라켓 B 수비수 1위치 사용
 volatile char B_use_defender_2Cnt = 0;//라켓 B 수비수 2위치 사용
 volatile char B_use_defender_3Cnt = 0;//라켓 B 수비수 3위치 사용
-volatile char B_activated_mine1Cnt = 0;//라켓 B 지뢰 1위치 발동
-volatile char B_activated_mine2Cnt = 0;//라켓 B 지뢰 2위치 발동
-volatile char B_activated_mine3Cnt = 0;//라켓 B 지뢰 3위치 발동
-volatile char B_activated_defender1Cnt = 0;//라켓 B 수비수 1위치 발동
-volatile char B_activated_defender2Cnt = 0;//라켓 B 수비수 2위치 발동
-volatile char B_activated_defender3Cnt = 0;//라켓 B 수비수 3위치 발동
+volatile char B_activated_mine_1Cnt = 0;//라켓 B 지뢰 1위치 발동
+volatile char B_activated_mine_2Cnt = 0;//라켓 B 지뢰 2위치 발동
+volatile char B_activated_mine_3Cnt = 0;//라켓 B 지뢰 3위치 발동
+volatile char B_activated_defender_1Cnt = 0;//라켓 B 수비수 1위치 발동
+volatile char B_activated_defender_2Cnt = 0;//라켓 B 수비수 2위치 발동
+volatile char B_activated_defender_3Cnt = 0;//라켓 B 수비수 3위치 발동
 volatile char B_delete_mineCnt = 0; //라켓 B 지뢰 소멸
 volatile char B_delete_defenderCnt = 0;//라켓 B 수비수 소멸
 //AR 아이템 획득
@@ -149,23 +149,15 @@ volatile char A_get_mine = 0;
 volatile char A_get_defender = 0;
 volatile char B_get_mine = 0;
 volatile char B_get_defender = 0;
+
+volatile char A_get_mineCnt = 0;
+volatile char A_get_defenderCnt = 0;
+volatile char B_get_mineCnt = 0;
+volatile char B_get_defenderCnt = 0;
 //동전 투입
 volatile char insert_coin_1000Cnt = 0;
 volatile char insert_coin_5000Cnt = 0;
 volatile char insert_coin_10000Cnt = 0;
-//stat variable for check 디테일한 상태 변수들의 값을 확인하고 변하는 값들.
-volatile unsigned char ball_check = 0; //벽 충돌 여부 및 득점인지 받아쳤는지를 알려주는 값
-volatile unsigned char game_ready = 0;//플레이어의 게임 시작 전 상태를 알려주는 값
-volatile unsigned char A_use_item1 = 0;// A 플레이어의 게임중 아이템 사용 상태를 알려주는 값
-volatile unsigned char A_use_item2 = 0;// A 플레이어의 게임중 아이템 사용 상태를 알려주는 값
-volatile unsigned char A_activate_or_delete_item = 0;// A 플레이어의 아이템 발동 및 소멸
-volatile unsigned char A_move = 0;// A 플레이어의 게임중 움직임 상태를 알려주는 값
-volatile unsigned char B_use_item1 = 0;// B 플레이어의 게임중 아이템 사용 상태를 알려주는 값
-volatile unsigned char B_use_item2 = 0;// B 플레이어의 게임중 아이템 사용 상태를 알려주는 값
-volatile unsigned char B_activate_or_delete_item = 0;// B 플레이어의 아이템 발동 및 소멸
-volatile unsigned char B_move = 0;// B 플레이어의 게임중 움직임 상태를 알려주는 값
-volatile unsigned char insert_coin = 0;// 플레이어들의 동전 투입 상태를 알려주는 값
-volatile unsigned char get_AR_item = 0;
 // receive data variable
 //공 아이템 사용
 volatile char move_fireball = 0;
@@ -199,10 +191,10 @@ int ball_X_limitSwitch2 = 23;
 //int ball_Y_limitSwitch1 = 24;
 //int ball_Y_limitSwitch2 = 25;
 
-int ball_Y_limitSwitch1_1 = 39;
-int ball_Y_limitSwitch1_2 = 38;
-int ball_Y_limitSwitch2_1 = 41;
-int ball_Y_limitSwitch2_2 = 40;
+int ball_Y_limitSwitch1_1 = 0;
+int ball_Y_limitSwitch1_2 = 1;
+int ball_Y_limitSwitch2_1 = 2;
+int ball_Y_limitSwitch2_2 = 3;
 
 int ball_Y_dirCheck1 = 0;//레이저 센서 체크
 int ball_Y_dirCheck2 = 0;
@@ -240,6 +232,11 @@ int led_left_count = 0;
 int led_right_count = 0;
 char left_startCnt = 0;
 char right_startCnt = 0;
+//thermoelectric variable
+char A_thermoelectric_GPIOPin = 24;
+char B_thermoelectric_GPIOPin = 25;
+char A_thermoelectric_PWMPin = 10;
+char B_thermoelectric_PWMPin = 11;
 //timer variable
 volatile int ball_X_timerCnt = 0;
 volatile int ball_X_timerLimit = 3;//start speed
@@ -294,20 +291,26 @@ int B_item = 0;
 volatile int restart_check = 0;
 volatile int restartCnt = 0;
 //function prototype
+//send data function
 void serial_send_data(void);
+
 void ball_X_Cood_function(void);
 void ball_Y_Cood_function(void);
-void ball_check_function(void);
 void A_X_Cood_function(void);
-void A_game_ready_function(void);
-void A_use_item_function(void);
-void A_move_function(void);
 void B_X_Cood_function(void);
-void B_game_ready_function(void);
-void B_use_item_function(void);
-void B_move_function(void);
-void insert_coin_function(void);
-void reset_data_after_send(void);
+char ball_check_function(void);
+char game_ready_function(void);
+char A_use_item_1_function(void);
+char A_use_item_2_function(void);
+char A_activate_or_delete_item_function(void); 
+char A_move_function(void);
+char B_use_item_1_function(void);
+char B_use_item_2_function(void);
+char B_activate_or_delete_item_function(void);
+char B_move_function(void); 
+char insert_coin_function(void);
+char get_AR_item_function(void);
+//receive data function
 void ball_move_item(void);
 void ball_receive_move(void);
 void ball_stat(void);
@@ -317,13 +320,11 @@ void A_choose(void);
 void B_using_item(void);
 void B_get_item(void);
 void B_choose(void);
+
 void initing(void);
 void fireball(void);
 void tornado(void);
 void changeup(void);
-void BallMove60Angle(void);
-void BallMove45Angle(void);
-void BallMove30Angle(void);
 void A_change_left_dir(void);
 void A_change_rigth_dir(void);
 void B_change_left_dir(void);
@@ -369,11 +370,11 @@ void initSerial(void)
 }
 void initTimer(void)//timer interrupt
 {
-    Timer1.attachInterrupt(ball_X_timerHandler).start(100);
-    Timer2.attachInterrupt(ball_Y_timerHandler).start(100);
-    Timer3.attachInterrupt(A_X_timerHandler).start(100);
-    Timer4.attachInterrupt(B_X_timerHandler).start(100); //100us
-    Timer5.attachInterrupt(restart).start(1000000);//1s
+    Timer0.attachInterrupt(ball_X_timerHandler).start(100);
+    Timer1.attachInterrupt(ball_Y_timerHandler).start(100);
+    Timer2.attachInterrupt(A_X_timerHandler).start(100);
+    Timer3.attachInterrupt(B_X_timerHandler).start(100); //100us
+    Timer4.attachInterrupt(restart).start(1000000);//1s
 }
 void initPinConfiguration(void)
 {
@@ -407,6 +408,11 @@ void initPinConfiguration(void)
     pinMode(led_right_pin,OUTPUT);
     pinMode(led_top_pin,OUTPUT);
     pinMode(led_bottom_pin,OUTPUT);
+    //set pin of thermoelectric
+    pinMode(A_thermoelectric_PWMPin,OUTPUT);
+    pinMode(B_thermoelectric_PWMPin,OUTPUT);
+    pinMode(A_thermoelectric_GPIOPin,OUTPUT);
+    pinMode(B_thermoelectric_GPIOPin,OUTPUT);
 }
 void setup(void)
 {
@@ -515,10 +521,10 @@ void limitSwitchCheck(void)
         setAngle(new_angle,speed);
         right_startCnt = 1;
     }
-    if((digitalRead(ball_Y_limitSwitch1_1) == LOW && ball_Y_dirCheck1 == 0 ) && ball_Y_dir == 1){
+    if((analogRead(ball_Y_limitSwitch1_1) > 1000 && ball_Y_dirCheck1 == 0 ) && ball_Y_dir == 1){
         ball_Y_dirCheck1 = 1;
     }
-    if((digitalRead(ball_Y_limitSwitch1_2) == LOW && ball_Y_dirCheck1 == 1 ) && ball_Y_dir == 1){
+    if((analogRead(ball_Y_limitSwitch1_2) > 1000 && ball_Y_dirCheck1 == 1 ) && ball_Y_dir == 1){
         Serial2.write('U');
         collision_check2 = 1;
         ball_Y_dirCheck1 = 2;
@@ -535,10 +541,10 @@ void limitSwitchCheck(void)
         Serial3.write('U');
         A_Collision_check();
     }
-    if((digitalRead(ball_Y_limitSwitch2_1) == LOW && ball_Y_dirCheck2 == 0 ) && ball_Y_dir == 0){
+    if((analogRead(ball_Y_limitSwitch2_1) > 1000 && ball_Y_dirCheck2 == 0 ) && ball_Y_dir == 0){
         ball_Y_dirCheck2 = 1;
     }
-    if((digitalRead(ball_Y_limitSwitch2_2) == LOW && ball_Y_dirCheck2 == 1 ) && ball_Y_dir == 0){
+    if((analogRead(ball_Y_limitSwitch2_2) > 1000 && ball_Y_dirCheck2 == 1 ) && ball_Y_dir == 0){
         Serial2.write('U');
         collision_check2 = 1;
         ball_Y_dirCheck2 = 2;
@@ -1045,7 +1051,7 @@ void initing(void)
             delayMicroseconds(delay_);
         }
     }
-    while(!(digitalRead(ball_Y_limitSwitch1_2) == LOW)){
+    while(!(digitalRead(ball_Y_limitSwitch1_2) > 1000)){
         digitalWrite(ball_Y_stpPin, HIGH);
         delayMicroseconds(400);
         digitalWrite(ball_Y_stpPin, LOW);
@@ -1335,50 +1341,37 @@ void serial_send_data(void)
     ball_Y_Cood_function();
     A_X_Cood_function();
     B_X_Cood_function();
-    ball_check_function();
-    A_use_item_function();
-    A_move_function();
-    B_use_item_function();
-    B_move_function();
-    if(firstCheck == 0){
-        A_game_ready_function();
-        B_game_ready_function();
-        //insert_coin_function();
-    }
-    send_buffer[25] = 0xFF;
-    send_buffer[24] = 0xFF;//
-    send_buffer[23] = 4;//CMD
-    send_buffer[22] = ball_X_Cood_High;
-    send_buffer[21] = ball_X_Cood_Low;
-    send_buffer[20] = ball_Y_Cood_High;
-    send_buffer[19] = ball_Y_Cood_Low;
-    send_buffer[18] = ball_check;
-    send_buffer[17] = A_X_Cood_High;
-    send_buffer[16] = A_X_Cood_Low;
-    send_buffer[15] = A_game_ready;
-    send_buffer[14] = A_use_item_1;
-    send_buffer[13] = A_use_item_2;
-    send_buffer[12] = A_use_item_3;
-    send_buffer[11] = A_move;
-    send_buffer[10] = B_X_Cood_High;
-    send_buffer[9] = B_X_Cood_Low;
-    send_buffer[8] = B_game_ready;
-    send_buffer[7] = B_use_item_1;
-    send_buffer[6] = B_use_item_2;
-    send_buffer[5] = B_use_item_3;
-    send_buffer[4] = B_move;
-    send_buffer[3] = 0;//0x1;//insert_coin;
-    send_buffer[2] = 0;//14;//게임 전 설정
-    send_buffer[1] = 0xFE;//end
+    send_buffer[0] = 0xFF;
+    send_buffer[1] = 0xFF;
+    send_buffer[2] = 0x4;
+    send_buffer[3] = ball_X_Cood_High;
+    send_buffer[4] = ball_X_Cood_Low;
+    send_buffer[5] = ball_Y_Cood_High;
+    send_buffer[6] = ball_Y_Cood_Low;
+    send_buffer[7] = ball_check_function();
+    send_buffer[8] = A_X_Cood_High;
+    send_buffer[9] = A_X_Cood_Low;
+    send_buffer[10] = game_ready_function();
+    send_buffer[11] = A_use_item_1_function();
+    send_buffer[12] = A_use_item_2_function();
+    send_buffer[13] = A_activate_or_delete_item_function();
+    send_buffer[14] = A_move_function();
+    send_buffer[15] = B_X_Cood_High;
+    send_buffer[16] = B_X_Cood_Low;
+    send_buffer[17] = B_use_item_1_function();
+    send_buffer[18] = B_use_item_2_function();
+    send_buffer[19] = B_activate_or_delete_item_function();
+    send_buffer[20] = B_move_function();
+    send_buffer[21] = insert_coin_function();
+    send_buffer[22] = get_AR_item_function();
+    send_buffer[23] = 0xFE;//end
     
-    for(int i = 25 ; i >= 1 ; i--){
+    for(int i = 0 ; i <= 24 ; i++){
         checkSum+=send_buffer[i];
-    }
-    send_buffer[0] = checkSum ^ 0xFF;//check sum
-    for(int i = 25 ; i >= 0 ; i--){
         Serial1.write(send_buffer[i]);
     }
-    reset_data_after_send();
+    send_buffer[25] = checkSum ^ 0xFF;//check sum
+    Serial1.write(send_buffer[25]);
 }
 void ball_X_Cood_function(void)
 {//17,18번째 데이터 공의 X 좌표를 high , low 두 비트로 나눠서 표현하는 함수 
@@ -1390,285 +1383,550 @@ void ball_Y_Cood_function(void)
     ball_Y_Cood_High = (unsigned char)((ball_Y_Cood & 65280)>>8);
     ball_Y_Cood_Low = (unsigned char)(ball_Y_Cood & 255);
 }
-void ball_check_function(void)
+char ball_check_function(void)
 {//14번째 데이터 공의 상태를 종합하는 함수
+    char ball_check = 0;
     if(wall_crash == 1 || wall_crashCnt != 0){//벽에 부딪힘
+        wall_crash = 0;
         ball_check += 1;    
         wall_crashCnt += 1;
         if(wall_crashCnt == 3)
             wall_crashCnt = 0;
     }
-    if(A_get_score == 1 || A_get_scoreCnt != 0){
+    if(A_get_score == 1 || A_get_scoreCnt != 0){//A 득점
+        A_get_score = 0;
         ball_check += 2;
         A_get_scoreCnt += 1;
         if(A_get_scoreCnt == 3)
             A_get_scoreCnt = 0;
     }
-    if(B_get_score == 1 || B_get_scoreCnt != 0){
+    if(B_get_score == 1 || B_get_scoreCnt != 0){//B 득점 
+        B_get_score = 0;
         ball_check += 4;
         B_get_scoreCnt += 1;
         if(B_get_scoreCnt == 3)
             B_get_scoreCnt = 0;
     }
-    if(A_return == 1 || A_returnCnt != 0){
+    if(A_return == 1 || A_returnCnt != 0){//A 받아침 
+        A_return = 0;
         ball_check += 8;
         A_returnCnt += 1;
         if(A_returnCnt == 3)
             A_returnCnt = 0;
     }
-    if(B_return == 1 || B_returnCnt != 0){
+    if(B_return == 1 || B_returnCnt != 0){//B 받아침 
+        B_return = 0;
         ball_check += 16;
         B_returnCnt += 1;
         if(B_returnCnt == 3)
             B_returnCnt = 0;
     }
+    return ball_check;
 }
 void A_X_Cood_function(void)
 {//12,13번째 데이터 라켓 A의 좌표를 high, low 두 비트로 나눠서 표현하는 함수 
     A_X_Cood_High = (unsigned char)((A_X_Cood & 65280)>>8);
     A_X_Cood_Low = (unsigned char)(A_X_Cood & 255);
 }
-void A_game_ready_function(void)
+char game_ready_function(void)
 {//11번째 데이터 A 플레이어가 블루투스로 통해 보낸 신호 처리
+    char game_ready = 0;
     if(A_pre_game_selected == 1 || A_pre_game_selectedCnt != 0){//선공게임 완료
-        A_game_ready += 1;
+        A_pre_game_selected = 0;
+        game_ready += 1;
         A_pre_game_selectedCnt += 1;
         if(A_pre_game_selectedCnt == 3)
             A_pre_game_selectedCnt = 0;
     }
-    else if(A_controller_selected == 1 ){//컨트롤러 선택 완료
-        A_game_ready += 2;
+    if(B_pre_game_selected == 1 || A_pre_game_selectedCnt != 0){
+        B_pre_game_selected = 0;
+        game_ready += 2;
+        B_pre_game_selectedCnt += 1;
+        if(B_pre_game_selectedCnt == 3)
+            B_pre_game_selectedCnt = 0;
     }
-    else if(A_controller_right == 1){ //컨트롤러 선택 우
-        A_game_ready += 4;
-    } 
-    else if(A_controller_left == 1){ //컨트롤러 선택 좌
-        A_game_ready += 8;
+    if(A_AR_ready == 1 || A_AR_readyCnt != 0){
+        A_AR_ready = 0;
+        game_ready += 4;
+        A_AR_readyCnt += 1;
+        if(A_AR_readyCnt == 3)
+            A_AR_readyCnt = 0;
     }
-    else if(A_mode_selected == 1){ // 모드 선택 완료
-        A_game_ready += 16;
+    if(B_AR_ready == 1 || B_AR_readyCnt != 0){
+        B_AR_ready = 0;
+        game_ready += 8;
+        B_AR_readyCnt += 1;
+        if(B_AR_readyCnt == 3)
+            B_AR_readyCnt = 0;
     }
-    else if(A_mode_selection_right == 1){ //모드 선택 우
-        A_game_ready += 32;
+    if(single_mode_selection == 1 || single_mode_selectionCnt != 0){
+        single_mode_selection = 0;
+        game_ready += 16;
+        single_mode_selectionCnt += 1;
+        if(single_mode_selectionCnt == 3)
+            single_mode_selectionCnt = 0;
     }
-    else if(A_mode_selection_left == 1 ){//모드 선택 좌  
-        A_game_ready += 64;
-    } 
-    else if(completion_of_money_input == 1 ){//동전 투입 완료  
-        A_game_ready += 128;
-    } 
+    if(PVP_mode_selection == 1 || PVP_mode_selectionCnt != 0){
+        PVP_mode_selection = 0;
+        game_ready += 32;
+        PVP_mode_selectionCnt += 1;
+        if(PVP_mode_selectionCnt == 3)
+            PVP_mode_selectionCnt = 0;
+    }
+    if(completion_of_money_input == 1 || completion_of_money_inputCnt != 0){
+        completion_of_money_input = 0;
+        game_ready += 64;
+        completion_of_money_inputCnt += 1;
+        if(completion_of_money_inputCnt == 3)
+            completion_of_money_inputCnt = 0;
+    }
+    return game_ready;
 }
-void A_use_item_function(void)
+char A_use_item_1_function(void)
 {//10번째 데이터
+    char A_use_item_1
     if(A_use_fireball == 1 || A_use_fireballCnt != 0){//파이어볼 사용  
-        A_use_item += 1;
+        A_use_fireball = 0;
+        A_use_item_1 += 1;
         A_use_fireballCnt += 1;
         if(A_use_fireballCnt == 3)
             A_use_fireballCnt = 0;
     } 
     else if(A_use_tornado == 1 || A_use_tornadoCnt != 0){//토네이도 사용  
-        A_use_item += 2;
+        A_use+tornado = 0;
+        A_use_item_1 += 2;
         A_use_tornadoCnt += 1;
         if(A_use_tornado == 3)
             A_use_tornado = 0;
     } 
     else if(A_use_hacking == 1 || A_use_hackingCnt != 0){//해킹 사용  
-        A_use_item += 4;
+        A_use_hacking = 0;
+        A_use_item_1 += 4;
         A_use_hackingCnt += 1;
         if(A_use_hackingCnt == 3)
             A_use_hackingCnt = 0;
-    } 
-    else if(A_release_hacking == 1 || A_release_hackingCnt != 0){//해킹 해제  
-        A_use_item += 8;
-        A_release_hackingCnt += 1;
-        if(A_release_hackingCnt == 3)
-            A_release_hackingCnt = 0;
-    } 
+    }
     else if(A_use_EMP == 1 || A_use_EMPCnt != 0){//EMP 사용  
-        A_use_item += 16;
+        A_use_EMP = 0;
+        A_use_item_1 += 8;
         A_use_EMPCnt += 1;
         if(A_use_EMPCnt == 3)
             A_use_EMPCnt = 0;
     } 
     else if(A_use_changeup == 1 || A_use_changeupCnt != 0){//체인지업 사용  
-        A_use_item += 32;
+        A_use_changeup = 0;
+        A_use_item_1 += 16;
         A_use_changeupCnt += 1;
         if(A_use_changeupCnt == 3)
             A_use_changeupCnt = 0;
-    } 
+    }
+    else if(A_use_iceball == 1 || A_use_iceballCnt != 0){//use iceball
+        A_use_iceball = 0;
+        A_use_item_1 += 16;
+        A_use_iceballCnt += 1;
+        if(A_use_iceballCnt == 3)
+            A_use_iceballCnt = 0;
+    }
+    return A_use_item_1;
 }
-void A_move_function(void)
+char A_use_item_2_function(void)
+{
+    char A_use_item_2 = 0;
+    if(A_use_mine_1 == 1 || A_use_mine_1Cnt != 0){// A 지뢰 1위치 사용 
+        A_use_mine_1 = 0
+        A_use_item_2 += 1;
+        A_use_mine_1Cnt += 1;
+        if(A_use_mine_1Cnt == 3)
+            A_use_mine_1Cnt = 0;
+    }
+    if(A_use_mine_2 == 1 || A_use_mine_2Cnt != 0){// A 지뢰 2위치 사용 
+        A_use_mine_2 = 0
+        A_use_item_2 += 2;
+        A_use_mine_2Cnt += 1;
+        if(A_use_mine_2Cnt == 3)
+            A_use_mine_2Cnt = 0;
+    }
+    if(A_use_mine_3 == 1 || A_use_mine_3Cnt != 0){// A 지뢰 3위치 사용 
+        A_use_mine_3 = 0
+        A_use_item_2 += 4;
+        A_use_mine_3Cnt += 1;
+        if(A_use_mine_3Cnt == 3)
+            A_use_mine_3Cnt = 0;
+    }
+    if(A_use_defender_1 == 1 || A_use_defender_1Cnt != 0){// A 수비수 1위치 사용
+        A_use_defender_1 = 0;
+        A_use_item_2 += 8;
+        A_use_defender_1Cnt += 1;
+        if(A_use_defender_1Cnt == 3)
+            A_use_defender_1Cnt = 0;
+    }
+    if(A_use_defender_2 == 1 || A_use_defender_2Cnt != 0){//A 수비수 2위치 사용
+        A_use_defender_2 = 0;
+        A_use_item_2 += 16;
+        A_use_defender_2Cnt += 1;
+        if(A_use_defender_2Cnt == 3)
+            A_use_defender_2Cnt = 0;
+    }
+    if(A_use_defender_3 == 1 || A_use_defender_3Cnt != 0){//A 수비수 3위치 사용
+        A_use_defender_3 = 0;
+        A_use_item_2 += 32;
+        A_use_defender_3Cnt += 1;
+        if(A_use_defender_3Cnt == 3)
+            A_use_defender_3Cnt = 0;
+    }
+    return A_use_item_2;
+}
+char A_activate_or_delete_item_function(void)
+{
+    char A_activate_or_delete_item = 0;
+    if(A_activated_mine_1 == 1 || A_activated_mine_1Cnt != 0){
+        A_activated_mine_1 = 0;
+        A_activate_or_delete_item += 1;
+        A_activated_mine_1Cnt += 1;
+        if(A_activated_mine_1Cnt == 3)
+            A_activated_mine_1Cnt = 0;
+    }
+    if(A_activated_mine_2 == 1 || A_activated_mine_2Cnt != 0){
+        A_activated_mine_2 = 0;
+        A_activate_or_delete_item += 2;
+        A_activated_mine_2Cnt += 1;
+        if(A_activated_mine_2Cnt == 3)
+            A_activated_mine_2Cnt = 0;
+    }
+    if(A_activated_mine_3 == 1 || A_activated_mine_3Cnt != 0){
+        A_activated_mine_3 = 0;
+        A_activate_or_delete_item += 4;
+        A_activated_mine3Cnt += 1;
+        if(A_activated_mine3Cnt == 3)
+            A_activated_mine3Cnt = 0;
+    }
+    if(A_activated_defender_1 == 1 || A_activated_defender_1Cnt != 0){
+        A_activated_defender_1 = 0;
+        A_activate_or_delete_item += 8;
+        A_activated_defender_1Cnt += 1;
+        if(A_activated_defender_1Cnt == 3)
+            A_activated_defender_1Cnt = 0;
+    }
+    if(A_activated_defender_2 == 1 || A_activated_defender_2Cnt != 0){
+        A_activated_defender_2 = 0;
+        A_activate_or_delete_item += 16;
+        A_activated_defender_2Cnt += 1;
+        if(A_activated_defender_2Cnt == 3)
+            A_activated_defender_2Cnt = 0;
+    }
+    if(A_activated_defender_3 == 1 || A_activated_defender_3Cnt != 0){
+        A_activated_defender_3 = 0;
+        A_activate_or_delete_item += 32;
+        A_activated_defender_3Cnt += 1;
+        if(A_activated_defender_3Cnt == 3)
+            A_activated_defender_3Cnt = 0;
+    }
+    if(A_delete_mine == 1 || A_delete_mineCnt != 0){
+        A_delete_mine = 0;
+        A_activate_or_delete_item += 64;
+        A_delete_mineCnt += 1;
+        if(A_delete_mineCnt == 3)
+            A_delete_mineCnt = 0;
+    }
+    if(A_delete_defender == 1 || A_delete_defender != 0){
+        A_delete_defender = 0;
+        A_activate_or_delete_item += 128;
+        A_delete_defenderCnt += 1;
+        if(A_delete_defenderCnt == 3)
+            A_delete_defenderCnt = 0;
+    }
+    return A_activate_or_delete_item;
+}
+
+char A_move_function(void)
 {//9번째 데이터
-    if(A_move_right == 1) A_move += 1;// A 오른쪽으로 이동
-    else if(A_move_left == 1) A_move += 2;// A 왼쪽으로 이동
-    else if(A_move_stop == 1) A_move += 4;// A 정지
+    char A_move = 0;
+    if(A_move_right == 1){// A 오른쪽으로 이동
+        A_move_right = 0;
+        A_move += 1;
+    } 
+    else if(A_move_left == 1){// A 왼쪽으로 이동
+        A_move_left = 0;
+        A_move += 2;
+    } 
+    else if(A_move_stop == 1){// A 정지
+        A_move_stop = 0;
+        A_move += 4;
+    } 
+    return A_move;
 }
 void B_X_Cood_function(void)
 {//7,8번째 데이터 라켓 B의 좌표를 high, low 두 비트로 나눠서 표현하는 함수
     B_X_Cood_High = (unsigned char)((B_X_Cood & 65280)>>8);
     B_X_Cood_Low = (unsigned char)(B_X_Cood & 255);
 }
-void B_game_ready_function(void)
-{//6번째 데이터
-    if(B_pre_game_selected == 1 || B_pre_game_selectedCnt != 0){//선공 게임 완료  
-        B_game_ready += 1;
-        B_pre_game_selectedCnt += 1;
-        if(B_pre_game_selectedCnt == 3)
-            B_pre_game_selectedCnt = 0;
-    } 
-    else if(B_controller_selected == 1 ){//컨트롤러 선택 완료  
-        B_game_ready += 2;
-    } 
-    else if(B_controller_right == 1){//컨트롤러 선택 우  
-        B_game_ready += 4;
-    } 
-    else if(B_controller_left == 1 ){//컨트롤러 선택 좌  
-        B_game_ready += 8;
-    } 
-}
-void B_use_item_function(void)
-{//5번째 데이터  
-    if(B_use_fireball == 1 || B_use_fireballCnt != 0){
-        B_use_item += 1;
+
+char B_use_item_1_function(void)
+{//10번째 데이터
+    char B_use_item_1
+    if(B_use_fireball == 1 || B_use_fireballCnt != 0){//파이어볼 사용  
+        B_use_fireball = 0;
+        B_use_item_1 += 1;
         B_use_fireballCnt += 1;
         if(B_use_fireballCnt == 3)
-            B_use_fireballCnt = 0;  
-    }else if(B_use_tornado == 1 || B_use_tornadoCnt != 0){
-        B_use_item += 2;
+            B_use_fireballCnt = 0;
+    } 
+    if(B_use_tornado == 1 || B_use_tornadoCnt != 0){//토네이도 사용  
+        B_use_tornado = 0;
+        B_use_item_1 += 2;
         B_use_tornadoCnt += 1;
-        if(B_use_tornadoCnt == 3)
-            B_use_tornadoCnt = 0;  
-    }else if(B_use_hacking == 1 || B_use_hackingCnt != 0){
-        B_use_item += 4;
+        if(B_use_tornado == 3)
+            B_use_tornado = 0;
+    } 
+    if(B_use_hacking == 1 || B_use_hackingCnt != 0){//해킹 사용  
+        B_use_hacking = 0;
+        B_use_item_1 += 4;
         B_use_hackingCnt += 1;
         if(B_use_hackingCnt == 3)
-            B_use_hackingCnt = 0;  
-    }else if(B_release_hacking == 1 || B_release_hackingCnt != 0){
-        B_use_item += 8;
-        B_release_hackingCnt += 1;
-        if(B_release_hackingCnt == 3)
-            B_release_hackingCnt = 0;
+            B_use_hackingCnt = 0;
     }
-    else if(B_use_EMP == 1 || B_use_EMPCnt != 0){
-        B_use_item += 16;
+    if(B_use_EMP == 1 || B_use_EMPCnt != 0){//EMP 사용  
+        B_use_EMP = 0;
+        B_use_item_1 += 8;
         B_use_EMPCnt += 1;
         if(B_use_EMPCnt == 3)
-            B_use_EMPCnt = 0;  
+            B_use_EMPCnt = 0;
     } 
-    else if(B_use_changeup == 1 || B_use_changeupCnt != 0){
-        B_use_item += 32;
+    if(B_use_changeup == 1 || B_use_changeupCnt != 0){//체인지업 사용  
+        B_use_changeup = 0;
+        B_use_item_1 += 16;
         B_use_changeupCnt += 1;
         if(B_use_changeupCnt == 3)
             B_use_changeupCnt = 0;
-    } 
+    }
+    if(B_use_iceball == 1 || B_use_iceballCnt != 0){//use iceball
+        B_use_iceball = 0;
+        B_use_item_1 += 16;
+        B_use_iceballCnt += 1;
+        if(B_use_iceballCnt == 3)
+            B_use_iceballCnt = 0;
+    }
+    return B_use_item_1;
 }
-void B_move_function(void)
+char B_use_item_2_function(void)
 {
-    if(B_move_right == 1) B_move += 1;
-    else if(B_move_left == 1) B_move += 2;
-    else if(B_move_stop == 1) B_move += 4;//4번째 데이터
+    char B_use_item_2 = 0;
+    if(B_use_mine_1 == 1 || B_use_mine_1Cnt != 0){// B 지뢰 1위치 사용 
+        B_use_mine_1 = 0;
+        B_use_item_2 += 1;
+        B_use_mine_1Cnt += 1;
+        if(B_use_mine_1Cnt == 3)
+            B_use_mine_1Cnt = 0;
+    }
+    if(B_use_mine_2 == 1 || B_use_mine_2Cnt != 0){// B 지뢰 2위치 사용 
+        B_use_mine_2  = 0;
+        B_use_item_2 += 2;
+        B_use_mine_2Cnt += 1;
+        if(B_use_mine_2Cnt == 3)
+            B_use_mine_2Cnt = 0;
+    }
+    if(B_use_mine_3 == 1 || B_use_mine_3Cnt != 0){// B 지뢰 3위치 사용 
+        B_use_mine_3 = 0;
+        B_use_item_2 += 4;
+        B_use_mine_3Cnt += 1;
+        if(B_use_mine_3Cnt == 3)
+            B_use_mine_3Cnt = 0;
+    }
+    if(B_use_defender_1 == 1 || B_use_defender_1Cnt != 0){// B 수비수 1위치 사용
+        B_use_defender_1 = 0;
+        B_use_item_2 += 8;
+        B_use_defender_1Cnt += 1;
+        if(B_use_defender_1Cnt == 3)
+            B_use_defender_1Cnt = 0;
+    }
+    if(B_use_defender_2 == 1 || B_use_defender_2Cnt != 0){//B 수비수 2위치 사용
+        B_use_defender_2 = 0;
+        B_use_item_2 += 16;
+        B_use_defender_2Cnt += 1;
+        if(B_use_defender_2Cnt == 3)
+            B_use_defender_2Cnt = 0;
+    }
+    if(B_use_defender_3 == 1 || B_use_defender_3Cnt != 0){//B 수비수 3위치 사용
+        B_use_defender_3 = 0;
+        B_use_item_2 += 32;
+        B_use_defender_3Cnt += 1;
+        if(B_use_defender_3Cnt == 3)
+            B_use_defender_3Cnt = 0;
+    }
+    return B_use_item_2;
 }
-void insert_coin_function(void)
+char B_activate_or_delete_item_function(void)
+{
+    char B_activate_or_delete_item = 0;
+    if(B_activated_mine_1 == 1 || B_activated_mine_1Cnt != 0){
+        B_activated_mine_1 = 0;
+        B_activate_or_delete_item += 1;
+        B_activated_mine_1Cnt += 1;
+        if(B_activated_mine_1Cnt == 3)
+            B_activated_mine_1Cnt = 0;
+    }
+    if(B_activated_mine_2 == 1 || B_activated_mine_2Cnt != 0){
+        B_activated_mine_2 = 0;
+        B_activate_or_delete_item += 2;
+        B_activated_mine_2Cnt += 1;
+        if(B_activated_mine_2Cnt == 3)
+            B_activated_mine_2Cnt = 0;
+    }
+    if(B_activated_mine_3 == 1 || B_activated_mine_3Cnt != 0){
+        B_activated_mine_3 = 0;
+        B_activate_or_delete_item += 4;
+        B_activated_mine3Cnt += 1;
+        if(B_activated_mine3Cnt == 3)
+            B_activated_mine3Cnt = 0;
+    }
+    if(B_activated_defender_1 == 1 || B_activated_defender_1Cnt != 0){
+        B_activated_defender_1 = 0;
+        B_activate_or_delete_item += 8;
+        B_activated_defender_1Cnt += 1;
+        if(B_activated_defender_1Cnt == 3)
+            B_activated_defender_1Cnt = 0;
+    }
+    if(B_activated_defender_2 == 1 || B_activated_defender_2Cnt != 0){
+        B_activated_defender_2 = 0;
+        B_activate_or_delete_item += 16;
+        B_activated_defender_2Cnt += 1;
+        if(B_activated_defender_2Cnt == 3)
+            B_activated_defender_2Cnt = 0;
+    }
+    if(B_activated_defender_3 == 1 || B_activated_defender_3Cnt != 0){
+        B_activated_defender_3 = 0;
+        B_activate_or_delete_item += 32;
+        B_activated_defender_3Cnt += 1;
+        if(B_activated_defender_3Cnt == 3)
+            B_activated_defender_3Cnt = 0;
+    }
+    if(B_delete_mine == 1 || B_delete_mineCnt != 0){
+        B_delete_mine = 0;
+        B_activate_or_delete_item += 64;
+        B_delete_mineCnt += 1;
+        if(B_delete_mineCnt == 3)
+            B_delete_mineCnt = 0;
+    }
+    if(B_delete_defender == 1 || B_delete_defender != 0){
+        B_delete_defender = 0;
+        B_activate_or_delete_item += 128;
+        B_delete_defenderCnt += 1;
+        if(B_delete_defenderCnt == 3)
+            B_delete_defenderCnt = 0;
+    }
+    return B_activate_or_delete_item;
+}
+char B_move_function(void)
+{   
+    char B_move = 0;
+    if(B_move_right == 1){
+        B_move_right = 0;
+        B_move += 1;
+    } 
+    else if(B_move_left == 1){
+        B_move_left = 0;
+        B_move += 2;
+    } 
+    else if(B_move_stop == 1){
+        B_move_stop = 0;
+        B_move += 4;
+    } 
+    return B_move;
+}
+char insert_coin_function(void)
 {//3번째 데이터
+    char insert_coin = 0;
     if(insert_coin_1000 == 1 || insert_coin_1000Cnt != 0){
+        insert_coin_1000 = 0;
         insert_coin += 1;
         insert_coin_1000Cnt += 1;
         if(insert_coin_1000Cnt == 3)
             insert_coin_1000Cnt = 0;  
     } 
     else if(insert_coin_5000 == 1 || insert_coin_5000Cnt != 0){
+        insert_coin_5000 = 0;
         insert_coin += 2;
         insert_coin_5000Cnt += 1;
         if(insert_coin_5000Cnt == 3)
             insert_coin_1000Cnt = 0;  
     } 
     else if(insert_coin_10000 == 1 || insert_coin_10000Cnt != 0){
+        insert_coin_10000 = 0;
         insert_coin += 4;
         insert_coin_10000Cnt += 1;
         if(insert_coin_10000Cnt == 3)
             insert_coin_10000Cnt = 0;
-    }   
+    }
+    return insert_coin;
 }
-void reset_data_after_send(void)
-{//PC로 데이터 보낸 후에 변수 0으로 리셋
-    wall_crash = 0;
-    A_return = 0;
-    B_return = 0;
-    A_get_score = 0;
-    B_get_score = 0;
-    completion_of_money_input = 0;
-    A_mode_selection_left = 0;
-    A_mode_selection_right = 0;
-    A_mode_selected = 0;
-    A_controller_left = 0;
-    A_controller_right = 0;
-    A_controller_selected = 0;
-    A_pre_game_selected = 0;
-    A_use_fireball = 0;
-    A_use_tornado = 0;
-    A_use_hacking = 0;
-    A_release_hacking = 0;
-    A_use_EMP = 0;
-    A_use_changeup = 0;
-    A_move_right = 0;
-    A_move_left = 0;
-    A_move_stop = 0;
-    B_controller_left = 0;
-    B_controller_right = 0;
-    B_controller_selected = 0;
-    B_pre_game_selected = 0;
-    B_use_fireball = 0;
-    B_use_tornado = 0;
-    B_use_hacking = 0;
-    B_release_hacking = 0;
-    B_use_EMP = 0;
-    B_use_changeup = 0;
-    B_move_right = 0;
-    B_move_left = 0;
-    B_move_stop = 0;
-    insert_coin_1000 = 0;
-    insert_coin_5000 = 0;
-    insert_coin_10000 = 0;
-    ball_check = 0;
-    A_game_ready = 0;
-    A_use_item = 0;
-    A_move = 0;
-    B_game_ready = 0;
-    B_use_item = 0;
-    B_move = 0;
-    insert_coin = 0;
-    checkSum = 0;
+char get_AR_item_function(void)
+{
+    char get_AR_item = 0;
+    if(A_get_mine == 1 || A_get_mineCnt != 0){
+        A_get_mine = 0;
+        get_AR_item += 1;
+        A_get_mineCnt +=1;
+        if(A_get_mineCnt == 3)
+            A_get_mineCnt = 0;
+    }
+    if(A_get_defender == 1 || A_get_defenderCnt != 0){
+        A_get_defender = 0;
+        get_AR_item += 2;
+        A_get_defenderCnt += 1;
+        if(A_get_defenderCnt == 3)
+            A_get_defenderCnt = 0;
+    }
+    if(B_get_mine == 1 || B_get_mineCnt != 0){
+        B_get_mine = 0;
+        get_AR_item += 4;
+        B_get_mineCnt +=1;
+        if(B_get_mineCnt == 3)
+            B_get_mineCnt = 0;
+    }
+    if(B_get_defender == 1 || B_get_defenderCnt != 0){
+        B_get_defender = 0;
+        get_AR_item += 8;
+        B_get_defenderCnt += 1;
+        if(B_get_defenderCnt == 3)
+            B_get_defenderCnt = 0;
+    }
+    return get_AR_item;
 }
 //******************************************************************************************************************//
 //******************************************* Serial receive data function *****************************************//
 //******************************************************************************************************************//
+
 void ball_move_item(void)
-{//11번째 데이터
+{
     if((new_receive_buffer[1] & 1)== 1 && (old_receive_buffer[1] & 1)== 0){
         if(ball_Y_Cood < 500)
             A_item = 1;
         else if(ball_Y_Cood > 500)
             B_item = 1;
     } 
-    else if((new_receive_buffer[1] & 2) == 2 && (old_receive_buffer[1] & 2)== 0){
+    if((new_receive_buffer[1] & 2) == 2 && (old_receive_buffer[1] & 2)== 0){
         if(ball_Y_Cood < 500)
             A_item = 2;
         else if(ball_Y_Cood > 500)
             B_item = 2;
     }
-    else if((new_receive_buffer[1] & 4) == 4 && (old_receive_buffer[1] & 4)== 0){
+    if((new_receive_buffer[1] & 4) == 4 && (old_receive_buffer[1] & 4)== 0){
         if(ball_Y_Cood < 500)
             A_item = 3;
         else if(ball_Y_Cood > 500)
             B_item = 3;
-    }
+    }if((new_receive_buffer[1] & 8) == 8 && (old_receive_buffer[1] & 8)== 0){
+        if(ball_Y_Cood < 500)
+            A_item = 4;
+        else if(ball_Y_Cood > 500)
+            B_item = 4;
 }
 
 void ball_stat(void)
-{//9번째 데이터
+{
     if((new_receive_buffer[3] & 1 ) == 1 && (old_receive_buffer[3] & 1) == 0) firstAt = 1;//A 선공
     else if((new_receive_buffer[3] & 2 ) == 2 && (old_receive_buffer[3] & 2) == 0) firstAt = 2;//B 선공
-    if((new_receive_buffer[3] & 8) == 8 && (old_receive_buffer[3] & 8)== 0){//게임 종료
+    if((new_receive_buffer[3] & 8) == 8 && (old_receive_buffer[3] & 8) == 0){//게임 종료
         Serial2.write('T');
         Serial3.write('T');
         firstAt = 0;
@@ -1711,30 +1969,43 @@ void A_using_item(void)
 {//8번째 데이터 A 아이템 사용
     if(new_receive_buffer[4] != 0){
         if((new_receive_buffer[4] & 1) == 1 && (old_receive_buffer[4] & 1)== 0) Serial2.write('O');//파이어볼 사용
-        else if((new_receive_buffer[4] & 2) == 2 && (old_receive_buffer[4] & 2)== 0) Serial2.write('P');//토네이도 사용
-        else if((new_receive_buffer[4] & 4) == 4 && (old_receive_buffer[4] & 4)== 0){ B_hacking_check = 1; Serial2.write('Q');}//해킹 사용
-        else if((new_receive_buffer[4] & 8) == 8 && (old_receive_buffer[4] & 8)== 0) B_hacking_check = 0;
-        else if((new_receive_buffer[4] & 16) == 16 && (old_receive_buffer[4] & 16)== 0) Serial2.write('R');//EMP 사용
-        else if((new_receive_buffer[4] & 32) == 32 && (old_receive_buffer[4] & 32)== 0) Serial2.write('S');//체인지업 사용
+        if((new_receive_buffer[4] & 2) == 2 && (old_receive_buffer[4] & 2)== 0) Serial2.write('P');//토네이도 사용
+        if((new_receive_buffer[4] & 4) == 4 && (old_receive_buffer[4] & 4)== 0){ B_hacking_check = 1; Serial2.write('Q');}//해킹 사용
+        if((new_receive_buffer[4] & 8) == 8 && (old_receive_buffer[4] & 8)== 0) Serial2.write('R');//EMP 사용
+        if((new_receive_buffer[4] & 16) == 16 && (old_receive_buffer[4] & 16)== 0) Serial2.write('S');//체인지업 사용
+        if((new_receive_buffer[4] & 32) == 32 && (old_receive_buffer[4] & 32)== 0) Serial2.wrtie('');//아이스볼 사용 
     }
 }
 void A_get_item(void)
 {//7번째 데이터
     if(new_receive_buffer[5] != 0){
         if((new_receive_buffer[5] & 1 ) == 1 && (old_receive_buffer[5] & 1)== 0) Serial2.write('J');// 파이어볼 획득
-        else if((new_receive_buffer[5] & 2 ) == 2 && (old_receive_buffer[5] & 2)== 0)  Serial2.write('K');// 토네이도 획득
-        else if((new_receive_buffer[5] & 4 ) == 4 && (old_receive_buffer[5] & 4)== 0) Serial2.write('L');// 해킹 획득
-        else if((new_receive_buffer[5] & 8 ) == 8 && (old_receive_buffer[5] & 8)== 0) Serial2.write('M');//EMP 획득
-        else if((new_receive_buffer[5] & 16 ) == 16 && (old_receive_buffer[5] & 16)== 0) Serial2.write('N');//change up 획득
+        if((new_receive_buffer[5] & 2 ) == 2 && (old_receive_buffer[5] & 2)== 0)  Serial2.write('K');// 토네이도 획득
+        if((new_receive_buffer[5] & 4 ) == 4 && (old_receive_buffer[5] & 4)== 0) Serial2.write('L');// 해킹 획득
+        if((new_receive_buffer[5] & 8 ) == 8 && (old_receive_buffer[5] & 8)== 0) Serial2.write('M');//EMP 획득
+        if((new_receive_buffer[5] & 16 ) == 16 && (old_receive_buffer[5] & 16)== 0) Serial2.write('N');//change up 획득
+        if((new_receive_buffer[5] & 32) == 32 && (old_receive_buffer[5] & 32)== 0) Serial2.wrtie('');//아이스볼 획득
     }
 }
-void A_choose(void)
+void completion_choose(void)
 {//6번째 데이터
     if(new_receive_buffer[6] != 0){
-       /* if((new_receive_buffer[6] & 1) == 1 && (old_receive_buffer[6] & 1)== 0) //Serial2.write('A');//동전 투입 완료
-        else if((new_receive_buffer[6] & 2) == 2 && (old_receive_buffer[6] & 2)== 0) //Serial2.write('D');//모드 선택 완료
-        else if((new_receive_buffer[6] & 4) == 4 && (old_receive_buffer[6] & 4)== 0) //Serial2.write('G');//컨트롤러 선택 완료
-        else if((new_receive_buffer[6] & 8) == 8 && (old_receive_buffer[6] & 8)== 0) //Serial2.write('H');//선공 게임 선택 완료*/
+        if((new_receive_buffer[6] & 1) == 1 && (old_receive_buffer[6] & 1)== 0){
+            Serial2.write('A');//동전 투입 완료
+            Serial3.write('A');//동전 투입 완료
+        } 
+        else if((new_receive_buffer[6] & 2) == 2 && (old_receive_buffer[6] & 2)== 0){
+            Serial2.write('D');//모드 선택 완료
+            Serial3.write('D');//모드 선택 완료
+        } 
+        else if((new_receive_buffer[6] & 4) == 4 && (old_receive_buffer[6] & 4)== 0){
+            Serial3.write('G');//선공 게임 선택 완료
+            Serial3.write('G');//선공 게임 선택 완료
+        } 
+        else if((new_receive_buffer[6] & 8) == 8 && (old_receive_buffer[6] & 8)== 0){
+            Serial2.write('H');//증강 완료
+            Serial3.write('H');//증강 완료
+        } 
     }
 }
 void B_using_item(void)
@@ -1743,9 +2014,9 @@ void B_using_item(void)
         if((new_receive_buffer[7] & 1) == 1 && (old_receive_buffer[7] & 1)== 0) Serial3.write('O');//파이어볼 사용
         else if((new_receive_buffer[7] & 2) == 2 && (old_receive_buffer[7] & 2)== 0) Serial3.write('P');//토네이도 사용
         else if((new_receive_buffer[7] & 4) == 4 && (old_receive_buffer[7] & 4)== 0){ A_hacking_check = 1; Serial3.write('Q');}//해킹 사용
-        else if((new_receive_buffer[7] & 8) == 8 && (old_receive_buffer[7] & 8)== 0) A_hacking_check = 0;
-        else if((new_receive_buffer[7] & 16) == 16 && (old_receive_buffer[7] & 16)== 0) Serial3.write('R');// EMP 사용
-        else if((new_receive_buffer[7] & 32) == 32 && (old_receive_buffer[7] & 32)== 0) Serial3.write('S');// 체인지업 사용
+        else if((new_receive_buffer[7] & 8) == 8 && (old_receive_buffer[7] & 8)== 0)  Serial3.write('R');// EMP 사용
+        else if((new_receive_buffer[7] & 16) == 16 && (old_receive_buffer[7] & 16)== 0) Serial3.write('S');// 체인지업 사용
+        else if((new_receive_buffer[7] & 32) == 32 && (old_receive_buffer[7] & 32)== 0) Serial3.write('');//아이스볼 사용
     }
 }
 void B_get_item(void)
@@ -1756,13 +2027,7 @@ void B_get_item(void)
         else if((new_receive_buffer[8] & 4 ) == 4 && (old_receive_buffer[8] & 4)== 0) Serial3.write('L');// 해킹 획득
         else if((new_receive_buffer[8] & 8 ) == 8 && (old_receive_buffer[8] & 8)== 0) Serial3.write('M');//EMP 획득
         else if((new_receive_buffer[8] & 16 ) == 16 && (old_receive_buffer[8] & 16)== 0) Serial3.write('N');//change up 획득
-    }
-}
-void B_choose(void)
-{//3번째 데이터
-    if(new_receive_buffer[9] != 0){
-        /*if((new_receive_buffer[9] & 1) == 1 && (old_receive_buffer[9] & 1)== 0) //Serial3.write('G');//컨트롤러 선택 완료
-        else if((new_receive_buffer[9] & 2) == 2 && (old_receive_buffer[9] & 2)== 0) //Serial3.write('H');//선공 게임 선택 완료*/
+        else if((new_receive_buffer[8] & 32 ) == 32 && (old_receive_buffer[8] & 32)== 0) Serial3.write('N');//아이스볼  획득
     }
 }
 //******************************************************************************************************************//

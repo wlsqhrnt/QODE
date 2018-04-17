@@ -231,6 +231,7 @@ char startDir = 0;
 volatile int step_ =  0;
 volatile int data_len = 0;
 int collision_check2 = 0;
+int racket_collision_check2 = 0;
 int firstCheck = 0;
 //led GPIO
 
@@ -501,13 +502,13 @@ void coordinateCheck(void)
     }
     if (ndx != ball_X_Cood && x_move_check == 0) { // 현재 x좌
         if (ndx > ball_X_Cood) {
-            if(ball_X_dir != 0){
-                ball_X_dir = 0; digitalWrite(ball_X_dirPin,ball_X_dir);
+            if(ball_X_dir != 1){
+                ball_X_dir = 1; digitalWrite(ball_X_dirPin,ball_X_dir);
             }
             x_move_check = 1;
         } else if (ndx < ball_X_Cood ) { // 좌측에 있을 경우
-            if(ball_X_dir != 1){
-                ball_X_dir = 1; digitalWrite(ball_X_dirPin,ball_X_dir);   
+            if(ball_X_dir != 0){
+                ball_X_dir = 0; digitalWrite(ball_X_dirPin,ball_X_dir);   
             }
             x_move_check = 1;
         }
@@ -531,10 +532,10 @@ void coordinateCheck(void)
 void limitSwitchCheck(void)
 {
     //스위치 체크 
-    if(digitalRead(ball_X_limitSwitch1) == LOW && ball_X_dir == 1){
+    if(digitalRead(ball_X_limitSwitch1) == LOW && ball_X_dir == 0){
         Serial2.write('s');//진동
         Serial3.write('s');//진동
-        ball_X_dir = 0;
+        ball_X_dir = 1;
         digitalWrite(ball_X_dirPin,ball_X_dir);
         ball_X_Cood = 0;
         wall_crash = 1; 
@@ -546,12 +547,12 @@ void limitSwitchCheck(void)
         setAngle(new_angle,speed);
         left_startCnt = 1; 
     }
-    if(digitalRead(ball_X_limitSwitch2) == LOW && ball_X_dir == 0){
+    if(digitalRead(ball_X_limitSwitch2) == LOW && ball_X_dir == 1){
         Serial2.write('s');//진동
         Serial3.write('s');//진동
-        ball_X_dir = 1;
+        ball_X_dir = 0;
         digitalWrite(ball_X_dirPin,ball_X_dir);
-        ball_X_Cood = 1960;
+        ball_X_Cood = MAX_X;
         wall_crash = 1;
         ball_X_speedCheck = 0;
         ball_X_timerLimit = 3;
@@ -561,51 +562,73 @@ void limitSwitchCheck(void)
         setAngle(new_angle,speed);
         right_startCnt = 1;
     }
-    if((analogRead(ball_Y_limitSwitch1_1) > 1000 && ball_Y_dirCheck1 == 0 ) && ball_Y_dir == 1){
-        ball_Y_dirCheck1 = 1;
-    }
-    if((analogRead(ball_Y_limitSwitch1_2) > 1000 && ball_Y_dirCheck1 == 1 ) && ball_Y_dir == 1){
-        Serial2.write('s');//진동 
-        collision_check2 = 1;
-        ball_Y_dirCheck1 = 2;
-        ball_Y_dirCheck2 = 0;
-        ball_Y_dir = 0;
-        digitalWrite(ball_Y_dirPin,ball_Y_dir);
-        ball_Y_Cood = 0;
-        ball_Y_speedCheck = 0;
-        ball_Y_timerLimit = 3;
-        ball_Y_timerCnt = 0;
+    if((analogRead(ball_Y_limitSwitch1_1) < 100 && ball_Y_dirCheck1 == 0 ) && ball_Y_dir == 1){
+        A_Collision_check();
         if(A_hacking_check == 1)
             A_hacking_check = 0;
         if(B_item != 0){
             B_item = 0;
             ball_X_timerLimit = 3; 
         }
-        Serial3.write('s');//진동 
-        A_Collision_check();
     }
-    if((analogRead(ball_Y_limitSwitch2_1) > 1000 && ball_Y_dirCheck2 == 0 ) && ball_Y_dir == 0){
-        ball_Y_dirCheck2 = 1;
-    }
-    if((analogRead(ball_Y_limitSwitch2_2) > 1000 && ball_Y_dirCheck2 == 1 ) && ball_Y_dir == 0){
-        Serial2.write('s');//진동
-        collision_check2 = 1;
-        ball_Y_dirCheck2 = 2;
-        ball_Y_dirCheck1 = 0;
-        ball_Y_dir = 1;
+    if((analogRead(ball_Y_limitSwitch1_2) < 100 && ball_Y_dirCheck1 == 1 ) && ball_Y_dir == 1){//B득점
+        collision_check2 = 1;//x,y 멈추기
+        ball_Y_dirCheck1 = 2;//A쪽 레이저 센서 if문 안들어가게 하기
+        ball_Y_dirCheck2 = 0;//B쪽 레이서 선세 if문 들어가게 하기
+
+        ball_Y_dir = 0;//방향 설정
         digitalWrite(ball_Y_dirPin,ball_Y_dir);
-        ball_Y_Cood = 2720;
-        ball_Y_speedCheck = 0;
+        ball_Y_Cood = 0;//좌표 0
+        ball_Y_speedCheck = 0;//가속 체크
         ball_Y_timerLimit = 3;
         ball_Y_timerCnt = 0;
+        
+        Serial3.write('s');//진동 
+
+        Serial2.write('r');//득점 신호 보내기
+        delay(3);
+        Serial3.write('r');
+
+        B_get_score = 1;//
+        restart_check = 1;
+        angle = getAngle(angle,HORIZONTAL);
+        setAngle(angle,speed);
+        digitalWrite(led_bottom_pin,HIGH);
+
+    }
+    if((analogRead(ball_Y_limitSwitch2_1) < 100 && ball_Y_dirCheck2 == 0 ) && ball_Y_dir == 0){
+        B_Collision_check();
         if(B_hacking_check == 1)
             B_hacking_check = 0;
         if(A_item != 0){
             A_item = 0;
             ball_X_timerLimit = 3;
         }
-        Serial3.write('s');//진동
-        B_Collision_check();
+    }
+    if((analogRead(ball_Y_limitSwitch2_2) < 100 && ball_Y_dirCheck2 == 1 ) && ball_Y_dir == 0){//A득점
+        collision_check2 = 1;//x,y 멈추기
+        ball_Y_dirCheck2 = 2;//B쪽 레이저 센서 if문 들어가게 하지
+        ball_Y_dirCheck1 = 0;//A쪽 레이저 센서 if문 안들어가게 하기
+
+        ball_Y_dir = 1;
+        digitalWrite(ball_Y_dirPin,ball_Y_dir);
+        ball_Y_Cood = MAX_Y;
+        ball_Y_speedCheck = 0;
+        ball_Y_timerLimit = 3;
+        ball_Y_timerCnt = 0;
+        
+        Serial2.write('s');//진동
+
+        Serial2.write('q');//득점 신호 보내기
+        delay(3);
+        Serial3.write('q');
+
+        A_get_score = 1;//
+        restart_check = 1;
+        angle = getAngle(angle,HORIZONTAL);
+        setAngle(angle,speed);
+        digitalWrite(led_top_pin,HIGH);
+        
     }
     if(digitalRead(A_X_limitSwitch1) == LOW && A_X_dir == 0){
         Serial2.write('s');//진동
@@ -665,9 +688,9 @@ void ballMoveControl(void)
         if(ball_X_timercheck == 0){
             digitalWrite(ball_X_stpPin,HIGH);
             ball_X_timercheck = 1;
-            if(ball_X_dir == 1 && ball_X_Cood > 0 )
+            if(ball_X_dir == 0 && ball_X_Cood > 0 )
                 ball_X_Cood--;
-            else if(ball_X_dir == 0 && ball_X_Cood < 1960)
+            else if(ball_X_dir == 1 && ball_X_Cood < MAX_X)
                 ball_X_Cood++;
         }else if(ball_X_timercheck == 1){
             digitalWrite(ball_X_stpPin,LOW);
@@ -686,7 +709,7 @@ void ballMoveControl(void)
         if(ball_Y_timercheck == 0){
             digitalWrite(ball_Y_stpPin,HIGH);
             ball_Y_timercheck = 1;
-            if(ball_Y_dir == 0 && ball_Y_Cood < 2720 )
+            if(ball_Y_dir == 0 && ball_Y_Cood < MAX_Y)
                 ball_Y_Cood++;
             else if(ball_Y_dir == 1 && ball_Y_Cood > 0)
                 ball_Y_Cood--;
@@ -714,9 +737,9 @@ void rackectMoveControl(void)
             if(A_X_timercheck == 0){
                 digitalWrite(A_X_stpPin,HIGH);
                 A_X_timercheck = 1;
-                if(A_X_dir == 1){
+                if(A_X_dir == 0){
                     A_X_Cood++;
-                }else if(A_X_dir == 0){
+                }else if(A_X_dir == 1){
                     A_X_Cood--;
                 }
             }else if(A_X_timercheck == 1){
@@ -1293,13 +1316,13 @@ void initing(void)
     char B_X_check = 0;
     int delay_ = 100;
     int delay_for_Y = 300;
-    digitalWrite(ball_X_dirPin, 0);
+    digitalWrite(ball_X_dirPin, 1);
     digitalWrite(ball_Y_dirPin, 1);
     digitalWrite(A_X_dirPin,1);
     digitalWrite(B_X_dirPin,0);
     while(check != 3){
         if(ball_X_check == 0){
-            if(digitalRead(ball_X_limitSwitch1) == LOW){
+            if(digitalRead(ball_X_limitSwitch2) == LOW){
                 ball_X_check = 1;
                 check += 1;
                 delay_+=100;
@@ -1338,11 +1361,11 @@ void initing(void)
         digitalWrite(ball_Y_stpPin, LOW);
         delayMicroseconds(400);
     }
-    digitalWrite(ball_X_dirPin, 1);
+    digitalWrite(ball_X_dirPin, 0);
     digitalWrite(ball_Y_dirPin, 0);
     digitalWrite(A_X_dirPin,0);
     digitalWrite(B_X_dirPin,1);
-    ball_X_dir = 1; ball_Y_dir = 0; A_X_dir = 0; B_X_dir =1;
+    ball_X_dir = 0; ball_Y_dir = 0; A_X_dir = 0; B_X_dir =1;
 
     for (int i = 0; i < MAX_X/2; i++) {
         digitalWrite(ball_X_stpPin, HIGH);digitalWrite(ball_Y_stpPin, HIGH);
@@ -1514,18 +1537,22 @@ void ball_Y_timerHandler(void)
 }
 void A_X_timerHandler(void)
 {
-    if(collision_check2 == 0){
-        if(firstCheck != 0){
-            A_X_timerCnt++;
+    if(firstCheck != 0){
+        if(racket_collision_check2 == 0){
+            if(firstCheck != 0){
+                A_X_timerCnt++;
+            }
         }
     }
 }
 void B_X_timerHandler(void)
 {
-    if(collision_check2 == 0){
-        if(firstCheck != 0){
-            B_X_timerCnt++;
-        }
+    if(firstCheck != 0){
+        if(racket_collision_check2 == 0){
+            if(firstCheck != 0){
+                B_X_timerCnt++;
+            }
+        }    
     }
 }
 void restart(void)
@@ -2324,6 +2351,7 @@ void ball_stat(void)
         B_X_timercheck = 0;
         B_X_speedCheck = 0;
         collision_check2 = 0;
+        racket_collision_check2 = 0;
         A_item = 0;
         B_item = 0;
         ball_Y_dirCheck1 = 0;
@@ -2407,182 +2435,227 @@ void A_Collision_check(void)
 {
     if(ball_X_Cood < A_X_Cood){//라켓의 왼쪽
         if(A_X_Cood - RACKETSECTOR/2 <= ball_X_Cood){//90
+            ball_Y_dir = 0;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 90;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             A_return = 1;
         }else if(A_X_Cood - RACKETSECTOR*3/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood - RACKETSECTOR/2){//70
+            ball_Y_dir = 0;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 110;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             A_return = 1;
         }else if(A_X_Cood - RACKETSECTOR*5/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood - RACKETSECTOR*3/2){//60
+            ball_Y_dir = 0;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 120;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             A_return = 1;
         }else if(A_X_Cood - RACKETSECTOR*9/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood - RACKETSECTOR*5/2){//50
+            ball_Y_dir = 0;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 130;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             A_return = 1;
         }else if(A_X_Cood - RACKETSECTOR*17/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood - RACKETSECTOR*9/2){//40
+            ball_Y_dir = 0;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 140;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             A_return = 1;
         }else if(ball_X_Cood - BALLSIZE/2 <= A_X_Cood - RACKETSECTOR*17/2 && A_X_Cood - RACKETSECTOR*17/2 <= ball_X_Cood + BALLSIZE/2){//30
+            ball_Y_dir = 0;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 150;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             A_return = 1;
         }
     }else if(ball_X_Cood > A_X_Cood){//라켓의 오른쪽
         if(ball_X_Cood <= A_X_Cood + RACKETSECTOR/2){//90
+            ball_Y_dir = 0;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 90;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             A_return = 1;
         }else if(A_X_Cood + RACKETSECTOR/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood + RACKETSECTOR*3/2){//70
+            ball_Y_dir = 0;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 70;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             A_return = 1;
         }else if(A_X_Cood + RACKETSECTOR*3/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood + RACKETSECTOR*5/2){//60
+            ball_Y_dir = 0;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 60;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             A_return = 1;
         }else if(A_X_Cood + RACKETSECTOR*5/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood + RACKETSECTOR*9/2){//50
+            ball_Y_dir = 0;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 50;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             A_return = 1;
         }else if(A_X_Cood + RACKETSECTOR*9/2 <= ball_X_Cood && ball_X_Cood <= A_X_Cood + RACKETSECTOR*17/2){//40
+            ball_Y_dir = 0;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 40;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             A_return = 1;
         }else if(ball_X_Cood - BALLSIZE/2 <= A_X_Cood + RACKETSECTOR*17/2 && A_X_Cood + RACKETSECTOR*17/2 <= ball_X_Cood + BALLSIZE/2){//30
+            ball_Y_dir = 0;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 30;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             A_return = 1;
         }
     }else if(ball_X_Cood == A_X_Cood){
+        ball_Y_dir = 0;
+        digitalWrite(ball_Y_dirPin,ball_Y_dir);
         angle = 90;
         setAngle(angle,speed);
-        collision_check2 = 0;
+        racket_collision_check2 = 0;
         A_return = 1;
     }
-    if(collision_check2 == 1){//Goal B득점
-        Serial2.write('r');
-        delay(3);
-        Serial3.write('r');
-        B_get_score = 1;
-        restart_check = 1;
+    if(ball_Y_dir == 0){//받아친 상황 
         angle = getAngle(angle,HORIZONTAL);
         setAngle(angle,speed);
-        digitalWrite(led_bottom_pin,HIGH);
-        //B_get_score = 1;
-        //serial_send_data();
-        // racketReset();
+        Serial2.write('s');//진동 
+        ball_Y_dirCheck2 = 0;//B쪽 레이서 선세 if문 들어가게 하기
+        ball_Y_dirCheck1 = 2;//A쪽 레이저 센서 if문 안들어가게 하기
+    }
+    if(ball_Y_dir == 1;){//골인 상황
+        racket_collision_check2 = 1;//라켓 멈추기 
     }
 }
+
 void B_Collision_check(void)
 {
     if(ball_X_Cood < B_X_Cood){
         if(B_X_Cood - RACKETSECTOR/2 <= ball_X_Cood){//90
+            ball_Y_dir = 1;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 270;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             B_return = 1;
         }else if(B_X_Cood - RACKETSECTOR*3/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood - RACKETSECTOR/2){//70
+            ball_Y_dir = 1;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 250;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             B_return = 1;
         }else if(B_X_Cood - RACKETSECTOR*5/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood - RACKETSECTOR*3/2){//60
+            ball_Y_dir = 1;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 240;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             B_return = 1;
         }else if(B_X_Cood - RACKETSECTOR*9/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood - RACKETSECTOR*5/2){//50
+            ball_Y_dir = 1;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 230;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             B_return = 1;
         }else if(B_X_Cood - RACKETSECTOR*17/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood - RACKETSECTOR*9/2){//40
+            ball_Y_dir = 1;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 220;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             B_return = 1;
         }else if(ball_X_Cood - BALLSIZE/2 <= B_X_Cood - RACKETSECTOR*17/2 && B_X_Cood - RACKETSECTOR*17/2 <= ball_X_Cood + BALLSIZE/2){//30
+            ball_Y_dir = 1;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 210;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             B_return = 1;
         }
     }else if(ball_X_Cood > B_X_Cood){
         if(ball_X_Cood <= B_X_Cood + RACKETSECTOR/2 ){//90
+            ball_Y_dir = 1;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 270;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             B_return = 1;
         }else if(B_X_Cood + RACKETSECTOR/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood + RACKETSECTOR*3/2){//70
+            ball_Y_dir = 1;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 290;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             B_return = 1;
         }else if(B_X_Cood + RACKETSECTOR*3/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood + RACKETSECTOR*5/2){//60
+            ball_Y_dir = 1;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 300;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             B_return = 1;
         }else if(B_X_Cood + RACKETSECTOR*5/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood + RACKETSECTOR*9/2){//50
+            ball_Y_dir = 1;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 310;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             B_return = 1;
         }else if(B_X_Cood + RACKETSECTOR*9/2 <= ball_X_Cood && ball_X_Cood <= B_X_Cood + RACKETSECTOR*17/2){//40
+            ball_Y_dir = 1;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 320;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             B_return = 1;
         }
         else if(ball_X_Cood - BALLSIZE/2 <= B_X_Cood + RACKETSECTOR*17/2 && B_X_Cood + RACKETSECTOR*17/2 <= ball_X_Cood + BALLSIZE/2){//30
+            ball_Y_dir = 1;
+            digitalWrite(ball_Y_dirPin,ball_Y_dir);
             angle = 330;
             setAngle(angle,speed);
-            collision_check2 = 0;
+            racket_collision_check2 = 0;
             B_return = 1;
         }
     }else if(ball_X_Cood == B_X_Cood){//4번
         angle = 270;
         setAngle(angle,speed);
-        collision_check2 = 0;
+        racket_collision_check2 = 0;
         B_return = 1;
     }
-    if(collision_check2 == 1){//Goal A득점
-        Serial2.write('q');
-        delay(3);
-        Serial3.write('q');
-        A_get_score = 1;
-        restart_check = 1;
+    if(ball_Y_dir == 1){// 받아친 상
         angle = getAngle(angle,HORIZONTAL);
         setAngle(angle,speed);
-        digitalWrite(led_top_pin,HIGH);
-        //A_get_score = 1;
-        //serial_send_data();
-        //racketReset();
+        Serial2.write('s');//진동 
+        ball_Y_dirCheck1 = 0;//A쪽 레이저 센서 if문 들어가게 하기
+        ball_Y_dirCheck2 = 2;//B쪽 레이서 선세 if문 안들어가게 하기
+    }
+    if(ball_Y_dir == 0;){//골인 상황
+        racket_collision_check2 = 1;//라켓 멈추기 
     }
 }
 void A_change_left_dir(void)
 {
     if(A_hacking_check==0){ // 해킹 아닐때
-        A_X_dir = 0;
+        A_X_dir = 1;
         digitalWrite(A_X_dirPin,A_X_dir);
     }else if(A_hacking_check == 1){ // 해킹일때
-        A_X_dir = 1;
+        A_X_dir = 0;
         digitalWrite(A_X_dirPin,A_X_dir);
     }
     A_move_left = 1;
@@ -2590,10 +2663,10 @@ void A_change_left_dir(void)
 void A_change_right_dir(void)
 {
     if(A_hacking_check==0){ // 해킹 아닐때
-        A_X_dir = 1;
+        A_X_dir = 0;
         digitalWrite(A_X_dirPin,A_X_dir);
     }else if(A_hacking_check == 1){ //해킹 일때
-        A_X_dir = 0;
+        A_X_dir = 1;
         digitalWrite(A_X_dirPin,A_X_dir);
     }
     A_move_right = 1;

@@ -4,6 +4,7 @@
 //새로운 변수 정리 완료
 //새로운 프로토콜 적용
 //아이템 추가 
+//모터 방향 설정 적용
 #include <DueTimer.h>
 #define HORIZONTAL 1
 #define VERTICAL 2
@@ -199,10 +200,10 @@ int ball_X_limitSwitch2 = 23;
 //int ball_Y_limitSwitch1 = 24;
 //int ball_Y_limitSwitch2 = 25;
 
-int ball_Y_limitSwitch1_1 = 0;
-int ball_Y_limitSwitch1_2 = 1;
-int ball_Y_limitSwitch2_1 = 2;
-int ball_Y_limitSwitch2_2 = 3;
+int ball_Y_limitSwitch1_1 = A0;
+int ball_Y_limitSwitch1_2 = A1;
+int ball_Y_limitSwitch2_1 = A2;
+int ball_Y_limitSwitch2_2 = A3;
 
 int ball_Y_dirCheck1 = 0;//레이저 센서 체크
 int ball_Y_dirCheck2 = 0;
@@ -1292,9 +1293,9 @@ void initing(void)
     char B_X_check = 0;
     int delay_ = 100;
     int delay_for_Y = 300;
-    digitalWrite(ball_X_dirPin, 1);
+    digitalWrite(ball_X_dirPin, 0);
     digitalWrite(ball_Y_dirPin, 1);
-    digitalWrite(A_X_dirPin,0);
+    digitalWrite(A_X_dirPin,1);
     digitalWrite(B_X_dirPin,0);
     while(check != 3){
         if(ball_X_check == 0){
@@ -1331,17 +1332,17 @@ void initing(void)
             delayMicroseconds(delay_);
         }
     }
-    while(!(digitalRead(ball_Y_limitSwitch1_2) > 1000)){
+    while(!(digitalRead(ball_Y_limitSwitch1_1) < 100)){
         digitalWrite(ball_Y_stpPin, HIGH);
         delayMicroseconds(400);
         digitalWrite(ball_Y_stpPin, LOW);
         delayMicroseconds(400);
     }
-    digitalWrite(ball_X_dirPin, 0);
+    digitalWrite(ball_X_dirPin, 1);
     digitalWrite(ball_Y_dirPin, 0);
-    digitalWrite(A_X_dirPin,1);
+    digitalWrite(A_X_dirPin,0);
     digitalWrite(B_X_dirPin,1);
-    ball_X_dir = 0; ball_Y_dir = 0; A_X_dir = 1; B_X_dir =1;
+    ball_X_dir = 1; ball_Y_dir = 0; A_X_dir = 0; B_X_dir =1;
 
     for (int i = 0; i < MAX_X/2; i++) {
         digitalWrite(ball_X_stpPin, HIGH);digitalWrite(ball_Y_stpPin, HIGH);
@@ -2401,53 +2402,6 @@ void B_get_item(void)
 //******************************************************************************************************************//
 //*********************************************** The others function **********************************************//
 //******************************************************************************************************************//
-void racketReset(void)
-{
-    char check = 0;
-    char A_X_check = 0;
-    char B_X_check = 0;
-    int delay_ = 100;
-    digitalWrite(A_X_dirPin,0);
-    digitalWrite(B_X_dirPin,0);
-    while(check != 2){
-        if(A_X_check == 0){
-            if(digitalRead(A_X_limitSwitch1) == LOW){
-                A_X_check = 1;
-                check += 1;
-                delay_+=100;
-            }
-            digitalWrite(A_X_stpPin, HIGH);
-            delayMicroseconds(delay_);
-            digitalWrite(A_X_stpPin, LOW);
-            delayMicroseconds(delay_);
-        }
-        if(B_X_check == 0){
-            if(digitalRead(B_X_limitSwitch1) == LOW){
-                B_X_check = 1;
-                check += 1;
-                delay_+=100;
-            }
-            digitalWrite(B_X_stpPin, HIGH);
-            delayMicroseconds(delay_);
-            digitalWrite(B_X_stpPin, LOW);
-            delayMicroseconds(delay_);
-        }
-    }
-    digitalWrite(A_X_dirPin,1);
-    digitalWrite(B_X_dirPin,1);
-    A_X_dir = 1; B_X_dir =1;
-
-    for (int i = 0; i < MAX_X/2; i++) {
-        digitalWrite(A_X_stpPin,HIGH);
-        digitalWrite(B_X_stpPin,HIGH);
-        delayMicroseconds(400);
-        digitalWrite(A_X_stpPin,LOW);
-        digitalWrite(B_X_stpPin,LOW);
-        delayMicroseconds(400);
-    }
-    A_X_Cood = MAX_X/2;
-    B_X_Cood = MAX_X/2;
-}
 
 void A_Collision_check(void)
 {
@@ -2523,6 +2477,7 @@ void A_Collision_check(void)
     }
     if(collision_check2 == 1){//Goal B득점
         Serial2.write('r');
+        delay(3);
         Serial3.write('r');
         B_get_score = 1;
         restart_check = 1;
@@ -2609,6 +2564,7 @@ void B_Collision_check(void)
     }
     if(collision_check2 == 1){//Goal A득점
         Serial2.write('q');
+        delay(3);
         Serial3.write('q');
         A_get_score = 1;
         restart_check = 1;
